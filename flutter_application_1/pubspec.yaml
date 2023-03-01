@@ -1,4 +1,4 @@
-name: flutter_application_1
+name: fluid
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -27,7 +27,8 @@ environment:
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
-dependencies:
+dependencies: 
+  hexcolor: ^3.0.1
   flutter:
     sdk: flutter
 
@@ -56,13 +57,11 @@ flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
-    uses-material-design: true
+  uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-    assets:
-      - assets/hex.jpg
-      - assets/logo.png
-      - assets/logo2.png
+  assets:
+    - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -75,17 +74,13 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-fonts:
-  - family: Montserrat
-    fonts:
-      - asset: fonts/Montserrat-Medium.ttf
-      - asset: fonts/Montserrat-Bold.ttf
-        weight: 500
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
+  fonts:
+    - family: aquire
+      fonts:
+        - asset: fonts/Aquire-BW0ox.otf
+        - asset: fonts/AquireBold-8Ma60.otf
+          weight: 500
+ 
+  
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

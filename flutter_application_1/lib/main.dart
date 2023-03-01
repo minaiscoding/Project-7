@@ -1,58 +1,69 @@
 import 'package:flutter/material.dart'; //imports dart
+import 'package:hexcolor/hexcolor.dart';
 
-//import 'package:flutter_svg/flutter_svg.dart';
 void main() => runApp(MaterialApp(
-    title: 'Fluid', theme: ThemeData(fontFamily: 'Montserrat'), home: Home()));
+    debugShowCheckedModeBanner: false, //removes debugger banner from App
+    title: 'Fluid',
+    theme: ThemeData(fontFamily: 'aquire'), //set the font for the app to Aquire
+    home: Home()));
 
 class Home extends StatelessWidget {
   @override //redefinition of the build widget
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        flexibleSpace: Container(
-          alignment: Alignment.topLeft,
-          constraints: BoxConstraints.expand(),
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("logo.png"), fit: BoxFit.cover),
-          ),
-        ),
-        title: Image.asset(
-          'assets/logo2.png',
-          height: 100,
-          width: 100,
-        ),
-        backgroundColor: Color(0xffddecf6),
-      ),
-      body: Container(
-        constraints: BoxConstraints.expand(),
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/hex.jpg"), fit: BoxFit.cover),
-        ),
-        child: Stack(
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xfff5fdff), Color(0xff4675C0)])),
+      child: Scaffold(
+        backgroundColor: Color.fromRGBO(0, 0, 0, 0),
+        body: Stack(
           children: <Widget>[
-            Positioned.fill(
-              top: 100,
+            Positioned(
+              width: 439.08,
+              height: 312,
+              top: 68,
+              left: -25,
+              child: Image.asset('assets/logo (1).png'),
+            ),
+            Positioned(
+              width: 111,
+              height: 36,
+              top: 244,
+              left: 142,
+              child: Text('FLUID',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xff1a2a3a),
+                    fontSize: 37,
+                  )),
+            ),
+            Positioned(
+              top: 340,
+              right: 53,
+              width: 275,
+              height: 72,
               child: Text(
-                'LOREM IPSUM',
+                'Lorem ipsum dolor sit amet',
                 textAlign: TextAlign.center,
+                softWrap: true,
                 style: TextStyle(
-                  //  fontWeight: FontWeight.bold,
-                  fontSize: 50,
+                  fontSize: 25,
                 ),
               ),
             ),
-            Positioned.fill(
-                top: 190,
-                child: Text(
-                  'Lorem ipsum dolor sic mundus creatus est',
-                  softWrap: true,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 30,
-                  ),
-                )),
+            Container(
+              child: Positioned(
+                  bottom: 0, left: 0, child: Image.asset('assets/ripple1.png')),
+            ),
+            Container(
+              child: Positioned(
+                bottom: 0,
+                left: 0,
+                child: Image.asset('assets/ripple2.png'),
+              ),
+            ),
           ],
         ),
       ),
