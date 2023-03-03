@@ -123,6 +123,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     TextField(
+                      keyboardType: TextInputType.phone,
                       controller: _phoneNumberController,
                       decoration: InputDecoration(
                         hintText: '0000000000',
