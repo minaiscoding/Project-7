@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderSide:
                               BorderSide(color: Color(0xFF4675C0), width: 2),
                         ),
-                        prefixIcon: Icon(Icons.phone),
+                        prefixIcon: Icon(Icons.phone, color: Color(0xFF4675C0)),
                       ),
                     ),
                     SizedBox(height: 30),
@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderSide:
                               BorderSide(color: Color(0xFF4675C0), width: 2),
                         ),
-                        prefixIcon: Icon(Icons.lock),
+                        prefixIcon: Icon(Icons.lock, color: Color(0xFF4675C0)),
                       ),
                     ),
                     SizedBox(height: 50),
