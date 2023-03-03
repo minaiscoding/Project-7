@@ -6,8 +6,11 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController _fullnameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmpasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +66,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     TextField(
-                      controller: _phoneNumberController,
+                      controller: _fullnameController,
                       decoration: InputDecoration(
                         hintText: 'Mohammad Djabed',
                         hintStyle: TextStyle(
@@ -82,6 +85,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               BorderSide(color: Color(0xFF4675C0), width: 2),
                         ),
                         prefixIcon: Icon(Icons.face, color: Color(0xFF4675C0)),
+                        // Set the color of the text entered in the TextField
+                        // to blue (you can replace blue with any color of your choice)
+                        labelStyle: TextStyle(color: Colors.blue),
                       ),
                     ),
                     SizedBox(height: 30),
@@ -166,7 +172,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     TextField(
-                      controller: _phoneNumberController,
+                      controller: _confirmpasswordController,
                       decoration: InputDecoration(
                         hintText: '*********',
                         hintStyle: TextStyle(
