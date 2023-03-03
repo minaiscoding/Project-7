@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'Home.dart';
+import 'SignIn.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -19,6 +21,23 @@ class _SignUpPageState extends State<SignUpPage> {
       body: Stack(
         children: [
           Positioned(
+            //left: MediaQuery.of(context).size.width * 0.0709,
+            right: MediaQuery.of(context).size.width * 0.86,
+            top: MediaQuery.of(context).size.height * 0.1,
+            // bottom: MediaQuery.of(context).size.height * 0.90,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+              },
+              child: Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+                size: 40,
+              ),
+            ),
+          ),
+          Positioned(
             left: 95,
             top: 72,
             child: Text(
@@ -35,7 +54,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           Positioned(
             right: 0,
-            bottom: 0,
+            top: 180,
             child: Container(
               width: 392,
               height: 650,
@@ -81,8 +100,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               BorderSide(color: Color(0xFF4675C0), width: 2),
                         ),
                         focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFF4675C0), width: 2),
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 77, 129, 211),
+                              width: 2),
                         ),
                         prefixIcon: Icon(Icons.face, color: Color(0xFF4675C0)),
                         // Set the color of the text entered in the TextField
@@ -199,7 +219,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Text(
-                          'Sign In',
+                          'Sign Up',
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontStyle: FontStyle.normal,
@@ -219,7 +239,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    Text(
+                    /*Text(
                       'You already have an account? sign in',
                       style: TextStyle(
                         fontFamily: 'Montserrat',
@@ -229,7 +249,37 @@ class _SignUpPageState extends State<SignUpPage> {
                         height: 1.2,
                         color: Color.fromARGB(255, 16, 51, 105),
                       ),
-                    ),
+                    ),*/
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                        );
+                      },
+                      child: Text.rich(
+                        TextSpan(
+                          text: 'You already have an account? ',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15,
+                            height: 1.2,
+                            color: Color.fromARGB(255, 16, 51, 105),
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Sign in',
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
