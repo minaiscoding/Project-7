@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'Home.dart';
 import 'SignIn.dart';
 
@@ -26,15 +27,11 @@ class _SignUpPageState extends State<SignUpPage> {
             color: Colors.white,
           ),
           Container(
-            height: 250,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.only(
-                bottomLeft:
-                    Radius.circular(MediaQuery.of(context).size.width * 2),
-                bottomRight:
-                    Radius.circular(MediaQuery.of(context).size.width * 2),
+            height: 350,
+            child: ClipPath(
+              clipper: MyClipper(),
+              child: Container(
+                color: Color(0xFF4675C0),
               ),
             ),
           ),
@@ -56,7 +53,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           Positioned(
-            left: 95,
+            left: MediaQuery.of(context).size.width * 0.2,
             top: 72,
             child: Text(
               'Sign Up',
@@ -64,9 +61,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 fontFamily: 'Montserrat',
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.w700,
-                fontSize: 61,
+                fontSize: 45,
                 color: Colors.white,
-                height: 1,
+                height: 1.2,
               ),
             ),
           ),
@@ -90,7 +87,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                  top: 60,
+                  top: 50,
                   left: 30,
                   right: 30,
                 ),
@@ -105,7 +102,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w600,
-                          fontSize: 18,
+                          fontSize: 16,
                           color: Color(0xFF9FA5C0),
                         ),
                         enabledBorder: UnderlineInputBorder(
@@ -121,8 +118,11 @@ class _SignUpPageState extends State<SignUpPage> {
                             Icon(Icons.person, color: Color(0xFF989898)),
                         // Set the color of the text entered in the TextField
                         // to blue (you can replace blue with any color of your choice)
-                        labelStyle: TextStyle(color: Colors.blue),
+                        labelStyle: TextStyle(color: Color(0xFF4675C0)),
                       ),
+                    ),
+                    SizedBox(
+                      height: 30,
                     ),
                     TextField(
                       keyboardType: TextInputType.phone,
@@ -133,7 +133,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w600,
-                          fontSize: 18,
+                          fontSize: 16,
                           color: Color(0xFF9FA5C0),
                         ),
                         enabledBorder: UnderlineInputBorder(
@@ -147,7 +147,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         prefixIcon: Icon(Icons.phone, color: Color(0xFF989898)),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 30),
                     TextField(
                       controller: _passwordController,
                       obscureText: true,
@@ -157,7 +157,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w600,
-                          fontSize: 18,
+                          fontSize: 16,
                           color: Color(0xFF9FA5C0),
                         ),
                         enabledBorder: UnderlineInputBorder(
@@ -171,7 +171,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         prefixIcon: Icon(Icons.lock, color: Color(0xFF989898)),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 30),
                     TextField(
                       controller: _confirmpasswordController,
                       decoration: InputDecoration(
@@ -180,7 +180,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w600,
-                          fontSize: 18,
+                          fontSize: 16,
                           color: Color(0xFF9FA5C0),
                         ),
                         enabledBorder: UnderlineInputBorder(
@@ -201,7 +201,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           Positioned(
             width: 157,
-            height: 75,
+            height: 60,
             left: 117,
             top: 537,
             child: ElevatedButton(
@@ -216,8 +216,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     fontFamily: 'Montserrat',
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w700,
-                    fontSize: 28,
-                    height: 1.2,
+                    fontSize: 20,
+                    height: 1,
                     color: Colors.white,
                   ),
                 ),
@@ -232,8 +232,60 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
           ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: CustomPaint(
+              size: Size(MediaQuery.of(context).size.width, 300),
+              painter: WavePainter(),
+            ),
+          ),
         ],
       ),
     );
   }
+}
+
+class MyClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path()
+      ..lineTo(0, size.height * 0.5)
+      ..quadraticBezierTo(
+        size.width * 0.5,
+        size.height,
+        size.width,
+        size.height * 0.5,
+      )
+      ..lineTo(size.width, 0)
+      ..close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
+class WavePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Color(0xFF4675C0)
+      ..style = PaintingStyle.fill;
+    final path = Path()
+      ..moveTo(0, size.height * 0.6)
+      ..quadraticBezierTo(
+          size.width / 4, size.height * 0.8, size.width / 2, size.height * 0.6)
+      ..quadraticBezierTo(
+          size.width * 3 / 4, size.height * 0.4, size.width, size.height * 0.6)
+      ..lineTo(size.width, size.height)
+      ..lineTo(0, size.height)
+      ..close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(WavePainter oldDelegate) => false;
 }
