@@ -63,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     TextField(
+                      keyboardType: TextInputType.phone,
                       controller: _phoneNumberController,
                       decoration: InputDecoration(
                         hintText: '0000000000',
