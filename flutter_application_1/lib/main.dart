@@ -7,6 +7,5 @@ import 'SignUp.dart';
 void main() => runApp(MaterialApp(
     debugShowCheckedModeBanner: false, //removes debugger banner from App
     title: 'Fluid',
-    theme: ThemeData(
-        fontFamily: 'Montserrat'), //set the font for the app to Aquire
+    theme: ThemeData(fontFamily: 'Montserrat'),
     home: SignUpPage()));

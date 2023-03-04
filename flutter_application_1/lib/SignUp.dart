@@ -17,9 +17,27 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF4675C0),
+      backgroundColor: Colors.grey, //Color(0xFF4675C0),
       body: Stack(
         children: [
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.white,
+          ),
+          Container(
+            height: 250,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.only(
+                bottomLeft:
+                    Radius.circular(MediaQuery.of(context).size.width * 2),
+                bottomRight:
+                    Radius.circular(MediaQuery.of(context).size.width * 2),
+              ),
+            ),
+          ),
           Positioned(
             //left: MediaQuery.of(context).size.width * 0.0709,
             right: MediaQuery.of(context).size.width * 0.86,
@@ -53,16 +71,22 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           Positioned(
-            right: 0,
-            top: 180,
+            left: 52,
+            top: 167,
             child: Container(
-              width: 392,
-              height: 650,
+              width: 288,
+              height: 407,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(70),
-                ),
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0xFF4675C0),
+                    blurRadius: 20,
+                    spreadRadius: 0,
+                    offset: Offset(0, 0),
+                  ),
+                ],
               ),
               child: Padding(
                 padding: EdgeInsets.only(
@@ -73,21 +97,10 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      'Full name',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
-                        height: 1.2,
-                        color: Color(0xFF4675C0),
-                      ),
-                    ),
                     TextField(
                       controller: _fullnameController,
                       decoration: InputDecoration(
-                        hintText: 'Mohammad Djabed',
+                        hintText: 'Full name',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.normal,
@@ -97,29 +110,18 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(color: Color(0xFF4675C0), width: 2),
+                              BorderSide(color: Color(0xFF4675C0), width: 1),
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
                               color: Color.fromARGB(255, 77, 129, 211),
                               width: 2),
                         ),
-                        prefixIcon: Icon(Icons.face, color: Color(0xFF4675C0)),
+                        prefixIcon:
+                            Icon(Icons.person, color: Color(0xFF989898)),
                         // Set the color of the text entered in the TextField
                         // to blue (you can replace blue with any color of your choice)
                         labelStyle: TextStyle(color: Colors.blue),
-                      ),
-                    ),
-                    SizedBox(height: 30),
-                    Text(
-                      'Phone number',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
-                        height: 1.2,
-                        color: Color(0xFF4675C0),
                       ),
                     ),
                     TextField(
@@ -136,27 +138,16 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(color: Color(0xFF4675C0), width: 2),
+                              BorderSide(color: Color(0xFF4675C0), width: 1),
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(color: Color(0xFF4675C0), width: 2),
+                              BorderSide(color: Color(0xFF4675C0), width: 1),
                         ),
-                        prefixIcon: Icon(Icons.phone, color: Color(0xFF4675C0)),
+                        prefixIcon: Icon(Icons.phone, color: Color(0xFF989898)),
                       ),
                     ),
-                    SizedBox(height: 30),
-                    Text(
-                      'Password',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
-                        height: 1.2,
-                        color: Color(0xFF4675C0),
-                      ),
-                    ),
+                    SizedBox(height: 10),
                     TextField(
                       controller: _passwordController,
                       obscureText: true,
@@ -171,27 +162,16 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(color: Color(0xFF4675C0), width: 2),
+                              BorderSide(color: Color(0xFF4675C0), width: 1),
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(color: Color(0xFF4675C0), width: 2),
+                              BorderSide(color: Color(0xFF4675C0), width: 1),
                         ),
-                        prefixIcon: Icon(Icons.lock, color: Color(0xFF4675C0)),
+                        prefixIcon: Icon(Icons.lock, color: Color(0xFF989898)),
                       ),
                     ),
-                    SizedBox(height: 50),
-                    Text(
-                      'Confirm Password',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
-                        height: 1.2,
-                        color: Color(0xFF4675C0),
-                      ),
-                    ),
+                    SizedBox(height: 10),
                     TextField(
                       controller: _confirmpasswordController,
                       decoration: InputDecoration(
@@ -205,84 +185,50 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(color: Color(0xFF4675C0), width: 2),
+                              BorderSide(color: Color(0xFF4675C0), width: 1),
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(color: Color(0xFF4675C0), width: 2),
+                              BorderSide(color: Color(0xFF4675C0), width: 1),
                         ),
-                        prefixIcon: Icon(Icons.lock, color: Color(0xFF4675C0)),
+                        prefixIcon: Icon(Icons.lock, color: Color(0xFF989898)),
                       ),
                     ),
-                    SizedBox(height: 30),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          'Sign Up',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF4675C0),
-                        shadowColor: Color(0xFF1A2A3A),
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    /*Text(
-                      'You already have an account? sign in',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15,
-                        height: 1.2,
-                        color: Color.fromARGB(255, 16, 51, 105),
-                      ),
-                    ),*/
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
-                        );
-                      },
-                      child: Text.rich(
-                        TextSpan(
-                          text: 'You already have an account? ',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15,
-                            height: 1.2,
-                            color: Color.fromARGB(255, 16, 51, 105),
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Sign in',
-                              style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                color: Colors.blue,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
                   ],
                 ),
+              ),
+            ),
+          ),
+          Positioned(
+            width: 157,
+            height: 75,
+            left: 117,
+            top: 537,
+            child: ElevatedButton(
+              onPressed: () {},
+              child: Container(
+                width: 112,
+                height: 34,
+                alignment: Alignment.center,
+                child: Text(
+                  'Sign Up',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 28,
+                    height: 1.2,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFF4675C0),
+                elevation: 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                shadowColor: Color(0xFF4675C0),
               ),
             ),
           ),
