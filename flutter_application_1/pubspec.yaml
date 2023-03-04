@@ -80,6 +80,12 @@ flutter:
         - asset: fonts/Aquire-BW0ox.otf
         - asset: fonts/AquireBold-8Ma60.otf
           weight: 500
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat-Black.ttf
+        - asset: fonts/Montserrat-Bold.ttf
+        - asset: fonts/Montserrat-Medium.ttf
+          weight: 500
  
   
   # For details regarding fonts from package dependencies,
