@@ -18,13 +18,13 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey, //Color(0xFF4675C0),
+      backgroundColor: Colors.white, //Color(0xFF4675C0),
       body: Stack(
         children: [
           Container(
             height: double.infinity,
             width: double.infinity,
-            color: Colors.white,
+            color: Colors.transparent,
           ),
           Container(
             height: 350,
@@ -233,7 +233,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           Positioned(
-            bottom: 0,
+            top: MediaQuery.of(context).size.height - 300,
             left: 0,
             right: 0,
             child: CustomPaint(
@@ -241,6 +241,39 @@ class _SignUpPageState extends State<SignUpPage> {
               painter: WavePainter(),
             ),
           ),
+          Positioned(
+            top: 620,
+            left: 46,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
+              child: Text.rich(
+                TextSpan(
+                  text: 'You already have an account? ',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    height: 1.2,
+                    color: Color(0xFF989898),
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: 'Sign in',
+                      style: TextStyle(
+                        color: Color(0xff4675C0),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );

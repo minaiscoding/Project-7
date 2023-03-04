@@ -8,4 +8,4 @@ void main() => runApp(MaterialApp(
     debugShowCheckedModeBanner: false, //removes debugger banner from App
     title: 'Fluid',
     theme: ThemeData(fontFamily: 'Montserrat'),
-    home: SignUpPage()));
+    home: LoginPage()));
