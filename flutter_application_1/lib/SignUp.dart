@@ -18,7 +18,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, //Color(0xFF4675C0),
+      backgroundColor: Colors.white, //Color(0xFF789CD2),
       body: Stack(
         children: [
           Container(
@@ -31,7 +31,7 @@ class _SignUpPageState extends State<SignUpPage> {
             child: ClipPath(
               clipper: MyClipper(),
               child: Container(
-                color: Color(0xFF4675C0),
+                color: Color(0xFF789CD2),
               ),
             ),
           ),
@@ -69,7 +69,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           Positioned(
             left: 52,
-            top: 167,
+            top: 190,
             child: Container(
               width: 288,
               height: 407,
@@ -78,7 +78,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
-                    color: Color(0xFF4675C0),
+                    color: Color(0xFF789CD2),
                     blurRadius: 20,
                     spreadRadius: 0,
                     offset: Offset(0, 0),
@@ -101,24 +101,21 @@ class _SignUpPageState extends State<SignUpPage> {
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w400,
                           fontSize: 16,
                           color: Color(0xFF9FA5C0),
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(color: Color(0xFF4675C0), width: 1),
+                              BorderSide(color: Color(0xFF789CD2), width: 1),
                         ),
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(255, 77, 129, 211),
-                              width: 2),
+                          borderSide:
+                              BorderSide(color: Color(0xFF789CD2), width: 2),
                         ),
                         prefixIcon:
                             Icon(Icons.person, color: Color(0xFF989898)),
-                        // Set the color of the text entered in the TextField
-                        // to blue (you can replace blue with any color of your choice)
-                        labelStyle: TextStyle(color: Color(0xFF4675C0)),
+                        labelStyle: TextStyle(color: Color(0xFF789CD2)),
                       ),
                     ),
                     SizedBox(
@@ -132,17 +129,17 @@ class _SignUpPageState extends State<SignUpPage> {
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w400,
                           fontSize: 16,
                           color: Color(0xFF9FA5C0),
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(color: Color(0xFF4675C0), width: 1),
+                              BorderSide(color: Color(0xFF789CD2), width: 1),
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(color: Color(0xFF4675C0), width: 1),
+                              BorderSide(color: Color(0xFF789CD2), width: 1),
                         ),
                         prefixIcon: Icon(Icons.phone, color: Color(0xFF989898)),
                       ),
@@ -156,17 +153,17 @@ class _SignUpPageState extends State<SignUpPage> {
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w400,
                           fontSize: 16,
                           color: Color(0xFF9FA5C0),
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(color: Color(0xFF4675C0), width: 1),
+                              BorderSide(color: Color(0xFF789CD2), width: 1),
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(color: Color(0xFF4675C0), width: 1),
+                              BorderSide(color: Color(0xFF789CD2), width: 1),
                         ),
                         prefixIcon: Icon(Icons.lock, color: Color(0xFF989898)),
                       ),
@@ -179,17 +176,17 @@ class _SignUpPageState extends State<SignUpPage> {
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w400,
                           fontSize: 16,
                           color: Color(0xFF9FA5C0),
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(color: Color(0xFF4675C0), width: 1),
+                              BorderSide(color: Color(0xFF789CD2), width: 1),
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(color: Color(0xFF4675C0), width: 1),
+                              BorderSide(color: Color(0xFF789CD2), width: 1),
                         ),
                         prefixIcon: Icon(Icons.lock, color: Color(0xFF989898)),
                       ),
@@ -203,7 +200,7 @@ class _SignUpPageState extends State<SignUpPage> {
             width: 157,
             height: 60,
             left: 117,
-            top: 537,
+            top: 567,
             child: ElevatedButton(
               onPressed: () {},
               child: Container(
@@ -223,26 +220,26 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFF4675C0),
+                primary: Color(0xFF789CD2),
                 elevation: 8,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
-                shadowColor: Color(0xFF4675C0),
+                shadowColor: Color(0xFF789CD2),
               ),
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height - 300,
+            top: MediaQuery.of(context).size.height - 250,
             left: 0,
             right: 0,
             child: CustomPaint(
-              size: Size(MediaQuery.of(context).size.width, 300),
+              size: Size(MediaQuery.of(context).size.width, 250),
               painter: WavePainter(),
             ),
           ),
           Positioned(
-            top: 620,
+            top: 650,
             left: 46,
             child: GestureDetector(
               onTap: () {
@@ -257,7 +254,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w400,
                     fontSize: 16,
                     height: 1.2,
                     color: Color(0xFF989898),
@@ -266,7 +263,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     TextSpan(
                       text: 'Sign in',
                       style: TextStyle(
-                        color: Color(0xff4675C0),
+                        color: Color(0xff789CD2),
                       ),
                     ),
                   ],
@@ -304,7 +301,7 @@ class WavePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Color(0xFF4675C0)
+      ..color = Color(0xFF789CD2)
       ..style = PaintingStyle.fill;
     final path = Path()
       ..moveTo(0, size.height * 0.6)
