@@ -71,6 +71,7 @@ class Home extends StatelessWidget {
                 textAlign: TextAlign.center,
                 softWrap: true,
                 style: TextStyle(
+                  fontFamily: 'aquire',
                   fontSize: 25,
                 ),
               ),
@@ -84,7 +85,7 @@ class Home extends StatelessWidget {
                   // Color.fromARGB(255, 60, 87, 207).withOpacity(0.2),
                   Color.fromARGB(255, 9, 41, 105).withOpacity(0.5),
                 ],
-                durations: [4000, 5000, 7000],
+                durations: [5000, 6000, 8000],
                 //durations of animations for each colors,
                 // make numbers equal to numbers of colors
                 heightPercentages: [0.75, 0.77, 0.85],
