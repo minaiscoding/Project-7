@@ -201,7 +201,7 @@ class _LoginPageState extends State<LoginPage> {
               },
               child: Text.rich(
                 TextSpan(
-                  text: 'You don\'t have an account? ',
+                  text: 'Don\'t have an account? ',
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontStyle: FontStyle.normal,

@@ -253,11 +253,11 @@ class _SignUpPageState extends State<SignUpPage> {
               },
               child: Text.rich(
                 TextSpan(
-                  text: 'You already have an account? ',
+                  text: 'Already have an account? ',
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                     fontSize: 16,
                     height: 1.2,
                     color: Color(0xFF989898),
