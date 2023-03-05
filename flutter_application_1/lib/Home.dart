@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart'; //imports dart
 import 'package:hexcolor/hexcolor.dart';
-<<<<<<< HEAD
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 import 'package:drop_shadow_image/drop_shadow_image.dart';
-=======
->>>>>>> 7ce17a28075465f4549d26f7dc5979fc89f569a8
 
 class Home extends StatelessWidget {
   @override //redefinition of the build widget
@@ -23,7 +20,6 @@ class Home extends StatelessWidget {
             Positioned(
               width: 439.08,
               height: 312,
-<<<<<<< HEAD
               top: 104,
               left: -25,
               child: DropShadowImage(
@@ -36,16 +32,10 @@ class Home extends StatelessWidget {
                 //@scale if not defined default value is 1
                 // scale: 1.05,
               ),
-=======
-              top: 68,
-              left: -25,
-              child: Image.asset('assets/logo (1).png'),
->>>>>>> 7ce17a28075465f4549d26f7dc5979fc89f569a8
             ),
             Positioned(
               width: 111,
               height: 36,
-<<<<<<< HEAD
               top: 280,
               left: 142,
               child: RichText(
@@ -73,19 +63,6 @@ class Home extends StatelessWidget {
             ),
             Positioned(
               top: 376,
-=======
-              top: 244,
-              left: 142,
-              child: Text('FLUID',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xff1a2a3a),
-                    fontSize: 37,
-                  )),
-            ),
-            Positioned(
-              top: 340,
->>>>>>> 7ce17a28075465f4549d26f7dc5979fc89f569a8
               right: 53,
               width: 275,
               height: 72,
@@ -98,7 +75,6 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-<<<<<<< HEAD
             WaveWidget(
               //user Stack() widget to overlap content and waves
               config: CustomConfig(
@@ -121,17 +97,6 @@ class Home extends StatelessWidget {
               size: Size(
                 double.infinity,
                 double.infinity,
-=======
-            Container(
-              child: Positioned(
-                  bottom: 0, left: 0, child: Image.asset('assets/ripple1.png')),
-            ),
-            Container(
-              child: Positioned(
-                bottom: 0,
-                left: 0,
-                child: Image.asset('assets/ripple2.png'),
->>>>>>> 7ce17a28075465f4549d26f7dc5979fc89f569a8
               ),
             ),
           ],
