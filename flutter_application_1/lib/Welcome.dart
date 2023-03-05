@@ -1,0 +1,110 @@
+import 'package:flutter/material.dart'; //imports dart
+import 'package:hexcolor/hexcolor.dart';
+import 'package:wave/config.dart';
+import 'package:wave/wave.dart';
+import 'package:drop_shadow_image/drop_shadow_image.dart';
+
+class Welcome extends StatelessWidget {
+  @override //redefinition of the build widget
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xfff5fdff), Color(0xff4675C0)])),
+      child: Scaffold(
+        backgroundColor: Color.fromRGBO(0, 0, 0, 0),
+        body: Stack(
+          children: <Widget>[
+            Positioned(
+              width: 656,
+              height: 426.36,
+              top: 34,
+              left: -135,
+              child: Image.asset('assets/logo (2).png'),
+            ),
+            Positioned(
+              top: 427,
+              left: 101,
+              child: Text(
+                textAlign: TextAlign.center,
+                'WELCOME',
+                style: TextStyle(
+                  color: Color(0xff1A2A3A),
+                  fontFamily: 'aquire',
+                  fontSize: 36,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Positioned(
+                width: 246,
+                height: 52,
+                left: 72,
+                top: 592,
+                child: DecoratedBox(
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xffFFFFFF),
+                            Color(0xffC7DEFF),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                              color: Color(0xff65A0FF), //shadow for button
+                              blurRadius: 5) //blur radius of shadow
+                        ]),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.transparent,
+                          onSurface: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                        ),
+                        onPressed: () {},
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: 5,
+                            bottom: 5,
+                          ),
+                          child: Text(
+                            "Sign in",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 22.88,
+                              color: Color(0xff1A2A3A),
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        )))),
+            Positioned(
+              width: 219,
+              height: 22,
+              top: 697,
+              left: 86,
+              child: Text("Don't have an account ?",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Color(0xff1A2A3A),
+                  )),
+            ),
+            Positioned(
+              top: 733,
+              left: 155,
+              child: Text("Sign up",
+                  style: TextStyle(
+                    color: Color(0xff1A2A3A),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                  )),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
