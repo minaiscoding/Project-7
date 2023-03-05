@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart'; //imports dart
 import 'package:hexcolor/hexcolor.dart';
+import 'package:wave/config.dart';
+import 'package:wave/wave.dart';
+import 'package:drop_shadow_image/drop_shadow_image.dart';
 
 class Home extends StatelessWidget {
   @override //redefinition of the build widget
