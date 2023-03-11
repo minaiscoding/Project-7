@@ -7,6 +7,7 @@ import 'SignIn.dart';
 import 'SignUp.dart';
 import 'Welcome.dart';
 import 'Preview.dart';
+import 'history.dart';
 
 class PageViewDemo extends StatefulWidget {
   const PageViewDemo({Key? key}) : super(key: key);
@@ -64,8 +65,7 @@ void main() {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      home: Menu(),
+      home: HistoryPage(),
     ),
   );
 }
-
