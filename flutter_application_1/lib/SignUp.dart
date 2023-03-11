@@ -1,3 +1,4 @@
+import 'package:fluid/main.dart';
 import 'package:flutter/material.dart';
 
 import 'Home.dart';
@@ -42,8 +43,8 @@ class _SignUpPageState extends State<SignUpPage> {
             // bottom: MediaQuery.of(context).size.height * 0.90,
             child: InkWell(
               onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Home()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PageViewDemo()));
               },
               child: Icon(
                 Icons.arrow_back,

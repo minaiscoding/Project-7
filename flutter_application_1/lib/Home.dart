@@ -3,10 +3,17 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 import 'package:drop_shadow_image/drop_shadow_image.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'Welcome.dart';
+import 'Preview.dart';
 
 class Home extends StatelessWidget {
+  const Home({Key? key}) : super(key: key);
   @override //redefinition of the build widget
   Widget build(BuildContext context) {
+    int _activePage = 0;
+    final PageController _pageController = PageController(initialPage: 0);
+    final List<Widget> _pages = [Home(), Preview(), Welcome()];
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -25,12 +32,8 @@ class Home extends StatelessWidget {
               child: DropShadowImage(
                 image: Image.asset('assets/logo (1).png'),
                 borderRadius: 15,
-                //@blurRadius if not defined default value is
-                blurRadius: 25,
-                //@offset default value is Offset(8,8)
-                //offset: Offset(5, 5),
-                //@scale if not defined default value is 1
-                // scale: 1.05,
+                offset: Offset(0, 4.10895),
+                blurRadius: 13.655,
               ),
             ),
             Positioned(
@@ -85,7 +88,7 @@ class Home extends StatelessWidget {
                   // Color.fromARGB(255, 60, 87, 207).withOpacity(0.2),
                   Color.fromARGB(255, 9, 41, 105).withOpacity(0.5),
                 ],
-                durations: [5000, 6000, 8000],
+                durations: [6500, 7500, 9500],
                 //durations of animations for each colors,
                 // make numbers equal to numbers of colors
                 heightPercentages: [0.75, 0.77, 0.85],
