@@ -1,18 +1,36 @@
+
+import 'package:fluid/SignIn.dart';
+
 import 'package:flutter/material.dart'; //imports dart
 import 'package:hexcolor/hexcolor.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 import 'package:drop_shadow_image/drop_shadow_image.dart';
 
+import 'SignUp.dart';
+
 class Welcome extends StatelessWidget {
+  const Welcome({Key? key}) : super(key: key);
+
   @override //redefinition of the build widget
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Color(0xfff5fdff), Color(0xff4675C0)])),
+
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFFF5FDFF),
+            Color(0xFF4675C0),
+          ],
+          stops: [
+            0.0185,
+            1.3432,
+          ],
+        ),
+      ),
+
       child: Scaffold(
         backgroundColor: Color.fromRGBO(0, 0, 0, 0),
         body: Stack(
@@ -64,8 +82,19 @@ class Welcome extends StatelessWidget {
                           primary: Colors.transparent,
                           onSurface: Colors.transparent,
                           shadowColor: Colors.transparent,
+                          elevation: 8,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
+                          );
+                        },
+
                         child: Padding(
                           padding: EdgeInsets.only(
                             top: 5,
@@ -85,9 +114,12 @@ class Welcome extends StatelessWidget {
               width: 219,
               height: 22,
               top: 697,
-              left: 86,
+
+              left: 92,
               child: Text("Don't have an account ?",
                   style: TextStyle(
+                    fontFamily: 'Montserrat',
+
                     fontSize: 18,
                     color: Color(0xff1A2A3A),
                   )),
@@ -95,12 +127,23 @@ class Welcome extends StatelessWidget {
             Positioned(
               top: 733,
               left: 155,
-              child: Text("Sign up",
-                  style: TextStyle(
-                    color: Color(0xff1A2A3A),
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                  )),
+
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignUpPage()),
+                  );
+                },
+                child: Positioned(
+                  child: Text("Sign up",
+                      style: TextStyle(
+                        color: Color(0xff1A2A3A),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      )),
+                ),
+              ),
             ),
           ],
         ),
