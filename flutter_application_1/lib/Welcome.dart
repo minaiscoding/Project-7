@@ -1,4 +1,3 @@
-
 import 'package:fluid/SignIn.dart';
 
 import 'package:flutter/material.dart'; //imports dart
@@ -16,7 +15,6 @@ class Welcome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -30,7 +28,6 @@ class Welcome extends StatelessWidget {
           ],
         ),
       ),
-
       child: Scaffold(
         backgroundColor: Color.fromRGBO(0, 0, 0, 0),
         body: Stack(
@@ -94,7 +91,6 @@ class Welcome extends StatelessWidget {
                                 builder: (context) => LoginPage()),
                           );
                         },
-
                         child: Padding(
                           padding: EdgeInsets.only(
                             top: 5,
@@ -114,12 +110,10 @@ class Welcome extends StatelessWidget {
               width: 219,
               height: 22,
               top: 697,
-
               left: 92,
               child: Text("Don't have an account ?",
                   style: TextStyle(
                     fontFamily: 'Montserrat',
-
                     fontSize: 18,
                     color: Color(0xff1A2A3A),
                   )),
@@ -127,7 +121,6 @@ class Welcome extends StatelessWidget {
             Positioned(
               top: 733,
               left: 155,
-
               child: GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -140,7 +133,7 @@ class Welcome extends StatelessWidget {
                       style: TextStyle(
                         color: Color(0xff1A2A3A),
                         fontSize: 20,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w800,
                       )),
                 ),
               ),
