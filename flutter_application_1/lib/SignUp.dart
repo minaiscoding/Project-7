@@ -231,12 +231,21 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           Positioned(
+            top: MediaQuery.of(context).size.height - 200,
+            left: 0,
+            right: 0,
+            child: CustomPaint(
+              size: Size(MediaQuery.of(context).size.width, 200),
+              painter: WavePainter(),
+            ),
+          ),
+          Positioned(
             top: MediaQuery.of(context).size.height - 250,
             left: 0,
             right: 0,
             child: CustomPaint(
               size: Size(MediaQuery.of(context).size.width, 250),
-              painter: WavePainter(),
+              painter: CustomWavePainter(),
             ),
           ),
           Positioned(
@@ -302,14 +311,14 @@ class WavePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Color(0xFF789CD2)
+      ..color = Color.fromRGBO(120, 156, 210, 0.5)
       ..style = PaintingStyle.fill;
     final path = Path()
-      ..moveTo(0, size.height * 0.6)
+      ..moveTo(0, size.height * 0.7)
       ..quadraticBezierTo(
-          size.width / 4, size.height * 0.8, size.width / 2, size.height * 0.6)
+          size.width / 5, size.height * 0.9, size.width / 2, size.height * 0.6)
       ..quadraticBezierTo(
-          size.width * 3 / 4, size.height * 0.4, size.width, size.height * 0.6)
+          size.width * 3 / 4, size.height * 0.3, size.width, size.height * 0.4)
       ..lineTo(size.width, size.height)
       ..lineTo(0, size.height)
       ..close();
@@ -319,4 +328,27 @@ class WavePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(WavePainter oldDelegate) => false;
+}
+
+class CustomWavePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Color.fromRGBO(120, 156, 210, 0.69)
+      ..style = PaintingStyle.fill;
+    final path = Path()
+      ..moveTo(size.width, size.height * 0.7)
+      ..quadraticBezierTo(size.width * 3 / 4, size.height * 0.8, size.width / 2,
+          size.height * 0.6)
+      ..quadraticBezierTo(
+          size.width / 4, size.height * 0.4, 0, size.height * 0.6)
+      ..lineTo(0, size.height)
+      ..lineTo(size.width, size.height)
+      ..close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomWavePainter oldDelegate) => false;
 }
