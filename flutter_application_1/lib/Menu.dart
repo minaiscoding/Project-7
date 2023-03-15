@@ -5,7 +5,7 @@ import 'package:wave/wave.dart';
 import 'package:drop_shadow_image/drop_shadow_image.dart';
 
 class Menu extends StatelessWidget {
-  @override //redefinition of the build widget
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(

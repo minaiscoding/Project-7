@@ -3,7 +3,6 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 import 'package:drop_shadow_image/drop_shadow_image.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'Welcome.dart';
 import 'Preview.dart';
 
@@ -11,9 +10,6 @@ class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
   @override //redefinition of the build widget
   Widget build(BuildContext context) {
-    int _activePage = 0;
-    final PageController _pageController = PageController(initialPage: 0);
-    final List<Widget> _pages = [Home(), Preview(), Welcome()];
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(

@@ -62,7 +62,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 fontFamily: 'Montserrat',
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.w700,
-                fontSize: 45,
+                fontSize: 60.16,
                 color: Colors.white,
                 height: 1.2,
               ),
@@ -126,7 +126,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       keyboardType: TextInputType.phone,
                       controller: _phoneNumberController,
                       decoration: InputDecoration(
-                        hintText: '0000000000',
+                        hintText: 'Phone number',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.normal,
@@ -150,7 +150,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       controller: _passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
-                        hintText: '*********',
+                        hintText: 'Password',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.normal,
@@ -173,7 +173,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     TextField(
                       controller: _confirmpasswordController,
                       decoration: InputDecoration(
-                        hintText: '*********',
+                        hintText: 'Confirm password',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.normal,
@@ -241,7 +241,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           Positioned(
             top: 650,
-            left: 46,
+            left: 72,
             child: GestureDetector(
               onTap: () {
                 Navigator.push(

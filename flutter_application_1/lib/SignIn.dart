@@ -1,6 +1,5 @@
 import 'package:fluid/main.dart';
 import 'package:flutter/material.dart';
-
 import 'Home.dart';
 import 'SignUp.dart';
 
@@ -62,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                 fontFamily: 'Montserrat',
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.w700,
-                fontSize: 45,
+                fontSize: 60.16,
                 color: Colors.white,
                 height: 1.2,
               ),
@@ -70,10 +69,10 @@ class _LoginPageState extends State<LoginPage> {
           ),
           Positioned(
             left: 52,
-            bottom: 320,
+            top: 167,
             child: Container(
               width: 288,
-              height: 288,
+              height: 280,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
@@ -152,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
             width: 157,
             height: 60,
             left: 117,
-            top: 470,
+            top: 410,
             child: ElevatedButton(
               onPressed: () {},
               child: Container(
@@ -191,8 +190,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           Positioned(
-            top: 570,
-            left: 46,
+            top: 552,
+            left: 72,
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
