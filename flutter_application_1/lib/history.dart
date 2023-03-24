@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:async';
 import 'Home.dart';
 import 'dart:ui';
 
@@ -10,6 +13,40 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   bool _isLevelSelected = true;
   bool _isMenuOpen = false;
+  double _waterLevel = 0;
+
+  Future<double> _getWaterLevel() async {
+    final response =
+        await http.get(Uri.parse('http://192.168.1.4:5000/water-level'));
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final waterLevel = data['water_level'];
+      return waterLevel;
+    } else {
+      throw Exception('Failed to load water level');
+    }
+  }
+
+  void _startTimer() {
+    Timer.periodic(Duration(seconds: 5), (timer) async {
+      try {
+        final waterLevel = await _getWaterLevel();
+        setState(() {
+          _waterLevel = waterLevel;
+        });
+        print('Water level: $_waterLevel');
+      } catch (e) {
+        print(e);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
 
   void _selectLevel() {
     setState(() {
@@ -211,8 +248,9 @@ class _HistoryPageState extends State<HistoryPage> {
                         bottomRight: Radius.circular(20),
                       ),
                     ),
-                    child:
-                        _isLevelSelected ? _buildLevel() : _buildTemperature(),
+                    child: _isLevelSelected
+                        ? _buildLevel(_waterLevel)
+                        : _buildTemperature(),
                   ),
                 ],
               ),
@@ -316,11 +354,11 @@ class _HistoryPageState extends State<HistoryPage> {
     );
   }
 
-  Widget _buildLevel() {
+  Widget _buildLevel(double waterLevel) {
     return Container(
       child: Center(
         child: Text(
-          'Level Graph',
+          'water level: ${waterLevel.toStringAsFixed(2)}',
           style: TextStyle(fontSize: 24),
         ),
       ),
