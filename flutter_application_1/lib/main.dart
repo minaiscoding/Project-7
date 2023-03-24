@@ -66,7 +66,7 @@ void main() {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      home: LoginPage(),
+      home: HistoryPage(),
     ),
   );
 }
