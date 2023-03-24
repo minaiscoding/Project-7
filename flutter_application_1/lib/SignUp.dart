@@ -12,6 +12,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _fullnameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _tankNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmpasswordController =
       TextEditingController();
@@ -70,10 +71,10 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           Positioned(
             left: 52,
-            top: 190,
+            top: 160,
             child: Container(
               width: 288,
-              height: 407,
+              height: 460,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
@@ -88,7 +89,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                  top: 50,
+                  top: 30,
                   left: 30,
                   right: 30,
                 ),
@@ -117,6 +118,32 @@ class _SignUpPageState extends State<SignUpPage> {
                         prefixIcon:
                             Icon(Icons.person, color: Color(0xFF989898)),
                         labelStyle: TextStyle(color: Color(0xFF789CD2)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    TextField(
+                      keyboardType: TextInputType.phone,
+                      controller: _tankNumberController,
+                      decoration: InputDecoration(
+                        hintText: 'tank number',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          color: Color(0xFF9FA5C0),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFF789CD2), width: 1),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFF789CD2), width: 1),
+                        ),
+                        prefixIcon: Icon(Icons.water, color: Color(0xFF989898)),
                       ),
                     ),
                     SizedBox(
@@ -201,7 +228,7 @@ class _SignUpPageState extends State<SignUpPage> {
             width: 157,
             height: 60,
             left: 117,
-            top: 567,
+            top: 585,
             child: ElevatedButton(
               onPressed: () {},
               child: Container(
@@ -249,7 +276,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           Positioned(
-            top: 650,
+            top: 670,
             left: 72,
             child: GestureDetector(
               onTap: () {

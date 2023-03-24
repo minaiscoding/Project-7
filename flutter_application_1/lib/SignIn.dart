@@ -9,8 +9,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _fullnameController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _tankNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmpasswordController =
       TextEditingController();
@@ -96,9 +95,9 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     TextField(
                       keyboardType: TextInputType.phone,
-                      controller: _phoneNumberController,
+                      controller: _tankNumberController,
                       decoration: InputDecoration(
-                        hintText: 'Phone number',
+                        hintText: 'tank number',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.normal,
@@ -114,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderSide:
                               BorderSide(color: Color(0xFF789CD2), width: 1),
                         ),
-                        prefixIcon: Icon(Icons.phone, color: Color(0xFF989898)),
+                        prefixIcon: Icon(Icons.water, color: Color(0xFF989898)),
                       ),
                     ),
                     SizedBox(height: 40),
