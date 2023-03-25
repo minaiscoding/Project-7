@@ -29,6 +29,16 @@ class _HistoryPageState extends State<HistoryPage> {
     }
   }
 
+  void triggerNotification(double waterLevel) {
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+      id: 10, // -1 is replaced by a random number
+      channelKey: 'alerts',
+      title: 'Your tank is getting empty !',
+      body: "You only have ${waterLevel}% left in your tank",
+    ));
+  }
+
   void _startTimer() {
     Timer.periodic(Duration(seconds: 5), (timer) async {
       try {
@@ -37,6 +47,7 @@ class _HistoryPageState extends State<HistoryPage> {
           _waterLevel = waterLevel;
         });
         print('Water level: $_waterLevel');
+        triggerNotification(_waterLevel);
       } catch (e) {
         print(e);
       }
