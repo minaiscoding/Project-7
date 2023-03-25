@@ -63,7 +63,7 @@ class _PageViewDemoState extends State<PageViewDemo> {
 
 void main() {
   AwesomeNotifications().initialize(
-      'resource://drawable/res_app_icon',
+      null, //'resource://drawable/res_app_icon',
       [
         NotificationChannel(
             channelKey: 'alerts',
