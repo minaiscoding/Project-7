@@ -2,6 +2,8 @@ import 'package:fluid/main.dart';
 import 'package:flutter/material.dart';
 import 'Home.dart';
 import 'SignUp.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,6 +15,33 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmpasswordController =
       TextEditingController();
+  Future<void> _signIn() async {
+    final tankNumber = _tankNumberController.text.trim();
+    final password = _passwordController.text.trim();
+    final body = jsonEncode({'tankNumber': tankNumber, 'password': password});
+    final response = await http.post(Uri.parse("http://localhost:5000/signin"),
+        headers: {'Content-Type': 'application/json'}, body: body);
+
+    if (response.statusCode == 200) {
+      // Authentication successful, navigate to Home screen
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+    } else {
+      // Authentication failed, show an error message
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text('Error'),
+                content: Text('Invalid tank number or password'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('OK'))
+                ],
+              ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +181,9 @@ class _LoginPageState extends State<LoginPage> {
             left: 117,
             top: 410,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                _signIn();
+              },
               child: Container(
                 width: 112,
                 height: 34,
