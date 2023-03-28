@@ -83,7 +83,7 @@ void main() {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      home: HistoryPage(),
+      home: SignUpPage(),
     ),
   );
 }

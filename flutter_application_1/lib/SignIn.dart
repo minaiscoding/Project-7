@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
     final tankNumber = _tankNumberController.text.trim();
     final password = _passwordController.text.trim();
     final body = jsonEncode({'tankNumber': tankNumber, 'password': password});
-    final response = await http.post(Uri.parse("http://localhost:5000/signin"),
+    final response = await http.post(Uri.parse("http://192.168.1.35:5000/signin"),
         headers: {'Content-Type': 'application/json'}, body: body);
 
     if (response.statusCode == 200) {
