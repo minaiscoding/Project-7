@@ -20,7 +20,7 @@ class _SignUpPageState extends State<SignUpPage> {
       TextEditingController();
 
   Future<void> _submitSignUpForm() async {
-    final String apiUrl = "http://192.168.1.35:5000/signup";
+    final String apiUrl = "http://192.168.197.102:5000/signup";
 
     final response = await http.post(
       Uri.parse(apiUrl),
@@ -268,39 +268,6 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           Positioned(
-            width: 157,
-            height: 60,
-            left: 117,
-            top: 585,
-            child: ElevatedButton(
-              onPressed: () {_submitSignUpForm();},
-              child: Container(
-                width: 112,
-                height: 34,
-                alignment: Alignment.center,
-                child: Text(
-                  'Sign Up',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 20,
-                    height: 1,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xFF789CD2),
-                elevation: 8,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                shadowColor: Color(0xFF789CD2),
-              ),
-            ),
-          ),
-          Positioned(
             top: MediaQuery.of(context).size.height - 200,
             left: 0,
             right: 0,
@@ -350,7 +317,42 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
             ),
-          )
+          ),
+          Positioned(
+            width: 157,
+            height: 60,
+            left: 117,
+            top: 590,
+            child: ElevatedButton(
+              onPressed: () {
+                _submitSignUpForm();
+              },
+              child: Container(
+                width: 112,
+                height: 34,
+                alignment: Alignment.center,
+                child: Text(
+                  'Sign In',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                    height: 1,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFF789CD2),
+                elevation: 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                shadowColor: Color(0xFF789CD2),
+              ),
+            ),
+          ),
         ],
       ),
     );
