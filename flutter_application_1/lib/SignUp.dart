@@ -38,6 +38,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
   final responseData = jsonDecode(response.body);
 
+  
+
   if (response.statusCode == 201) {
     // Navigate to the home page after successful signup
     Navigator.pushReplacement(
