@@ -53,7 +53,7 @@ class _SignUpPageState extends State<SignUpPage> {
         actions: <Widget>[
           ElevatedButton(
             child: Text("Ok"),
-            onPressed: () {
+            onPressed: () {,
               Navigator.of(ctx).pop();
             },
           ),
