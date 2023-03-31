@@ -20,45 +20,49 @@ class _SignUpPageState extends State<SignUpPage> {
       TextEditingController();
 
   Future<void> _submitSignUpForm() async {
-    final String apiUrl = "http://192.168.1.35:5000/signup";
+  final String apiUrl = "http://192.168.1.35:5000/signup";
 
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'full_name': _fullnameController.text,
-        'phone_number': _phoneNumberController.text,
-        'tank_number': _tankNumberController.text,
-        'password': _passwordController.text,
-        'confirm_password': _confirmpasswordController.text,
-      }),
+  final response = await http.post(
+    Uri.parse(apiUrl),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'full_name': _fullnameController.text,
+      'phone_number': _phoneNumberController.text,
+      'tank_number': _tankNumberController.text,
+      'password': _passwordController.text,
+      'confirm_password': _confirmpasswordController.text,
+    }),
+  );
+
+  final responseData = jsonDecode(response.body);
+
+  if (response.statusCode == 201) {
+    // Navigate to the home page after successful signup
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => Home()),
     );
-
-    final responseData = jsonDecode(response.body);
-
-    if (response.statusCode == 201) {
-      // Navigate to the home page after successful signup
-      Navigator.of(context).pushReplacementNamed('/Home');
-    } else {
-      showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text("An error occurred!"),
-          content: Text(responseData['error']),
-          actions: <Widget>[
-            ElevatedButton(
-              child: Text("Okay"),
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-            ),
-          ],
-        ),
-      );
-    }
+  } else {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text("An error occurred!"),
+        content: Text(responseData['error']),
+        actions: <Widget>[
+          ElevatedButton(
+            child: Text("Ok"),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          ),
+        ],
+      ),
+    );
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -268,39 +272,6 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           Positioned(
-            width: 157,
-            height: 60,
-            left: 117,
-            top: 585,
-            child: ElevatedButton(
-              onPressed: () {_submitSignUpForm();},
-              child: Container(
-                width: 112,
-                height: 34,
-                alignment: Alignment.center,
-                child: Text(
-                  'Sign Up',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 20,
-                    height: 1,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xFF789CD2),
-                elevation: 8,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                shadowColor: Color(0xFF789CD2),
-              ),
-            ),
-          ),
-          Positioned(
             top: MediaQuery.of(context).size.height - 200,
             left: 0,
             right: 0,
@@ -350,7 +321,42 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
             ),
-          )
+          ),
+          Positioned(
+            width: 157,
+            height: 60,
+            left: 117,
+            top: 590,
+            child: ElevatedButton(
+              onPressed: () {
+                _submitSignUpForm();
+              },
+              child: Container(
+                width: 112,
+                height: 34,
+                alignment: Alignment.center,
+                child: Text(
+                  'Sign up',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                    height: 1,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFF789CD2),
+                elevation: 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                shadowColor: Color(0xFF789CD2),
+              ),
+            ),
+          ),
         ],
       ),
     );

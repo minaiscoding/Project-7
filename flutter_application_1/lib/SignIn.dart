@@ -15,33 +15,47 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmpasswordController =
       TextEditingController();
-  Future<void> _signIn() async {
-    final tankNumber = _tankNumberController.text.trim();
-    final password = _passwordController.text.trim();
-    final body = jsonEncode({'tankNumber': tankNumber, 'password': password});
-    final response = await http.post(Uri.parse("http://192.168.1.35:5000/signin"),
-        headers: {'Content-Type': 'application/json'}, body: body);
+Future<void> _signIn() async {
+  final String apiUrl = "http://192.168.1.35:5000/signin";
 
-    if (response.statusCode == 200) {
-      // Authentication successful, navigate to Home screen
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-    } else {
-      // Authentication failed, show an error message
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: Text('Error'),
-                content: Text('Invalid tank number or password'),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text('OK'))
-                ],
-              ));
-    }
+  final response = await http.post(
+    Uri.parse(apiUrl),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'tank_number': _tankNumberController.text,
+      'password': _passwordController.text,
+    }),
+  );
+
+  final responseData = jsonDecode(response.body);
+
+  if (response.statusCode == 200) {
+    // Navigate to the home page after successful signin
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => Home()),
+    );
+  } else {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text("An error occurred!"),
+        content: Text(responseData['error']),
+        actions: <Widget>[
+          ElevatedButton(
+            child: Text("Ok"),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          ),
+        ],
+      ),
+    );
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
