@@ -11,51 +11,50 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _tankNumberController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmpasswordController =
       TextEditingController();
-Future<void> _signIn() async {
-  final String apiUrl = "http://192.168.1.35:5000/signin";
+  Future<void> _signIn() async {
+    final String apiUrl = "http://192.168.1.35:5000/signin";
 
-  final response = await http.post(
-    Uri.parse(apiUrl),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      'tank_number': _tankNumberController.text,
-      'password': _passwordController.text,
-    }),
-  );
-
-  final responseData = jsonDecode(response.body);
-
-  if (response.statusCode == 200) {
-    // Navigate to the home page after successful signin
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => Home()),
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'tank_number': _phoneNumberController.text,
+        'password': _passwordController.text,
+      }),
     );
-  } else {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text("An error occurred!"),
-        content: Text(responseData['error']),
-        actions: <Widget>[
-          ElevatedButton(
-            child: Text("Ok"),
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-          ),
-        ],
-      ),
-    );
+
+    final responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      // Navigate to the home page after successful signin
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text("An error occurred!"),
+          content: Text(responseData['error']),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text("Ok"),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            ),
+          ],
+        ),
+      );
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -138,9 +137,9 @@ Future<void> _signIn() async {
                   children: [
                     TextField(
                       keyboardType: TextInputType.phone,
-                      controller: _tankNumberController,
+                      controller: _phoneNumberController,
                       decoration: InputDecoration(
-                        hintText: 'tank number',
+                        hintText: 'Phone number',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.normal,
@@ -156,12 +155,13 @@ Future<void> _signIn() async {
                           borderSide:
                               BorderSide(color: Color(0xFF789CD2), width: 1),
                         ),
-                        prefixIcon: Icon(Icons.water, color: Color(0xFF989898)),
+                        prefixIcon: Icon(Icons.phone, color: Color(0xFF989898)),
                       ),
                     ),
                     SizedBox(height: 40),
                     TextField(
                       controller: _passwordController,
+                      keyboardType: TextInputType.number,
                       obscureText: true,
                       decoration: InputDecoration(
                         hintText: 'Password',

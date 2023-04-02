@@ -22,49 +22,46 @@ class _SignUpPageState extends State<SignUpPage> {
   Future<void> _submitSignUpForm() async {
     final String apiUrl = "http://192.168.1.35:5000/signup";
 
-  final response = await http.post(
-    Uri.parse(apiUrl),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      'full_name': _fullnameController.text,
-      'phone_number': _phoneNumberController.text,
-      'tank_number': _tankNumberController.text,
-      'password': _passwordController.text,
-      'confirm_password': _confirmpasswordController.text,
-    }),
-  );
-
-  final responseData = jsonDecode(response.body);
-
-  
-
-  if (response.statusCode == 201) {
-    // Navigate to the home page after successful signup
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => Home()),
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'full_name': _fullnameController.text,
+        'phone_number': _phoneNumberController.text,
+        'tank_number': _tankNumberController.text,
+        'password': _passwordController.text,
+        'confirm_password': _confirmpasswordController.text,
+      }),
     );
-  } else {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text("An error occurred!"),
-        content: Text(responseData['error']),
-        actions: <Widget>[
-          ElevatedButton(
-            child: Text("Ok"),
-            onPressed: () {,
-              Navigator.of(ctx).pop();
-            },
-          ),
-        ],
-      ),
-    );
+
+    final responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 201) {
+      // Navigate to the home page after successful signup
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text("An error occurred!"),
+          content: Text(responseData['error']),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text("Ok"),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            ),
+          ],
+        ),
+      );
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +170,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       height: 30,
                     ),
                     TextField(
-                      keyboardType: TextInputType.phone,
+                      keyboardType: TextInputType.number,
                       controller: _tankNumberController,
                       decoration: InputDecoration(
                         hintText: 'tank number',
@@ -225,6 +222,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     TextField(
                       controller: _passwordController,
                       obscureText: true,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: 'Password',
                         hintStyle: TextStyle(
@@ -248,6 +246,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     SizedBox(height: 30),
                     TextField(
                       controller: _confirmpasswordController,
+                      keyboardType: TextInputType.number,
+                      obscureText: true,
                       decoration: InputDecoration(
                         hintText: 'Confirm password',
                         hintStyle: TextStyle(
