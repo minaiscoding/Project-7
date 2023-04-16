@@ -25,64 +25,55 @@ client = influxdb_client.InfluxDBClient(
 query_api = client.query_api()
 
 
-
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.json
     required_fields = ['full_name', 'tank_number', 'phone_number',
                        'password', 'confirm_password']
     for field in required_fields:
-        if data.get(field) == "":
+        if (data.get(field) == ""):
+            field = field.replace("_", " ")
             return jsonify({'error': f'{field} is required'}), 400
 
     full_name = data['full_name']
-    tank_number = data['tank_number']
-    phone_number = data['phone_number']
-    password = data['password']
-    confirm_password = data['confirm_password']
+    tank_number = int(data['tank_number'])
+    phone_number = int(data['phone_number'])
+    password = (data['password'])
+    confirm_password = (data['confirm_password'])
 
     if password != confirm_password:
         return jsonify({'error': 'Passwords do not match'}), 400
 
-
     # check if the tank number or the phone number already exist in the users measurement
-    
-    query = f'from(bucket:"{bucket}") \
-     |> range(start: 2023-03-30T00:00:00Z) \
-     |> filter(fn: (r) => r["_measurement"] == "users") \
-     |> filter(fn: (r) => r["tank_number"] == "{tank_number}" or r["phone_number"] == "{phone_number}")'
-    result = query_api.query(org=org, query=query)
 
-    
-    
-    
+    query = f'from(bucket:"{bucket}") \
+     |> range(start: -1h) \
+     |> filter(fn: (r) => r["_measurement"] == "users1") \
+     |> filter(fn: (r) => r["_field"] == "phone_number" )\
+     |> filter(fn: (r) => r["_value"] == {phone_number})'
+
+    result = query_api.query(org=org, query=query)
     if len(result) > 0:
-        for r in result.get_points():
-            if r['tank_number'] == tank_number:
-                return jsonify({'error': 'User with this tank number already exists'}), 400
-            elif r['phone_number'] == phone_number:
-                return jsonify({'error': 'User with this phone number already exists'}), 400
-        
-    
+        return jsonify({'error': 'User with this phone number already exists'}), 400
 
     # create new user
     write_api = client.write_api(write_options=SYNCHRONOUS)
 
     data = [
-     {
-        "measurement": "users",
-        "tags": {
-            "org": org,
-            "bucket": bucket
-        },
-        "fields": {
-            "full_name": full_name ,
-            "tank_number": tank_number,
-            "phone_number": phone_number,
-            "password_hash": hash_password(password)
+        {
+            "measurement": "users1",
+            "tags": {
+                "org": org,
+                "bucket": bucket
+            },
+            "fields": {
+                "full_name": full_name,
+                "tank_number": tank_number,
+                "phone_number": phone_number,
+                "password_hash": password
+            }
         }
-     }
-         ]
+    ]
 
     write_api.write(bucket=bucket, org=org, record=data)
 
@@ -92,35 +83,27 @@ def signup():
 @app.route('/signin', methods=['POST'])
 def signin():
     data = request.json
-    required_fields = ['tank_number', 'password']
+    required_fields = ['phone_number', 'password']
     for field in required_fields:
-        if data.get(field) == "":
+        if (data.get(field) == ""):
+            field = field.replace("_", " ")
             return jsonify({'error': f'{field} is required'}), 400
 
-    tank_number = data['tank_number']
-    password = data['password']
+    phone_number = int(data['phone_number'])
+    password = (data['password'])
 
     query = f'from(bucket:"{bucket}") \
-         |> range(start: 2023-03-31T00:00:00Z) \
-         |> filter(fn: (r) => r["_measurement"] == "users") \
-         |> filter(fn: (r) => r["tank_number"] == "{tank_number}") '
-
+     |> range(start: -1h) \
+     |> filter(fn: (r) => r["_measurement"] == "users1") \
+     |> pivot(rowKey:["_time"], columnKey:["_field"], valueColumn:"_value")\
+     |> filter(fn: (r) => r.password_hash == "{password}" and r.phone_number == {phone_number})'
 
     result = query_api.query(org=org, query=query)
-    print(result)
 
     if len(result) > 0:
-        for r in result.get_points():
-            if r['password_hash'] == hash_password(password):
-                return jsonify({
-                    'full_name': r['full_name'],
-                    'tank_number': r['tank_number'],
-                    'phone_number': r['phone_number']
-                }), 200
-        # The return statement below will be executed if the password does not match for any result
-        return jsonify({'error': 'Incorrect password'}), 401
+        return jsonify({'message': 'Signed In '}), 200
     else:
-        return jsonify({'error': 'User not found'}), 401
+        return jsonify({'error': 'Incorrect password or phone number'}), 401
 
 
 if __name__ == '__main__':
