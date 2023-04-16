@@ -41,9 +41,15 @@ class _SignUpPageState extends State<SignUpPage> {
     if (response.statusCode == 201) {
       // Navigate to the home page after successful signup
       Navigator.pushReplacement(
+<<<<<<< HEAD
       context,
       MaterialPageRoute(builder: (context) => Home()),
     );
+=======
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+>>>>>>> 64f3455ad69402f5faa6fdc5daa26ec59825cda3
     } else {
       showDialog(
         context: context,
@@ -52,7 +58,11 @@ class _SignUpPageState extends State<SignUpPage> {
           content: Text(responseData['error']),
           actions: <Widget>[
             ElevatedButton(
+<<<<<<< HEAD
               child: Text("Okay"),
+=======
+              child: Text("Ok"),
+>>>>>>> 64f3455ad69402f5faa6fdc5daa26ec59825cda3
               onPressed: () {
                 Navigator.of(ctx).pop();
               },
@@ -170,7 +180,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       height: 30,
                     ),
                     TextField(
-                      keyboardType: TextInputType.phone,
+                      keyboardType: TextInputType.number,
                       controller: _tankNumberController,
                       decoration: InputDecoration(
                         hintText: 'tank number',
@@ -222,6 +232,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     TextField(
                       controller: _passwordController,
                       obscureText: true,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: 'Password',
                         hintStyle: TextStyle(
@@ -245,6 +256,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     SizedBox(height: 30),
                     TextField(
                       controller: _confirmpasswordController,
+                      keyboardType: TextInputType.number,
+                      obscureText: true,
                       decoration: InputDecoration(
                         hintText: 'Confirm password',
                         hintStyle: TextStyle(
