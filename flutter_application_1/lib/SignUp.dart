@@ -1,4 +1,6 @@
 import 'package:fluid/main.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 import 'Home.dart';
@@ -16,6 +18,60 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmpasswordController =
       TextEditingController();
+
+  Future<void> _submitSignUpForm() async {
+    final String apiUrl = "http://192.168.78.9:5000/signup";
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'full_name': _fullnameController.text,
+        'phone_number': _phoneNumberController.text,
+        'tank_number': _tankNumberController.text,
+        'password': _passwordController.text,
+        'confirm_password': _confirmpasswordController.text,
+      }),
+    );
+
+    final responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 201) {
+      // Navigate to the home page after successful signup
+      Navigator.pushReplacement(
+<<<<<<< HEAD
+      context,
+      MaterialPageRoute(builder: (context) => Home()),
+    );
+=======
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+>>>>>>> 64f3455ad69402f5faa6fdc5daa26ec59825cda3
+    } else {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text("An error occurred!"),
+          content: Text(responseData['error']),
+          actions: <Widget>[
+            ElevatedButton(
+<<<<<<< HEAD
+              child: Text("Okay"),
+=======
+              child: Text("Ok"),
+>>>>>>> 64f3455ad69402f5faa6fdc5daa26ec59825cda3
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +180,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       height: 30,
                     ),
                     TextField(
-                      keyboardType: TextInputType.phone,
+                      keyboardType: TextInputType.number,
                       controller: _tankNumberController,
                       decoration: InputDecoration(
                         hintText: 'tank number',
@@ -176,6 +232,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     TextField(
                       controller: _passwordController,
                       obscureText: true,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: 'Password',
                         hintStyle: TextStyle(
@@ -199,6 +256,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     SizedBox(height: 30),
                     TextField(
                       controller: _confirmpasswordController,
+                      keyboardType: TextInputType.number,
+                      obscureText: true,
                       decoration: InputDecoration(
                         hintText: 'Confirm password',
                         hintStyle: TextStyle(
@@ -221,39 +280,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ],
                 ),
-              ),
-            ),
-          ),
-          Positioned(
-            width: 157,
-            height: 60,
-            left: 117,
-            top: 585,
-            child: ElevatedButton(
-              onPressed: () {},
-              child: Container(
-                width: 112,
-                height: 34,
-                alignment: Alignment.center,
-                child: Text(
-                  'Sign Up',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 20,
-                    height: 1,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xFF789CD2),
-                elevation: 8,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                shadowColor: Color(0xFF789CD2),
               ),
             ),
           ),
@@ -307,7 +333,42 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
             ),
-          )
+          ),
+          Positioned(
+            width: 157,
+            height: 60,
+            left: 117,
+            top: 590,
+            child: ElevatedButton(
+              onPressed: () {
+                _submitSignUpForm();
+              },
+              child: Container(
+                width: 112,
+                height: 34,
+                alignment: Alignment.center,
+                child: Text(
+                  'Sign Up',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                    height: 1,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFF789CD2),
+                elevation: 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                shadowColor: Color(0xFF789CD2),
+              ),
+            ),
+          ),
         ],
       ),
     );

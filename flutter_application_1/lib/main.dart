@@ -63,7 +63,7 @@ class _PageViewDemoState extends State<PageViewDemo> {
 
 void main() {
   AwesomeNotifications().initialize(
-      null, //'resource://drawable/res_app_icon',
+      'resource://drawable/ic_stat_logo',
       [
         NotificationChannel(
             channelKey: 'alerts',
@@ -83,7 +83,7 @@ void main() {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      home: HistoryPage(),
+      home: SignUpPage(),
     ),
   );
 }

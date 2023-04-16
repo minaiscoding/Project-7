@@ -2,6 +2,8 @@ import 'package:fluid/main.dart';
 import 'package:flutter/material.dart';
 import 'Home.dart';
 import 'SignUp.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   @override
@@ -9,10 +11,58 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _tankNumberController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmpasswordController =
       TextEditingController();
+  Future<void> _signIn() async {
+<<<<<<< HEAD
+    final String apiUrl = "http://192.168.78.9:5000/signin";
+=======
+    final String apiUrl = "http://192.168.1.35:5000/signin";
+>>>>>>> 64f3455ad69402f5faa6fdc5daa26ec59825cda3
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+<<<<<<< HEAD
+        'phone_number': _phoneNumberController.text,
+=======
+        'tank_number': _phoneNumberController.text,
+>>>>>>> 64f3455ad69402f5faa6fdc5daa26ec59825cda3
+        'password': _passwordController.text,
+      }),
+    );
+
+    final responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      // Navigate to the home page after successful signin
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text("An error occurred!"),
+          content: Text(responseData['error']),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text("Ok"),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,9 +145,9 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     TextField(
                       keyboardType: TextInputType.phone,
-                      controller: _tankNumberController,
+                      controller: _phoneNumberController,
                       decoration: InputDecoration(
-                        hintText: 'tank number',
+                        hintText: 'Phone number',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.normal,
@@ -113,12 +163,13 @@ class _LoginPageState extends State<LoginPage> {
                           borderSide:
                               BorderSide(color: Color(0xFF789CD2), width: 1),
                         ),
-                        prefixIcon: Icon(Icons.water, color: Color(0xFF989898)),
+                        prefixIcon: Icon(Icons.phone, color: Color(0xFF989898)),
                       ),
                     ),
                     SizedBox(height: 40),
                     TextField(
                       controller: _passwordController,
+                      keyboardType: TextInputType.number,
                       obscureText: true,
                       decoration: InputDecoration(
                         hintText: 'Password',
@@ -152,7 +203,9 @@ class _LoginPageState extends State<LoginPage> {
             left: 117,
             top: 410,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                _signIn();
+              },
               child: Container(
                 width: 112,
                 height: 34,
