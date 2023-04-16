@@ -9,6 +9,9 @@ import 'Welcome.dart';
 import 'Preview.dart';
 import 'history.dart';
 import 'HistoryStats.dart';
+import 'FAQ.dart';
+import 'Graph.dart';
+import 'currentWaterLevel.dart';
 
 class PageViewDemo extends StatefulWidget {
   const PageViewDemo({Key? key}) : super(key: key);
