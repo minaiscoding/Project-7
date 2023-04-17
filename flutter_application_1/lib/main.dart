@@ -9,6 +9,11 @@ import 'Welcome.dart';
 import 'Preview.dart';
 import 'history.dart';
 import 'HistoryStats.dart';
+
+import 'FAQ.dart';
+import 'Graph.dart';
+import 'currentWaterLevel.dart';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 
 class PageViewDemo extends StatefulWidget {
@@ -83,7 +88,7 @@ void main() {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      home: HistoryPage(),
+      home: HistoryStats(),
     ),
   );
 }

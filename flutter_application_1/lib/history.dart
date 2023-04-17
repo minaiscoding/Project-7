@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'Home.dart';
+import 'currentWaterLevel.dart';
 import 'dart:ui';
 
 class HistoryPage extends StatefulWidget {
@@ -183,12 +184,12 @@ class _HistoryPageState extends State<HistoryPage> {
               ),
             ),
             Positioned(
-              left: 49,
+              // left: 100,
               top: 156,
               child: Column(
                 children: [
                   Container(
-                    width: 293,
+                    width: MediaQuery.of(context).size.width,
                     height: 97,
                     decoration: BoxDecoration(
                       color: Color(0xFFD9D9D9),
@@ -201,32 +202,36 @@ class _HistoryPageState extends State<HistoryPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        SizedBox(width: 20),
                         GestureDetector(
                           onTap: _selectLevel,
-                          child: Container(
-                            width: 90,
-                            height: 36,
-                            child: Center(
-                              child: Text(
-                                'Level',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20,
-                                  color: _isLevelSelected
-                                      ? Color(0xFF1A2A3A)
-                                      : Color(0xFF989898),
+                          child: Stack(children: [
+                            Container(
+                              width: 90,
+                              height: 36,
+                              child: Center(
+                                child: Text(
+                                  'Level',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20,
+                                    color: _isLevelSelected
+                                        ? Color(0xFF1A2A3A)
+                                        : Color(0xFF989898),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+                          ]),
                         ),
                         VerticalDivider(
                           width: 1,
                           thickness: 1,
                           color: Color(0xFF989898),
                         ),
+                        SizedBox(width: 5),
                         GestureDetector(
                           onTap: _selectTemperature,
                           child: Container(
@@ -248,11 +253,12 @@ class _HistoryPageState extends State<HistoryPage> {
                             ),
                           ),
                         ),
+                        SizedBox(width: 15),
                       ],
                     ),
                   ),
                   Container(
-                    width: 293,
+                    width: MediaQuery.of(context).size.width,
                     height: 459,
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -373,12 +379,8 @@ class _HistoryPageState extends State<HistoryPage> {
 
   Widget _buildLevel(double waterLevel) {
     return Container(
-      child: Center(
-        child: Text(
-          'water level: ${waterLevel.toStringAsFixed(2)}',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
+      child: WaterLevelBucket(sensorId: "'001'"),
+
     );
   }
 
