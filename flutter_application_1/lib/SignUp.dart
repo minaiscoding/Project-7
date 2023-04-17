@@ -12,6 +12,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _fullnameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _tankNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmpasswordController =
       TextEditingController();
@@ -70,10 +71,10 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           Positioned(
             left: 52,
-            top: 190,
+            top: 160,
             child: Container(
               width: 288,
-              height: 407,
+              height: 460,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
@@ -88,7 +89,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                  top: 50,
+                  top: 30,
                   left: 30,
                   right: 30,
                 ),
@@ -117,6 +118,32 @@ class _SignUpPageState extends State<SignUpPage> {
                         prefixIcon:
                             Icon(Icons.person, color: Color(0xFF989898)),
                         labelStyle: TextStyle(color: Color(0xFF789CD2)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    TextField(
+                      keyboardType: TextInputType.phone,
+                      controller: _tankNumberController,
+                      decoration: InputDecoration(
+                        hintText: 'tank number',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          color: Color(0xFF9FA5C0),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFF789CD2), width: 1),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFF789CD2), width: 1),
+                        ),
+                        prefixIcon: Icon(Icons.water, color: Color(0xFF989898)),
                       ),
                     ),
                     SizedBox(
@@ -201,7 +228,7 @@ class _SignUpPageState extends State<SignUpPage> {
             width: 157,
             height: 60,
             left: 117,
-            top: 567,
+            top: 585,
             child: ElevatedButton(
               onPressed: () {},
               child: Container(
@@ -231,16 +258,25 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           Positioned(
+            top: MediaQuery.of(context).size.height - 200,
+            left: 0,
+            right: 0,
+            child: CustomPaint(
+              size: Size(MediaQuery.of(context).size.width, 200),
+              painter: WavePainter(),
+            ),
+          ),
+          Positioned(
             top: MediaQuery.of(context).size.height - 250,
             left: 0,
             right: 0,
             child: CustomPaint(
               size: Size(MediaQuery.of(context).size.width, 250),
-              painter: WavePainter(),
+              painter: CustomWavePainter(),
             ),
           ),
           Positioned(
-            top: 650,
+            top: 670,
             left: 72,
             child: GestureDetector(
               onTap: () {
@@ -302,14 +338,14 @@ class WavePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Color(0xFF789CD2)
+      ..color = Color.fromRGBO(120, 156, 210, 0.5)
       ..style = PaintingStyle.fill;
     final path = Path()
-      ..moveTo(0, size.height * 0.6)
+      ..moveTo(0, size.height * 0.7)
       ..quadraticBezierTo(
-          size.width / 4, size.height * 0.8, size.width / 2, size.height * 0.6)
+          size.width / 5, size.height * 0.9, size.width / 2, size.height * 0.6)
       ..quadraticBezierTo(
-          size.width * 3 / 4, size.height * 0.4, size.width, size.height * 0.6)
+          size.width * 3 / 4, size.height * 0.3, size.width, size.height * 0.4)
       ..lineTo(size.width, size.height)
       ..lineTo(0, size.height)
       ..close();
@@ -319,4 +355,27 @@ class WavePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(WavePainter oldDelegate) => false;
+}
+
+class CustomWavePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Color.fromRGBO(120, 156, 210, 0.69)
+      ..style = PaintingStyle.fill;
+    final path = Path()
+      ..moveTo(size.width, size.height * 0.7)
+      ..quadraticBezierTo(size.width * 3 / 4, size.height * 0.8, size.width / 2,
+          size.height * 0.6)
+      ..quadraticBezierTo(
+          size.width / 4, size.height * 0.4, 0, size.height * 0.6)
+      ..lineTo(0, size.height)
+      ..lineTo(size.width, size.height)
+      ..close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomWavePainter oldDelegate) => false;
 }

@@ -32,10 +32,14 @@ dependencies:
   flutter:
     sdk: flutter
   wave: ^0.2.2
+  http: ^0.13.4
   smooth_page_indicator: ^1.0.0+2
+
   charts_flutter: ^0.12.0
   influxdb_client: ^2.0.0
   syncfusion_flutter_charts: ^21.1.35
+
+  awesome_notifications: ^0.7.4+1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

@@ -9,9 +9,13 @@ import 'Welcome.dart';
 import 'Preview.dart';
 import 'history.dart';
 import 'HistoryStats.dart';
+
 import 'FAQ.dart';
 import 'Graph.dart';
 import 'currentWaterLevel.dart';
+
+import 'package:awesome_notifications/awesome_notifications.dart';
+
 
 class PageViewDemo extends StatefulWidget {
   const PageViewDemo({Key? key}) : super(key: key);
@@ -64,12 +68,28 @@ class _PageViewDemoState extends State<PageViewDemo> {
 }
 
 void main() {
+  AwesomeNotifications().initialize(
+      null, //'resource://drawable/res_app_icon',
+      [
+        NotificationChannel(
+            channelKey: 'alerts',
+            channelName: 'Alerts',
+            channelDescription: 'Notification tests as alerts',
+            playSound: true,
+            onlyAlertOnce: true,
+            groupAlertBehavior: GroupAlertBehavior.Children,
+            importance: NotificationImportance.High,
+            defaultPrivacy: NotificationPrivacy.Private,
+            defaultColor: Colors.deepPurple,
+            ledColor: Colors.deepPurple)
+      ],
+      debug: true);
   runApp(
     MaterialApp(
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      home: HistoryStats(),
+      home: HistoryPage(),
     ),
   );
 }
