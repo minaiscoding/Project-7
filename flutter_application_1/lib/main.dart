@@ -16,7 +16,6 @@ import 'currentWaterLevel.dart';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 
-
 class PageViewDemo extends StatefulWidget {
   const PageViewDemo({Key? key}) : super(key: key);
   @override
@@ -89,7 +88,7 @@ void main() {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      home: HistoryPage(),
+      home: HistoryStats(),
     ),
   );
 }
