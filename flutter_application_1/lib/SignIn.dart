@@ -16,11 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _confirmpasswordController =
       TextEditingController();
   Future<void> _signIn() async {
-<<<<<<< HEAD
     final String apiUrl = "http://192.168.78.9:5000/signin";
-=======
-    final String apiUrl = "http://192.168.1.35:5000/signin";
->>>>>>> 64f3455ad69402f5faa6fdc5daa26ec59825cda3
 
     final response = await http.post(
       Uri.parse(apiUrl),
@@ -28,11 +24,7 @@ class _LoginPageState extends State<LoginPage> {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-<<<<<<< HEAD
         'phone_number': _phoneNumberController.text,
-=======
-        'tank_number': _phoneNumberController.text,
->>>>>>> 64f3455ad69402f5faa6fdc5daa26ec59825cda3
         'password': _passwordController.text,
       }),
     );
@@ -169,7 +161,6 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 40),
                     TextField(
                       controller: _passwordController,
-                      keyboardType: TextInputType.number,
                       obscureText: true,
                       decoration: InputDecoration(
                         hintText: 'Password',
