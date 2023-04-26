@@ -81,7 +81,6 @@ class Home extends StatelessWidget {
                 colors: [
                   Color(0xfff5fdff).withOpacity(0.43),
                   Color(0xff1D9FC9).withOpacity(0.4),
-                  // Color.fromARGB(255, 60, 87, 207).withOpacity(0.2),
                   Color.fromARGB(255, 9, 41, 105).withOpacity(0.5),
                 ],
                 durations: [6500, 7500, 9500],

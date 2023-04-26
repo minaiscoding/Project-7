@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'Graph.dart';
 import 'Home.dart';
 import 'dart:ui';
+import 'currentWaterLevel.dart';
 
 class HistoryStats extends StatefulWidget {
   @override
@@ -13,19 +14,19 @@ WaterLevelChart chartWidget = new WaterLevelChart(
 String dropdownValue = 'Daily';
 
 class _HistoryStatsState extends State<HistoryStats> {
-  bool _isLevelSelected = true;
+  bool _isLiveSelected = true;
   bool _isMenuOpen = false;
 
-  void _selectLevel() {
+  void _selectLive() {
     setState(() {
-      _isLevelSelected = true;
+      _isLiveSelected = true;
       _isMenuOpen = false;
     });
   }
 
-  void _selectTemperature() {
+  void _selectHistory() {
     setState(() {
-      _isLevelSelected = false;
+      _isLiveSelected = false;
       _isMenuOpen = false;
     });
   }
@@ -134,7 +135,6 @@ class _HistoryStatsState extends State<HistoryStats> {
               ),
             ),
             Positioned(
-              // left: 100,
               top: 156,
               child: Column(
                 children: [
@@ -154,20 +154,20 @@ class _HistoryStatsState extends State<HistoryStats> {
                       children: [
                         SizedBox(width: 20),
                         GestureDetector(
-                          onTap: _selectLevel,
+                          onTap: _selectLive,
                           child: Stack(children: [
                             Container(
                               width: 90,
                               height: 36,
                               child: Center(
                                 child: Text(
-                                  'Level',
+                                  'Live',
                                   style: TextStyle(
                                     fontFamily: 'Montserrat',
                                     fontStyle: FontStyle.normal,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 20,
-                                    color: _isLevelSelected
+                                    color: _isLiveSelected
                                         ? Color(0xFF1A2A3A)
                                         : Color(0xFF989898),
                                   ),
@@ -183,25 +183,27 @@ class _HistoryStatsState extends State<HistoryStats> {
                         ),
                         SizedBox(width: 5),
                         GestureDetector(
-                          onTap: _selectTemperature,
-                          child: Container(
-                            width: 150,
-                            height: 50,
-                            child: Center(
-                              child: Text(
-                                'Temperature',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20,
-                                  color: !_isLevelSelected
-                                      ? Color(0xFF1A2A3A)
-                                      : Color(0xFF989898),
+                          onTap: _selectHistory,
+                          child: Stack(children: [
+                            Container(
+                              width: 150,
+                              height: 50,
+                              child: Center(
+                                child: Text(
+                                  'History',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20,
+                                    color: !_isLiveSelected
+                                        ? Color(0xFF1A2A3A)
+                                        : Color(0xFF989898),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+                          ]),
                         ),
                         SizedBox(width: 15),
                       ],
@@ -221,8 +223,7 @@ class _HistoryStatsState extends State<HistoryStats> {
                         bottomRight: Radius.circular(20),
                       ),
                     ),
-                    child:
-                        _isLevelSelected ? _buildLevel() : _buildTemperature(),
+                    child: _isLiveSelected ? _buildLive() : _buildHistory(),
                   ),
                 ],
               ),
@@ -242,75 +243,6 @@ class _HistoryStatsState extends State<HistoryStats> {
                 ),
               ),
             ),
-            Positioned(
-                top: 250,
-                right: 40,
-                child: DropdownButton<String>(
-                  items: <String>['Daily', 'Weekly', 'Monthly']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  value: dropdownValue,
-                  icon: Padding(
-                    padding: const EdgeInsets.only(left: 0),
-                    child: const Icon(Icons.arrow_drop_down),
-                  ),
-                  iconSize: 24,
-                  style: const TextStyle(
-                    fontSize: 14.99,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xff1A2A3A),
-                  ),
-                  underline: Container(
-                    height: 2,
-                  ),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      style:
-                      const TextStyle(
-                        fontSize: 14.99,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xff1A2A3A),
-                      );
-                      dropdownValue = newValue!;
-
-                      switch (dropdownValue) {
-                        case 'Weekly':
-                          chartWidget = WaterLevelChart(
-                              rangeStart: Duration(days: 7),
-                              sensor_ID: "'001'",
-                              key: UniqueKey());
-                          break;
-                        case 'Monthly':
-                          chartWidget = WaterLevelChart(
-                              rangeStart: Duration(days: 30),
-                              sensor_ID: "'001'",
-                              key: UniqueKey());
-                          break;
-                        case 'Daily':
-                          chartWidget = WaterLevelChart(
-                              rangeStart: Duration(hours: 24),
-                              sensor_ID: "'001'",
-                              key: UniqueKey());
-                          break;
-                      }
-                    });
-                  },
-                )),
-            Visibility(
-              visible: dropdownValue == 'Weekly' ||
-                  dropdownValue == 'Monthly' ||
-                  dropdownValue == 'Daily',
-              child: Positioned(
-                width: MediaQuery.of(context).size.width,
-                bottom: 190,
-                // set the width and height of the container according to your requirement
-                child: chartWidget,
-              ),
-            ),
             Visibility(
               visible: _isMenuOpen,
               child: Stack(
@@ -318,7 +250,7 @@ class _HistoryStatsState extends State<HistoryStats> {
                   Container(
                     margin: const EdgeInsets.fromLTRB(59, 142, 0, 0),
                     width: 273,
-                    height: 490,
+                    height: 434,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(
@@ -337,9 +269,7 @@ class _HistoryStatsState extends State<HistoryStats> {
                     child: Column(
                       children: [
                         SizedBox(height: 40),
-                        menuItem('Home', false),
-                        SizedBox(height: 28),
-                        menuItem('History', true),
+                        menuItem('Home', true),
                         SizedBox(height: 28),
                         menuItem('Settings', false),
                         SizedBox(height: 28),
@@ -395,25 +325,86 @@ class _HistoryStatsState extends State<HistoryStats> {
     );
   }
 
-  Widget _buildLevel() {
+  Widget _buildHistory() {
     return Container(
-      child: Center(
-        child: Text(
-          'Level Past Data',
-          style: TextStyle(fontSize: 24),
-        ),
+      child: Stack(
+        children: [
+          Visibility(
+            visible: dropdownValue == 'Weekly' ||
+                dropdownValue == 'Monthly' ||
+                dropdownValue == 'Daily',
+            child: Positioned(
+              width: MediaQuery.of(context).size.width,
+              bottom: 90,
+              child: chartWidget,
+            ),
+          ),
+          Positioned(
+              top: 10,
+              right: 40,
+              child: DropdownButton<String>(
+                items: <String>['Daily', 'Weekly', 'Monthly']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                value: dropdownValue,
+                icon: Padding(
+                  padding: const EdgeInsets.only(left: 0),
+                  child: const Icon(Icons.arrow_drop_down),
+                ),
+                iconSize: 24,
+                style: const TextStyle(
+                  fontSize: 14.99,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xff1A2A3A),
+                ),
+                underline: Container(
+                  height: 2,
+                ),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    style:
+                    const TextStyle(
+                      fontSize: 14.99,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xff1A2A3A),
+                    );
+                    dropdownValue = newValue!;
+
+                    switch (dropdownValue) {
+                      case 'Weekly':
+                        chartWidget = WaterLevelChart(
+                            rangeStart: Duration(days: 7),
+                            sensor_ID: "'001'",
+                            key: UniqueKey());
+                        break;
+                      case 'Monthly':
+                        chartWidget = WaterLevelChart(
+                            rangeStart: Duration(days: 30),
+                            sensor_ID: "'001'",
+                            key: UniqueKey());
+                        break;
+                      case 'Daily':
+                        chartWidget = WaterLevelChart(
+                            rangeStart: Duration(hours: 24),
+                            sensor_ID: "'001'",
+                            key: UniqueKey());
+                        break;
+                    }
+                  });
+                },
+              )),
+        ],
       ),
     );
   }
 
-  Widget _buildTemperature() {
+  Widget _buildLive() {
     return Container(
-      child: Center(
-        child: Text(
-          'Temperature Past Data',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
+      child: WaterLevelBucket(sensorId: '001'),
     );
   }
 }

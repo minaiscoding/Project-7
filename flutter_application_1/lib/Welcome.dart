@@ -1,4 +1,4 @@
-import 'package:fluid/SignIn.dart';
+import 'package:fluid/LoginPage.dart';
 
 import 'package:flutter/material.dart'; //imports dart
 import 'package:hexcolor/hexcolor.dart';

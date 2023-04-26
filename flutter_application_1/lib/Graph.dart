@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:influxdb_client/api.dart';
+import 'dart:convert';
+import 'dart:async';
+import 'package:http/http.dart' as http;
 
 class WaterLevelData {
   final DateTime time;
@@ -58,6 +61,7 @@ class _WaterLevelChartState extends State<WaterLevelChart> {
         print(
             'record: ${record['_time']}: water level: ${record['_value']} ${record['sensor']}');
         var value = record['_value'];
+
         if (value != null) {
           var waterLevelData = WaterLevelData(
             DateTime.parse(record['_time']),

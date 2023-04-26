@@ -2,6 +2,7 @@ import 'package:fluid/main.dart';
 import 'package:flutter/material.dart';
 import 'Home.dart';
 import 'SignUp.dart';
+import 'PageViewDemo.dart';
 
 class FAQ extends StatefulWidget {
   @override
@@ -43,9 +44,7 @@ class _FAQState extends State<FAQ> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
-                children: <Widget>[
-                  
-                ],
+                children: <Widget>[],
               ),
             ),
           ),

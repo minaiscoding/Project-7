@@ -27,7 +27,7 @@ class Menu extends StatelessWidget {
             Container(
               margin: EdgeInsets.fromLTRB(59, 142, 0, 0),
               width: 273,
-              height: 490,
+              height: 434,
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(
@@ -70,34 +70,6 @@ class Menu extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
-                    ),
-                  ),
-                  SizedBox(height: 28),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Container(
-                      width: 121,
-                      height: 56,
-                      alignment: Alignment.center,
-                      child: Text(
-                        'History',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 24,
-                          height: 1,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0XFF21457D),
-                      elevation: 8,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      shadowColor: Color(0XFF21457D),
                     ),
                   ),
                   SizedBox(height: 28),

@@ -2,6 +2,7 @@ import 'package:fluid/main.dart';
 import 'package:flutter/material.dart';
 import 'Home.dart';
 import 'SignUp.dart';
+import 'PageViewDemo.dart';
 
 class LoginPage extends StatefulWidget {
   @override
