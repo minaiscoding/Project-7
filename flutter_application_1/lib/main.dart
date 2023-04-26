@@ -88,7 +88,7 @@ void main() {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      home: HistoryStats(),
+      home: WaterLevelBucket(sensorId: '001'),
     ),
   );
 }

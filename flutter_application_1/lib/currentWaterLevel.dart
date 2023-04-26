@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:influxdb_client/api.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 
 class WaterLevelBucket extends StatefulWidget {
   final String sensorId;
@@ -21,13 +22,23 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
     Timer.periodic(Duration(seconds: 5), (Timer t) => _fetchData());
   }
 
+  void triggerNotification(double waterLevel) {
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+      id: 10, // -1 is replaced by a random number
+      channelKey: 'alerts',
+      title: 'Your tank is getting empty !',
+      body: "You only have ${waterLevel}% left in your tank",
+    ));
+  }
+
   Future<void> _fetchData() async {
     var token =
         'MRYbOmaiLDqsc2yCPN39KUxmnSdhQGzQ_X4-hn3PVOd-us1QlkeOCQYw_0ROCt34Y5D-IhOGRXkO4PGS7MEK-Q==';
     var bucket = 'tanks';
     var org = 'Esi';
     var client = InfluxDBClient(
-        url: 'http://192.168.139.102:8086',
+        url: 'http://192.168.64.102:8086',
         token: token,
         org: org,
         bucket: bucket);
@@ -48,6 +59,9 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
       var value = record['_value'];
       if (value != null) {
         data.add(value);
+        if (value < 20) {
+          triggerNotification(value);
+        }
       }
     });
 

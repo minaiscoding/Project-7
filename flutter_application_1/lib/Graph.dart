@@ -38,7 +38,7 @@ class _WaterLevelChartState extends State<WaterLevelChart> {
     var bucket = 'tanks';
     var org = 'Esi';
     var client = InfluxDBClient(
-        url: 'http://192.168.139.102:8086',
+        url: 'http://192.168.64.102:8086',
         token: token,
         org: org,
         bucket: bucket);
