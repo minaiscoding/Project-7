@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'Graph.dart';
+import '../Widgets/Graph.dart';
 import 'Home.dart';
 import 'dart:ui';
-import 'currentWaterLevel.dart';
+import '../Widgets/currentWaterLevel.dart';
 
-class HistoryStats extends StatefulWidget {
+class LiveHistoryPage extends StatefulWidget {
   @override
-  _HistoryStatsState createState() => _HistoryStatsState();
+  _LiveHistoryPageState createState() => _LiveHistoryPageState();
 }
 
 WaterLevelChart chartWidget = new WaterLevelChart(
     rangeStart: Duration(days: 1), sensor_ID: "'001'", key: UniqueKey());
 String dropdownValue = 'Daily';
 
-class _HistoryStatsState extends State<HistoryStats> {
+class _LiveHistoryPageState extends State<LiveHistoryPage> {
   bool _isLiveSelected = true;
   bool _isMenuOpen = false;
 
@@ -120,7 +120,7 @@ class _HistoryStatsState extends State<HistoryStats> {
                     left: 25,
                     top: 50,
                     child: Image.asset(
-                      'assets/logo2.png',
+                      'assets/SmallLogo.png',
                       width: 70, // Set width to 50 pixels
                       height: 70, // Set height to 50 pixels
                     ),

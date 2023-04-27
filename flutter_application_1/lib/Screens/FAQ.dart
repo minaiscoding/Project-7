@@ -1,8 +1,8 @@
-import 'package:fluid/main.dart';
+import 'package:fluid/Screens/main.dart';
 import 'package:flutter/material.dart';
 import 'Home.dart';
 import 'SignUp.dart';
-import 'PageViewDemo.dart';
+import '../Widgets/PageViewDemo.dart';
 
 class FAQ extends StatefulWidget {
   @override

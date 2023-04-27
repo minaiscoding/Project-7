@@ -1,15 +1,17 @@
-import 'package:fluid/main.dart';
+import 'package:fluid/Screens/main.dart';
 import 'package:flutter/material.dart';
+import '../Widgets/PageViewDemo.dart';
 import 'Home.dart';
-import 'SignUp.dart';
-import 'PageViewDemo.dart';
+import 'LoginPage.dart';
 
-class LoginPage extends StatefulWidget {
+class SignUpPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController _fullnameController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _tankNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmpasswordController =
@@ -56,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
             left: MediaQuery.of(context).size.width * 0.2,
             top: 72,
             child: Text(
-              'Sign In',
+              'Sign Up',
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontStyle: FontStyle.normal,
@@ -69,10 +71,10 @@ class _LoginPageState extends State<LoginPage> {
           ),
           Positioned(
             left: 52,
-            top: 167,
+            top: 160,
             child: Container(
               width: 288,
-              height: 280,
+              height: 460,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
@@ -87,13 +89,40 @@ class _LoginPageState extends State<LoginPage> {
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                  top: 50,
+                  top: 30,
                   left: 30,
                   right: 30,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    TextField(
+                      controller: _fullnameController,
+                      decoration: InputDecoration(
+                        hintText: 'Full name',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          color: Color(0xFF9FA5C0),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFF789CD2), width: 1),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFF789CD2), width: 2),
+                        ),
+                        prefixIcon:
+                            Icon(Icons.person, color: Color(0xFF989898)),
+                        labelStyle: TextStyle(color: Color(0xFF789CD2)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
                     TextField(
                       keyboardType: TextInputType.phone,
                       controller: _tankNumberController,
@@ -117,7 +146,33 @@ class _LoginPageState extends State<LoginPage> {
                         prefixIcon: Icon(Icons.water, color: Color(0xFF989898)),
                       ),
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    TextField(
+                      keyboardType: TextInputType.phone,
+                      controller: _phoneNumberController,
+                      decoration: InputDecoration(
+                        hintText: 'Phone number',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          color: Color(0xFF9FA5C0),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFF789CD2), width: 1),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFF789CD2), width: 1),
+                        ),
+                        prefixIcon: Icon(Icons.phone, color: Color(0xFF989898)),
+                      ),
+                    ),
+                    SizedBox(height: 30),
                     TextField(
                       controller: _passwordController,
                       obscureText: true,
@@ -142,6 +197,28 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     SizedBox(height: 30),
+                    TextField(
+                      controller: _confirmpasswordController,
+                      decoration: InputDecoration(
+                        hintText: 'Confirm password',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          color: Color(0xFF9FA5C0),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFF789CD2), width: 1),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Color(0xFF789CD2), width: 1),
+                        ),
+                        prefixIcon: Icon(Icons.lock, color: Color(0xFF989898)),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -151,7 +228,7 @@ class _LoginPageState extends State<LoginPage> {
             width: 157,
             height: 60,
             left: 117,
-            top: 410,
+            top: 585,
             child: ElevatedButton(
               onPressed: () {},
               child: Container(
@@ -159,7 +236,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 34,
                 alignment: Alignment.center,
                 child: Text(
-                  'Sign In',
+                  'Sign Up',
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontStyle: FontStyle.normal,
@@ -199,18 +276,18 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           Positioned(
-            top: 552,
+            top: 670,
             left: 72,
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()),
+                  MaterialPageRoute(builder: (context) => LoginPage()),
                 );
               },
               child: Text.rich(
                 TextSpan(
-                  text: 'Don\'t have an account? ',
+                  text: 'Already have an account? ',
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontStyle: FontStyle.normal,
@@ -221,7 +298,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   children: <TextSpan>[
                     TextSpan(
-                      text: 'Sign up',
+                      text: 'Sign in',
                       style: TextStyle(
                         color: Color(0xff789CD2),
                       ),

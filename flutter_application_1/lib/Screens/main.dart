@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'Menu.dart';
+import '../Widgets/Menu.dart';
 import 'Home.dart';
 import 'LoginPage.dart';
 import 'SignUp.dart';
 import 'Welcome.dart';
 import 'Preview.dart';
-import 'HistoryStats.dart';
+import 'LiveHistoryPage.dart';
 import 'FAQ.dart';
-import 'Graph.dart';
-import 'currentWaterLevel.dart';
-import 'PageViewDemo.dart';
-import 'CircleWaveWidget.dart';
+import '../Widgets/Graph.dart';
+import '../Widgets/currentWaterLevel.dart';
+import '../Widgets/PageViewDemo.dart';
+import '../Widgets/CircleWaveWidget.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
 void main() {

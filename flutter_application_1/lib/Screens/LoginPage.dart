@@ -1,17 +1,15 @@
-import 'package:fluid/main.dart';
+import 'package:fluid/Screens/main.dart';
 import 'package:flutter/material.dart';
-import 'PageViewDemo.dart';
 import 'Home.dart';
-import 'LoginPage.dart';
+import 'SignUp.dart';
+import '../Widgets/PageViewDemo.dart';
 
-class SignUpPage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
-  final TextEditingController _fullnameController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController _tankNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmpasswordController =
@@ -58,7 +56,7 @@ class _SignUpPageState extends State<SignUpPage> {
             left: MediaQuery.of(context).size.width * 0.2,
             top: 72,
             child: Text(
-              'Sign Up',
+              'Sign In',
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontStyle: FontStyle.normal,
@@ -71,10 +69,10 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           Positioned(
             left: 52,
-            top: 160,
+            top: 167,
             child: Container(
               width: 288,
-              height: 460,
+              height: 280,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
@@ -89,40 +87,13 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                  top: 30,
+                  top: 50,
                   left: 30,
                   right: 30,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    TextField(
-                      controller: _fullnameController,
-                      decoration: InputDecoration(
-                        hintText: 'Full name',
-                        hintStyle: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                          color: Color(0xFF9FA5C0),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFF789CD2), width: 1),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFF789CD2), width: 2),
-                        ),
-                        prefixIcon:
-                            Icon(Icons.person, color: Color(0xFF989898)),
-                        labelStyle: TextStyle(color: Color(0xFF789CD2)),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
                     TextField(
                       keyboardType: TextInputType.phone,
                       controller: _tankNumberController,
@@ -146,33 +117,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         prefixIcon: Icon(Icons.water, color: Color(0xFF989898)),
                       ),
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    TextField(
-                      keyboardType: TextInputType.phone,
-                      controller: _phoneNumberController,
-                      decoration: InputDecoration(
-                        hintText: 'Phone number',
-                        hintStyle: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                          color: Color(0xFF9FA5C0),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFF789CD2), width: 1),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFF789CD2), width: 1),
-                        ),
-                        prefixIcon: Icon(Icons.phone, color: Color(0xFF989898)),
-                      ),
-                    ),
-                    SizedBox(height: 30),
+                    SizedBox(height: 40),
                     TextField(
                       controller: _passwordController,
                       obscureText: true,
@@ -197,28 +142,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     SizedBox(height: 30),
-                    TextField(
-                      controller: _confirmpasswordController,
-                      decoration: InputDecoration(
-                        hintText: 'Confirm password',
-                        hintStyle: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                          color: Color(0xFF9FA5C0),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFF789CD2), width: 1),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFF789CD2), width: 1),
-                        ),
-                        prefixIcon: Icon(Icons.lock, color: Color(0xFF989898)),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -228,7 +151,7 @@ class _SignUpPageState extends State<SignUpPage> {
             width: 157,
             height: 60,
             left: 117,
-            top: 585,
+            top: 410,
             child: ElevatedButton(
               onPressed: () {},
               child: Container(
@@ -236,7 +159,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 34,
                 alignment: Alignment.center,
                 child: Text(
-                  'Sign Up',
+                  'Sign In',
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontStyle: FontStyle.normal,
@@ -276,18 +199,18 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           Positioned(
-            top: 670,
+            top: 552,
             left: 72,
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  MaterialPageRoute(builder: (context) => SignUpPage()),
                 );
               },
               child: Text.rich(
                 TextSpan(
-                  text: 'Already have an account? ',
+                  text: 'Don\'t have an account? ',
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontStyle: FontStyle.normal,
@@ -298,7 +221,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   children: <TextSpan>[
                     TextSpan(
-                      text: 'Sign in',
+                      text: 'Sign up',
                       style: TextStyle(
                         color: Color(0xff789CD2),
                       ),

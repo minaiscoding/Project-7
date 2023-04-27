@@ -26,7 +26,7 @@ class Home extends StatelessWidget {
               top: 104,
               left: -25,
               child: DropShadowImage(
-                image: Image.asset('assets/logo (1).png'),
+                image: Image.asset('assets/HomeLogo.png'),
                 borderRadius: 15,
                 offset: Offset(0, 4.10895),
                 blurRadius: 13.655,

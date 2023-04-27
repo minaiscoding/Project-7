@@ -15,24 +15,11 @@ class CircleWaveWidget extends StatelessWidget {
     this.circleSize = 200,
     this.waveColor = Colors.blue,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
       width: circleSize,
       height: circleSize,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
       child: ClipOval(
         child: WaveWidget(
           config: CustomConfig(

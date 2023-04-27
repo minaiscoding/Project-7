@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'Home.dart';
-import 'Preview.dart';
-import 'Welcome.dart';
+import '../Screens/Home.dart';
+import '../Screens/Preview.dart';
+import '../Screens/Welcome.dart';
 
 class PageViewDemo extends StatefulWidget {
   const PageViewDemo({Key? key}) : super(key: key);

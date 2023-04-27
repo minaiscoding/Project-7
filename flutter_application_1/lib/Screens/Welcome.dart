@@ -1,4 +1,4 @@
-import 'package:fluid/LoginPage.dart';
+import 'package:fluid/Screens/LoginPage.dart';
 
 import 'package:flutter/material.dart'; //imports dart
 import 'package:hexcolor/hexcolor.dart';
@@ -37,7 +37,7 @@ class Welcome extends StatelessWidget {
               height: 426.36,
               top: 34,
               left: -135,
-              child: Image.asset('assets/logo (2).png'),
+              child: Image.asset('assets/WelcomeLogo.png'),
             ),
             Positioned(
               top: 427,
