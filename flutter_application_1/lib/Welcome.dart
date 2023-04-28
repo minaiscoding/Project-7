@@ -1,4 +1,4 @@
-import 'package:fluid/currentWaterLevel.dart';
+import 'package:fluid/LiveLevelPage.dart';
 import 'package:flutter/material.dart'; //imports dart
 import 'package:hexcolor/hexcolor.dart';
 import 'package:wave/config.dart';
@@ -85,8 +85,7 @@ class Welcome extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    WaterLevelBucket(sensorId: '001')),
+                                builder: (context) => LiveLevelPage()),
                           );
                         },
                         child: Padding(
@@ -123,9 +122,7 @@ class Welcome extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            WaterLevelBucket(sensorId: '001')),
+                    MaterialPageRoute(builder: (context) => LiveLevelPage()),
                   );
                 },
                 child: Positioned(
