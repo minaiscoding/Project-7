@@ -63,7 +63,7 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
             '${_waterLevel.toStringAsFixed(1)} %',
             style: TextStyle(
               fontSize: 56,
-              fontFamily: "Monsstserrat",
+              fontFamily: "Aquire",
               color: Color.fromARGB(255, 255, 255, 255),
               fontWeight: FontWeight.w100,
             ),
