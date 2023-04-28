@@ -61,17 +61,17 @@ class Home extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 376,
+              top: 400,
               right: 53,
               width: 275,
-              height: 72,
+              height: 80,
               child: Text(
-                'Lorem ipsum dolor sit amet',
+                'Don’t let a low water level catch you by surprise.',
                 textAlign: TextAlign.center,
                 softWrap: true,
                 style: TextStyle(
-                  fontFamily: 'aquire',
-                  fontSize: 25,
+                  color: const Color(0xff1a2a3a),
+                  fontSize: 20,
                 ),
               ),
             ),

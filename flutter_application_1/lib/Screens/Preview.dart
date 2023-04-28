@@ -30,7 +30,7 @@ class Preview extends StatelessWidget {
                 width: 294,
                 height: 215,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(19.998),
+                  borderRadius: BorderRadius.circular(19.923),
                   gradient: LinearGradient(
                     begin: Alignment.bottomRight,
                     end: Alignment.topLeft,
@@ -40,13 +40,13 @@ class Preview extends StatelessWidget {
                       Color(0xFFC3DBFF),
                       Color(0x00C3DBFF).withOpacity(0.8),
                     ],
-                    stops: [0.0452, 0.2555, 0.6382, 1.4206],
-                    transform: GradientRotation(139.58 * 3.1415 / 180),
+                    stops: [0.0561, 0.2843, 0.8113, 1.4206],
+                    transform: GradientRotation(139.58 * 3.141516 / 180),
                   ),
                   boxShadow: [
                     BoxShadow(
                       color: Color.fromRGBO(101, 160, 255, 0.8),
-                      blurRadius: 27.6824,
+                      blurRadius: 27.5785,
                       offset: Offset(0, 0),
                     ),
                   ],
@@ -63,24 +63,31 @@ class Preview extends StatelessWidget {
                     SizedBox(height: 5.8),
                     Image(
                       image: AssetImage('assets/percent.png'),
-                      width: 20, // set the width of the image
-                      height: 20, // set the height of the image
+                      width: 24, // set the width of the image
+                      height: 24, // set the height of the image
                     ),
-                    SizedBox(height: 13.68),
-                    Text('LOREM IPSUM',
+                    SizedBox(height: 10.68),
+                    Text('Water level',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'aquire',
                           fontSize: 16.9,
                           fontWeight: FontWeight.bold,
                         )),
-                    SizedBox(height: 10.64),
-                    Text(
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 17,
-                        ),
-                        'lorem ipsum dolor sit amet consecteur adipiscing elit duis dectum tortor velit ,at commodo nunc suscipicit pulvinar odio  '),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: 10.64,
+                        left: 16,
+                        bottom: 16,
+                        right: 16,
+                      ),
+                      child: Text(
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 17,
+                          ),
+                          'provides the user with their tank’s water level through a visual representation with great precision any time.'),
+                    ),
                   ],
                 ),
               ),
@@ -124,25 +131,32 @@ class Preview extends StatelessWidget {
                     ),
                     SizedBox(height: 5.8),
                     Image(
-                      image: AssetImage('assets/thermometer.png'),
-                      width: 24, // set the width of the image
-                      height: 24, // set the height of the image
+                      image: AssetImage('assets/history.png'),
+                      width: 30, // set the width of the image
+                      height: 30, // set the height of the image
                     ),
-                    SizedBox(height: 13.68),
-                    Text('LOREM IPSUM',
+                    SizedBox(height: 10.68),
+                    Text('History',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'aquire',
                           fontSize: 16.9,
                           fontWeight: FontWeight.bold,
                         )),
-                    SizedBox(height: 10.64),
-                    Text(
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 17,
-                        ),
-                        'lorem ipsum dolor sit amet consecteur adipiscing elit duis dectum tortor velit ,at commodo nunc suscipicit pulvinar odio  '),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: 10.64,
+                        left: 16,
+                        bottom: 16,
+                        right: 16,
+                      ),
+                      child: Text(
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 17,
+                          ),
+                          'keeps track of the water level by time and displays it through a graph either monthly, weekly or daily.'),
+                    ),
                   ],
                 ),
               ),
@@ -186,25 +200,32 @@ class Preview extends StatelessWidget {
                     ),
                     SizedBox(height: 5.8),
                     Image(
-                      image: AssetImage('assets/SMS.png'),
+                      image: AssetImage('assets/mail.png'),
                       width: 24, // set the width of the image
                       height: 24, // set the height of the image
                     ),
-                    SizedBox(height: 13.68),
-                    Text('LOREM IPSUM',
+                    SizedBox(height: 10.68),
+                    Text('SMS',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'aquire',
                           fontSize: 16.9,
                           fontWeight: FontWeight.bold,
                         )),
-                    SizedBox(height: 10.64),
-                    Text(
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 17,
-                        ),
-                        'lorem ipsum dolor sit amet consecteur adipiscing elit duis dectum tortor velit ,at commodo nunc suscipicit pulvinar odio  '),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: 10.64,
+                        left: 16,
+                        bottom: 16,
+                        right: 16,
+                      ),
+                      child: Text(
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 17,
+                          ),
+                          'offers the possibility of checking water level via SMS by sending a specific code and sends sms messages in dangerous situations.'),
+                    ),
                   ],
                 ),
               ),

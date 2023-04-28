@@ -37,7 +37,7 @@ void main() {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      home: Home(),
+      home: SignUpPage(),
     ),
   );
 }
