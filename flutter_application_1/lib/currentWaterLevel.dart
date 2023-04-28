@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:influxdb_client/api.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:http/http.dart' as http;
 
 class WaterLevelBucket extends StatefulWidget {
@@ -13,7 +13,7 @@ class WaterLevelBucket extends StatefulWidget {
 }
 
 class _WaterLevelBucketState extends State<WaterLevelBucket> {
-  double _waterLevel = 0.0;
+  double _waterLevel = 4.0;
 
   @override
   void initState() {
@@ -49,42 +49,22 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: 100,
-        height: 200,
-        decoration: BoxDecoration(
-          border: Border.all(),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: (_waterLevel / 100) * 180,
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
-                  ),
-                ),
-              ),
-            ),
-            Positioned.fill(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Text(
-                    '${_waterLevel.toStringAsFixed(1)} cm',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
-            ),
-          ],
+        width: 200.0,
+        height: 200.0,
+        child: LiquidCircularProgressIndicator(
+          value: _waterLevel /
+              100, // Specify the progress value between 0.0 and 1.0
+          valueColor: AlwaysStoppedAnimation(
+              Colors.blue), // Color of the progress indicator
+          backgroundColor: Colors.grey[200], // Color of the background
+          borderColor: Colors.blue, // Color of the border
+          borderWidth: 5.0, // Width of the border
+          direction: Axis
+              .vertical, // Progress direction (Axis.vertical or Axis.horizontal)
+          center: Text(
+            '${_waterLevel.toStringAsFixed(1)} cm',
+            style: TextStyle(fontSize: 16),
+          ), // Text displayed at the center of the indicator
         ),
       ),
     );
