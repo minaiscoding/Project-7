@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart'; //imports dart
-import 'package:hexcolor/hexcolor.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 import 'package:drop_shadow_image/drop_shadow_image.dart';
-import 'Welcome.dart';
-import 'Preview.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
   @override //redefinition of the build widget
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -60,7 +57,7 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               top: 400,
               right: 53,
               width: 275,
@@ -88,12 +85,12 @@ class Home extends StatelessWidget {
                 // make numbers equal to numbers of colors
                 heightPercentages: [0.75, 0.77, 0.85],
                 //height percentage for each colors.
-                blur: MaskFilter.blur(BlurStyle.solid, 5),
+                blur: const MaskFilter.blur(BlurStyle.solid, 5),
                 //blur intensity for waves
               ),
               waveAmplitude: 35.00, //depth of curves
               waveFrequency: 1.25, //number of curves in waves
-              size: Size(
+              size: const Size(
                 double.infinity,
                 double.infinity,
               ),

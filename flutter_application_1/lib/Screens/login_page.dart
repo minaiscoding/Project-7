@@ -1,8 +1,7 @@
-import 'package:fluid/Screens/main.dart';
+import 'package:fluid/Screens/live_history_page.dart';
 import 'package:flutter/material.dart';
-import 'Home.dart';
-import 'SignUp.dart';
-import '../Widgets/PageViewDemo.dart';
+import 'sign_up.dart';
+import '../Screens/welcome.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -26,12 +25,12 @@ class _LoginPageState extends State<LoginPage> {
             width: double.infinity,
             color: Colors.transparent,
           ),
-          Container(
+          SizedBox(
             height: 350,
             child: ClipPath(
               clipper: MyClipper(),
               child: Container(
-                color: Color(0xFF789CD2),
+                color: const Color(0xFF789CD2),
               ),
             ),
           ),
@@ -43,9 +42,9 @@ class _LoginPageState extends State<LoginPage> {
             child: InkWell(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PageViewDemo()));
+                    MaterialPageRoute(builder: (context) => const Welcome()));
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back,
                 color: Colors.white,
                 size: 40,
@@ -55,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
           Positioned(
             left: MediaQuery.of(context).size.width * 0.2,
             top: 72,
-            child: Text(
+            child: const Text(
               'Sign In',
               style: TextStyle(
                 fontFamily: 'Montserrat',
@@ -76,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Color(0xFF789CD2),
                     blurRadius: 20,
@@ -86,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
               child: Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   top: 50,
                   left: 30,
                   right: 30,
@@ -97,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextField(
                       keyboardType: TextInputType.phone,
                       controller: _tankNumberController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'tank number',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
@@ -117,11 +116,11 @@ class _LoginPageState extends State<LoginPage> {
                         prefixIcon: Icon(Icons.water, color: Color(0xFF989898)),
                       ),
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     TextField(
                       controller: _passwordController,
                       obscureText: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Password',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
@@ -153,12 +152,25 @@ class _LoginPageState extends State<LoginPage> {
             left: 117,
             top: 410,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LiveHistoryPage()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF789CD2),
+                elevation: 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                shadowColor: const Color(0xFF789CD2),
+              ),
               child: Container(
                 width: 112,
                 height: 34,
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   'Sign In',
                   style: TextStyle(
                     fontFamily: 'Montserrat',
@@ -169,14 +181,6 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.white,
                   ),
                 ),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xFF789CD2),
-                elevation: 8,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                shadowColor: Color(0xFF789CD2),
               ),
             ),
           ),
@@ -208,7 +212,7 @@ class _LoginPageState extends State<LoginPage> {
                   MaterialPageRoute(builder: (context) => SignUpPage()),
                 );
               },
-              child: Text.rich(
+              child: const Text.rich(
                 TextSpan(
                   text: 'Don\'t have an account? ',
                   style: TextStyle(
@@ -284,7 +288,7 @@ class CustomWavePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Color.fromRGBO(120, 156, 210, 0.69)
+      ..color = const Color.fromRGBO(120, 156, 210, 0.69)
       ..style = PaintingStyle.fill;
     final path = Path()
       ..moveTo(size.width, size.height * 0.7)

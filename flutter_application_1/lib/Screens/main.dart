@@ -1,19 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../Widgets/Menu.dart';
-import 'Home.dart';
-import 'LoginPage.dart';
-import 'SignUp.dart';
-import 'Welcome.dart';
-import 'Preview.dart';
-import 'LiveHistoryPage.dart';
-import 'FAQ.dart';
-import '../Widgets/Graph.dart';
-import '../Widgets/currentWaterLevel.dart';
-import '../Widgets/PageViewDemo.dart';
-import '../Widgets/CircleWaveWidget.dart';
+import 'live_history_page.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'sign_up.dart';
+import '../Widgets/page_view_demo.dart';
 
 void main() {
   AwesomeNotifications().initialize(
@@ -37,7 +26,7 @@ void main() {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      home: TankShapePage(),
+      home: PageViewDemo(),
     ),
   );
 }

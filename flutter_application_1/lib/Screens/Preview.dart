@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart'; //imports dart
-import 'package:hexcolor/hexcolor.dart';
-import 'package:drop_shadow_image/drop_shadow_image.dart';
 
 class Preview extends StatelessWidget {
   const Preview({Key? key}) : super(key: key);
   @override //redefinition of the build widget
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
@@ -35,15 +33,15 @@ class Preview extends StatelessWidget {
                     begin: Alignment.bottomRight,
                     end: Alignment.topLeft,
                     colors: [
-                      Color(0xFFFFFFFF),
-                      Color(0xFFDFECFF),
-                      Color(0xFFC3DBFF),
-                      Color(0x00C3DBFF).withOpacity(0.8),
+                      const Color(0xFFFFFFFF),
+                      const Color(0xFFDFECFF),
+                      const Color(0xFFC3DBFF),
+                      const Color(0x00C3DBFF).withOpacity(0.8),
                     ],
-                    stops: [0.0561, 0.2843, 0.8113, 1.4206],
-                    transform: GradientRotation(139.58 * 3.141516 / 180),
+                    stops: const [0.0561, 0.2843, 0.8113, 1.4206],
+                    transform: const GradientRotation(139.58 * 3.141516 / 180),
                   ),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Color.fromRGBO(101, 160, 255, 0.8),
                       blurRadius: 27.5785,
@@ -52,7 +50,7 @@ class Preview extends StatelessWidget {
                   ],
                 ),
                 child: Column(
-                  children: <Widget>[
+                  children: const <Widget>[
                     Padding(
                       padding: EdgeInsets.only(
                         top: 20,
@@ -104,15 +102,15 @@ class Preview extends StatelessWidget {
                     begin: Alignment.bottomRight,
                     end: Alignment.topLeft,
                     colors: [
-                      Color(0xFFFFFFFF),
-                      Color(0xFFDFECFF),
-                      Color(0xFFC3DBFF),
-                      Color(0x00C3DBFF).withOpacity(0.8),
+                      const Color(0xFFFFFFFF),
+                      const Color(0xFFDFECFF),
+                      const Color(0xFFC3DBFF),
+                      const Color(0x00C3DBFF).withOpacity(0.8),
                     ],
-                    stops: [0.0561, 0.2843, 0.8113, 1.4206],
-                    transform: GradientRotation(139.58 * 3.141516 / 180),
+                    stops: const [0.0561, 0.2843, 0.8113, 1.4206],
+                    transform: const GradientRotation(139.58 * 3.141516 / 180),
                   ),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Color.fromRGBO(101, 160, 255, 0.8),
                       blurRadius: 27.5785,
@@ -121,7 +119,7 @@ class Preview extends StatelessWidget {
                   ],
                 ),
                 child: Column(
-                  children: <Widget>[
+                  children: const <Widget>[
                     Padding(
                       padding: EdgeInsets.only(
                         top: 20,
@@ -173,15 +171,15 @@ class Preview extends StatelessWidget {
                     begin: Alignment.bottomRight,
                     end: Alignment.topLeft,
                     colors: [
-                      Color(0xFFFFFFFF),
-                      Color(0xFFDFECFF),
-                      Color(0xFFC3DBFF),
+                      const Color(0xFFFFFFFF),
+                      const Color(0xFFDFECFF),
+                      const Color(0xFFC3DBFF),
                       Color(0x00C3DBFF).withOpacity(0.8),
                     ],
-                    stops: [0.0561, 0.2843, 0.8113, 1.4206],
-                    transform: GradientRotation(139.58 * 3.141516 / 180),
+                    stops: const [0.0561, 0.2843, 0.8113, 1.4206],
+                    transform: const GradientRotation(139.58 * 3.141516 / 180),
                   ),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Color.fromRGBO(101, 160, 255, 0.8),
                       blurRadius: 27.5785,
@@ -190,7 +188,7 @@ class Preview extends StatelessWidget {
                   ],
                 ),
                 child: Column(
-                  children: <Widget>[
+                  children: const <Widget>[
                     Padding(
                       padding: EdgeInsets.only(
                         top: 20,

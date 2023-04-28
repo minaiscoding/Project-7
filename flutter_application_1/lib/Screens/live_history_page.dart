@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import '../Widgets/Graph.dart';
-import 'Home.dart';
+import '../Widgets/graph.dart';
 import 'dart:ui';
-import '../Widgets/currentWaterLevel.dart';
+import '../Widgets/current_water_level.dart';
+import '../Widgets/menu.dart';
 
 class LiveHistoryPage extends StatefulWidget {
   @override
   _LiveHistoryPageState createState() => _LiveHistoryPageState();
 }
 
-WaterLevelChart chartWidget = new WaterLevelChart(
-    rangeStart: Duration(days: 1), sensor_ID: "'001'", key: UniqueKey());
+WaterLevelChart chartWidget = WaterLevelChart(
+    rangeStart: const Duration(days: 1), sensorID: "'001'", key: UniqueKey());
 String dropdownValue = 'Daily';
 
 class _LiveHistoryPageState extends State<LiveHistoryPage> {
@@ -44,50 +44,6 @@ class _LiveHistoryPageState extends State<LiveHistoryPage> {
   }
 
   final Color primaryColor = const Color(0xFF21457D);
-
-  Widget menuItem(String title, bool isSelected) {
-    final textStyle = TextStyle(
-      fontFamily: 'Montserrat',
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w700,
-      fontSize: 24,
-      height: 1,
-      color: isSelected ? Colors.white : Color(0xFF21457D),
-    );
-    final elevation = isSelected ? 8.0 : 0.0;
-    final backgroundColor = isSelected ? Color(0xFF21457D) : Colors.white;
-    final boxShadow = isSelected
-        ? [
-            BoxShadow(
-              color: Color.fromRGBO(101, 160, 255, 0.5),
-              offset: Offset(0, 8),
-              blurRadius: 30,
-            ),
-          ]
-        : null;
-    final borderRadius = BorderRadius.circular(30);
-
-    return ElevatedButton(
-      onPressed: () {},
-      style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor,
-        elevation: elevation,
-        shape: RoundedRectangleBorder(
-          borderRadius: borderRadius,
-        ),
-        shadowColor: Color(0xFF21457D),
-      ),
-      child: Container(
-        width: 121,
-        height: 56,
-        alignment: Alignment.center,
-        child: Text(
-          title,
-          style: textStyle,
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -247,61 +203,7 @@ class _LiveHistoryPageState extends State<LiveHistoryPage> {
               visible: _isMenuOpen,
               child: Stack(
                 children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(59, 142, 0, 0),
-                    width: 273,
-                    height: 434,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                        color: const Color.fromRGBO(26, 42, 58, 0.25),
-                        width: 1,
-                      ),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color.fromRGBO(101, 160, 255, 0.5),
-                          offset: Offset(0, 8),
-                          blurRadius: 30,
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(33),
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 40),
-                        menuItem('Home', true),
-                        SizedBox(height: 28),
-                        menuItem('Settings', false),
-                        SizedBox(height: 28),
-                        menuItem('FAQ', false),
-                        SizedBox(height: 28),
-                        SizedBox(
-                          height: 40,
-                          width: 100,
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Log out',
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 15,
-                                height: 1,
-                                color: Colors.white,
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              primary: const Color(0xFF21457D),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  Menu(),
                   Positioned(
                     top: 150,
                     right: 20,
@@ -378,19 +280,19 @@ class _LiveHistoryPageState extends State<LiveHistoryPage> {
                       case 'Weekly':
                         chartWidget = WaterLevelChart(
                             rangeStart: Duration(days: 7),
-                            sensor_ID: "'001'",
+                            sensorID: "'001'",
                             key: UniqueKey());
                         break;
                       case 'Monthly':
                         chartWidget = WaterLevelChart(
                             rangeStart: Duration(days: 30),
-                            sensor_ID: "'001'",
+                            sensorID: "'001'",
                             key: UniqueKey());
                         break;
                       case 'Daily':
                         chartWidget = WaterLevelChart(
                             rangeStart: Duration(hours: 24),
-                            sensor_ID: "'001'",
+                            sensorID: "'001'",
                             key: UniqueKey());
                         break;
                     }

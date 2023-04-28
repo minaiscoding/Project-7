@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:influxdb_client/api.dart';
-import 'dart:convert';
 import 'dart:async';
-import 'package:http/http.dart' as http;
 
 class WaterLevelData {
   final DateTime time;
@@ -14,11 +12,11 @@ class WaterLevelData {
 
 class WaterLevelChart extends StatefulWidget {
   final Duration rangeStart;
-  final String sensor_ID;
+  final String sensorID;
   final Key key;
 
   WaterLevelChart(
-      {required this.rangeStart, required this.sensor_ID, required this.key})
+      {required this.rangeStart, required this.sensorID, required this.key})
       : super(key: key);
 
   @override
@@ -49,7 +47,7 @@ class _WaterLevelChartState extends State<WaterLevelChart> {
   |> range(start: -${widget.rangeStart.inHours}h)
   |> filter(fn: (r) => r["_measurement"] == "water_level")
   |> filter(fn: (r) => r["_field"] == "value")
-  |> filter(fn: (r) => r["sensor"] == "${widget.sensor_ID}")
+  |> filter(fn: (r) => r["sensor"] == "${widget.sensorID}")
   |> aggregateWindow(every: 1400s, fn: mean, createEmpty: false)
   |> yield(name: "mean")''';
     var queryService = client.getQueryService();
@@ -58,19 +56,13 @@ class _WaterLevelChartState extends State<WaterLevelChart> {
       var recordStream = await queryService.query(fluxQuery);
       var data = <WaterLevelData>[];
       await recordStream.forEach((record) {
-        print(
-            'record: ${record['_time']}: water level: ${record['_value']} ${record['sensor']}');
         var value = record['_value'];
-
         if (value != null) {
           var waterLevelData = WaterLevelData(
             DateTime.parse(record['_time']),
             value,
           );
           data.add(waterLevelData);
-          print(waterLevelData.time.toString() +
-              " - " +
-              waterLevelData.value.toString());
         }
       });
 
@@ -79,7 +71,7 @@ class _WaterLevelChartState extends State<WaterLevelChart> {
         yield data;
       }
 
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 5));
     }
   }
 
@@ -89,7 +81,7 @@ class _WaterLevelChartState extends State<WaterLevelChart> {
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: 300,
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Card(
           elevation: 6,
           child: Padding(
@@ -119,7 +111,7 @@ class _WaterLevelChartState extends State<WaterLevelChart> {
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else {
-                  return Center(
+                  return const Center(
                     child: Positioned(
                       child: Text(
                         'Loading graph',

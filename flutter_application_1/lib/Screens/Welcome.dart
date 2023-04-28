@@ -1,4 +1,4 @@
-import 'package:fluid/Screens/LoginPage.dart';
+import 'package:fluid/Screens/login_page.dart';
 
 import 'package:flutter/material.dart'; //imports dart
 import 'package:hexcolor/hexcolor.dart';
@@ -6,7 +6,7 @@ import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 import 'package:drop_shadow_image/drop_shadow_image.dart';
 
-import 'SignUp.dart';
+import 'sign_up.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome({Key? key}) : super(key: key);
