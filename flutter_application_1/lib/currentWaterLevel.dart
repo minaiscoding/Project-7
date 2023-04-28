@@ -54,16 +54,17 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
         height: MediaQuery.of(context).size.width * 0.7,
         child: LiquidCircularProgressIndicator(
           value: _waterLevel / 100,
-          valueColor: AlwaysStoppedAnimation(Color.fromARGB(92, 112, 198, 255)),
-          backgroundColor: Colors.white,
+          valueColor: AlwaysStoppedAnimation(Color.fromARGB(123, 96, 167, 255)),
+          backgroundColor: Color.fromARGB(0, 255, 255, 255),
           borderColor: Colors.white,
-          borderWidth: 3.0,
+          borderWidth: 1,
           direction: Axis.vertical,
           center: Text(
             '${_waterLevel.toStringAsFixed(1)} %',
             style: TextStyle(
-              fontSize: 36,
-              color: Color.fromARGB(255, 6, 57, 73),
+              fontSize: 56,
+              fontFamily: "Monsstserrat",
+              color: Color.fromARGB(255, 255, 255, 255),
               fontWeight: FontWeight.w100,
             ),
           ),
