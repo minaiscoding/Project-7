@@ -88,7 +88,7 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
             ),
             Positioned(
               bottom: MediaQuery.of(context).size.height * 0.3,
-              left: MediaQuery.of(context).size.width * 0.38,
+              left: MediaQuery.of(context).size.width * 0.37,
               right: MediaQuery.of(context).size.width * 0.1,
               child: Text(
                 '100 L',
@@ -124,7 +124,6 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
     return ElevatedButton(
       onPressed: () {
         // Add your logic here to fetch data
-
         updateLastUpdateTime();
       },
       child: Text(
