@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
-
+import 'dart:ui';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:http/http.dart' as http;
+import 'Menu.dart';
 
 class LiveLevelPage extends StatefulWidget {
   @override
@@ -12,6 +13,7 @@ class LiveLevelPage extends StatefulWidget {
 
 class _LiveLevelPageState extends State<LiveLevelPage> {
   bool _isMenuOpen = false;
+
   String lastUpdateTime = '';
   late WaterLevelFetcher dataFetcher;
 
@@ -68,6 +70,11 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
         ),
         child: Stack(
           children: [
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.transparent,
+            ),
             Positioned(
               left: 25,
               top: 60,
@@ -78,12 +85,13 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
               ),
             ),
             Positioned(
-              right: 80,
+              right: 25,
               top: 70,
-              child: Icon(
-                Icons.notifications,
-                size: 32,
-                color: Colors.white,
+              child: GestureDetector(
+                onTapDown: (details) {
+                  _openMenu();
+                },
+                child: Icon(Icons.menu, size: 32, color: Colors.white),
               ),
             ),
             Positioned(
@@ -105,7 +113,7 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
               left: MediaQuery.of(context).size.width * 0.37,
               right: MediaQuery.of(context).size.width * 0.1,
               child: Text(
-                '${dataFetcher.waterLevel} L',
+                '${(dataFetcher.waterLevel / 100 * 20).toStringAsFixed(1)} L',
                 style: TextStyle(
                     color: Colors.white, fontFamily: 'Aquire', fontSize: 35),
               ),
@@ -120,6 +128,28 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
                   color: Colors.white,
                   fontFamily: 'Montserrat',
                 ),
+              ),
+            ),
+            Visibility(
+              visible: _isMenuOpen,
+              child: Stack(
+                children: <Widget>[
+                  Menu(),
+                  Positioned(
+                    top: 150,
+                    right: 20,
+                    child: IconButton(
+                      icon: Icon(Icons.close),
+                      iconSize: 40,
+                      color: const Color(0xFF21457D),
+                      onPressed: () {
+                        setState(() {
+                          _closeMenu();
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
