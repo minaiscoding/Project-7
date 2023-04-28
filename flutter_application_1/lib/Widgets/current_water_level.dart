@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:influxdb_client/api.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:wave/config.dart';
+import 'package:wave/wave.dart';
 
 class WaterLevelBucket extends StatefulWidget {
   final String sensorId;
@@ -65,7 +68,7 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
         height: 200,
         decoration: BoxDecoration(
           border: Border.all(),
-          borderRadius: BorderRadius.circular(10),
+          shape: BoxShape.circle,
         ),
         child: Stack(
           children: [
@@ -94,6 +97,29 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
+              ),
+            ),
+            WaveWidget(
+              //user Stack() widget to overlap content and waves
+              config: CustomConfig(
+                colors: [
+                  Color.fromARGB(255, 122, 188, 204).withOpacity(0.43),
+                  Color(0xff1D9FC9).withOpacity(0.56),
+                  Color.fromARGB(255, 20, 63, 150).withOpacity(0.3),
+                ],
+                durations: [6500, 7500, 9500],
+                //durations of animations for each colors,
+                // make numbers equal to numbers of colors
+                heightPercentages: [0.5, 0.51, 0.48],
+                //height percentage for each colors.
+                blur: MaskFilter.blur(BlurStyle.solid, 5),
+                //blur intensity for waves
+              ),
+              waveAmplitude: 10.00, //depth of curves
+              waveFrequency: 1.25, //number of curves in waves
+              size: Size(
+                double.infinity,
+                double.infinity,
               ),
             ),
           ],

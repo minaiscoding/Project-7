@@ -1,17 +1,14 @@
-import 'package:fluid/main.dart';
+import 'package:fluid/Screens/live_history_page.dart';
 import 'package:flutter/material.dart';
+import 'sign_up.dart';
+import '../Screens/welcome.dart';
 
-import 'Home.dart';
-import 'SignIn.dart';
-
-class SignUpPage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
-  final TextEditingController _fullnameController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController _tankNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmpasswordController =
@@ -20,7 +17,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, //Color(0xFF789CD2),
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           Container(
@@ -28,12 +25,12 @@ class _SignUpPageState extends State<SignUpPage> {
             width: double.infinity,
             color: Colors.transparent,
           ),
-          Container(
+          SizedBox(
             height: 350,
             child: ClipPath(
               clipper: MyClipper(),
               child: Container(
-                color: Color(0xFF789CD2),
+                color: const Color(0xFF789CD2),
               ),
             ),
           ),
@@ -45,9 +42,9 @@ class _SignUpPageState extends State<SignUpPage> {
             child: InkWell(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PageViewDemo()));
+                    MaterialPageRoute(builder: (context) => const Welcome()));
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back,
                 color: Colors.white,
                 size: 40,
@@ -57,8 +54,8 @@ class _SignUpPageState extends State<SignUpPage> {
           Positioned(
             left: MediaQuery.of(context).size.width * 0.2,
             top: 72,
-            child: Text(
-              'Sign Up',
+            child: const Text(
+              'Sign In',
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontStyle: FontStyle.normal,
@@ -71,14 +68,14 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           Positioned(
             left: 52,
-            top: 160,
+            top: 167,
             child: Container(
               width: 288,
-              height: 460,
+              height: 280,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Color(0xFF789CD2),
                     blurRadius: 20,
@@ -88,8 +85,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 ],
               ),
               child: Padding(
-                padding: EdgeInsets.only(
-                  top: 30,
+                padding: const EdgeInsets.only(
+                  top: 50,
                   left: 30,
                   right: 30,
                 ),
@@ -97,36 +94,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     TextField(
-                      controller: _fullnameController,
-                      decoration: InputDecoration(
-                        hintText: 'Full name',
-                        hintStyle: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                          color: Color(0xFF9FA5C0),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFF789CD2), width: 1),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFF789CD2), width: 2),
-                        ),
-                        prefixIcon:
-                            Icon(Icons.person, color: Color(0xFF989898)),
-                        labelStyle: TextStyle(color: Color(0xFF789CD2)),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    TextField(
                       keyboardType: TextInputType.phone,
                       controller: _tankNumberController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'tank number',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
@@ -146,37 +116,11 @@ class _SignUpPageState extends State<SignUpPage> {
                         prefixIcon: Icon(Icons.water, color: Color(0xFF989898)),
                       ),
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    TextField(
-                      keyboardType: TextInputType.phone,
-                      controller: _phoneNumberController,
-                      decoration: InputDecoration(
-                        hintText: 'Phone number',
-                        hintStyle: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                          color: Color(0xFF9FA5C0),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFF789CD2), width: 1),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFF789CD2), width: 1),
-                        ),
-                        prefixIcon: Icon(Icons.phone, color: Color(0xFF989898)),
-                      ),
-                    ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 40),
                     TextField(
                       controller: _passwordController,
                       obscureText: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Password',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
@@ -197,28 +141,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     SizedBox(height: 30),
-                    TextField(
-                      controller: _confirmpasswordController,
-                      decoration: InputDecoration(
-                        hintText: 'Confirm password',
-                        hintStyle: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                          color: Color(0xFF9FA5C0),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFF789CD2), width: 1),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFF789CD2), width: 1),
-                        ),
-                        prefixIcon: Icon(Icons.lock, color: Color(0xFF989898)),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -228,15 +150,28 @@ class _SignUpPageState extends State<SignUpPage> {
             width: 157,
             height: 60,
             left: 117,
-            top: 585,
+            top: 410,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LiveHistoryPage()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF789CD2),
+                elevation: 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                shadowColor: const Color(0xFF789CD2),
+              ),
               child: Container(
                 width: 112,
                 height: 34,
                 alignment: Alignment.center,
-                child: Text(
-                  'Sign Up',
+                child: const Text(
+                  'Sign In',
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontStyle: FontStyle.normal,
@@ -246,14 +181,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     color: Colors.white,
                   ),
                 ),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xFF789CD2),
-                elevation: 8,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                shadowColor: Color(0xFF789CD2),
               ),
             ),
           ),
@@ -276,18 +203,18 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           Positioned(
-            top: 670,
+            top: 552,
             left: 72,
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  MaterialPageRoute(builder: (context) => SignUpPage()),
                 );
               },
-              child: Text.rich(
+              child: const Text.rich(
                 TextSpan(
-                  text: 'Already have an account? ',
+                  text: 'Don\'t have an account? ',
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontStyle: FontStyle.normal,
@@ -298,7 +225,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   children: <TextSpan>[
                     TextSpan(
-                      text: 'Sign in',
+                      text: 'Sign up',
                       style: TextStyle(
                         color: Color(0xff789CD2),
                       ),
@@ -361,7 +288,7 @@ class CustomWavePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Color.fromRGBO(120, 156, 210, 0.69)
+      ..color = const Color.fromRGBO(120, 156, 210, 0.69)
       ..style = PaintingStyle.fill;
     final path = Path()
       ..moveTo(size.width, size.height * 0.7)

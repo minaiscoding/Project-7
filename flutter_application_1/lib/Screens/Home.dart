@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart'; //imports dart
-import 'package:hexcolor/hexcolor.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 import 'package:drop_shadow_image/drop_shadow_image.dart';
-import 'Welcome.dart';
-import 'Preview.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
   @override //redefinition of the build widget
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -26,7 +23,7 @@ class Home extends StatelessWidget {
               top: 104,
               left: -25,
               child: DropShadowImage(
-                image: Image.asset('assets/logo (1).png'),
+                image: Image.asset('assets/HomeLogo.png'),
                 borderRadius: 15,
                 offset: Offset(0, 4.10895),
                 blurRadius: 13.655,
@@ -60,18 +57,18 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              top: 376,
+            const Positioned(
+              top: 400,
               right: 53,
               width: 275,
-              height: 72,
+              height: 80,
               child: Text(
-                'Lorem ipsum dolor sit amet',
+                'Don’t let a low water level catch you by surprise.',
                 textAlign: TextAlign.center,
                 softWrap: true,
                 style: TextStyle(
-                  fontFamily: 'aquire',
-                  fontSize: 25,
+                  color: const Color(0xff1a2a3a),
+                  fontSize: 20,
                 ),
               ),
             ),
@@ -81,7 +78,6 @@ class Home extends StatelessWidget {
                 colors: [
                   Color(0xfff5fdff).withOpacity(0.43),
                   Color(0xff1D9FC9).withOpacity(0.4),
-                  // Color.fromARGB(255, 60, 87, 207).withOpacity(0.2),
                   Color.fromARGB(255, 9, 41, 105).withOpacity(0.5),
                 ],
                 durations: [6500, 7500, 9500],
@@ -89,12 +85,12 @@ class Home extends StatelessWidget {
                 // make numbers equal to numbers of colors
                 heightPercentages: [0.75, 0.77, 0.85],
                 //height percentage for each colors.
-                blur: MaskFilter.blur(BlurStyle.solid, 5),
+                blur: const MaskFilter.blur(BlurStyle.solid, 5),
                 //blur intensity for waves
               ),
               waveAmplitude: 35.00, //depth of curves
               waveFrequency: 1.25, //number of curves in waves
-              size: Size(
+              size: const Size(
                 double.infinity,
                 double.infinity,
               ),
