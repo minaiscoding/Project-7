@@ -2,9 +2,18 @@ import 'package:fluid/main.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-
 import 'Home.dart';
 import 'SignIn.dart';
+
+final TextEditingController _fullnameController = TextEditingController();
+final TextEditingController _phoneNumberController = TextEditingController();
+final TextEditingController _tankNumberController = TextEditingController();
+final TextEditingController _passwordController = TextEditingController();
+final TextEditingController _confirmpasswordController =
+    TextEditingController();
+final TextEditingController _tankWidthController = TextEditingController();
+final TextEditingController _tankHeightController = TextEditingController();
+final TextEditingController _tankLengthController = TextEditingController();
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -12,13 +21,6 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final TextEditingController _fullnameController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
-  final TextEditingController _tankNumberController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmpasswordController =
-      TextEditingController();
-
   Future<void> _submitSignUpForm() async {
     final String apiUrl = "http://192.168.78.9:5000/signup";
 
@@ -426,4 +428,239 @@ class CustomWavePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomWavePainter oldDelegate) => false;
+}
+
+class TankInformation extends StatefulWidget {
+  @override
+  _TankInformationState createState() => _TankInformationState();
+}
+
+class _TankInformationState extends State<TankInformation> {
+  final Color primaryColor = const Color(0xFF21457D);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        child: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Color(0xFFBBD0EA),
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: 25,
+                    top: 50,
+                    child: Image.asset(
+                      'assets/SmallLogo.png',
+                      width: 70, // Set width to 50 pixels
+                      height: 70, // Set height to 50 pixels
+                    ),
+                  ),
+                  Positioned(
+                    left: MediaQuery.of(context).size.width * 0.2,
+                    top: 100,
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text(
+                        'Add a tank',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 35.16,
+                          color: const Color(0xff1a2a3a),
+                          height: 1.2,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 220,
+                    left: 40,
+                    child: Container(
+                      width: 400,
+                      height: 300,
+                      child: Text(
+                        softWrap: true,
+                        'Enter the information relative to your tank',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w300),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 52,
+                    top: 300,
+                    child: Container(
+                      width: 288,
+                      height: 400,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xFF789CD2),
+                            blurRadius: 20,
+                            spreadRadius: 0,
+                            offset: Offset(0, 0),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          top: 50,
+                          left: 30,
+                          right: 30,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            TextField(
+                              keyboardType: TextInputType.phone,
+                              controller: _tankNumberController,
+                              decoration: InputDecoration(
+                                hintText: 'Tank number',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  color: Color(0xFF9FA5C0),
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(0xFF789CD2), width: 1),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(0xFF789CD2), width: 1),
+                                ),
+                                prefixIcon:
+                                    Icon(Icons.water, color: Color(0xFF989898)),
+                              ),
+                            ),
+                            SizedBox(height: 40),
+                            TextField(
+                              keyboardType: TextInputType.phone,
+                              controller: _tankHeightController,
+                              decoration: InputDecoration(
+                                hintText: 'Tank height',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  color: Color(0xFF9FA5C0),
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(0xFF789CD2), width: 1),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(0xFF789CD2), width: 1),
+                                ),
+                                prefixIcon:
+                                    Icon(Icons.water, color: Color(0xFF989898)),
+                              ),
+                            ),
+                            SizedBox(height: 30),
+                            TextField(
+                              keyboardType: TextInputType.number,
+                              controller: _tankWidthController,
+                              decoration: InputDecoration(
+                                hintText: 'Base width',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  color: Color(0xFF9FA5C0),
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(0xFF789CD2), width: 1),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(0xFF789CD2), width: 1),
+                                ),
+                                prefixIcon:
+                                    Icon(Icons.water, color: Color(0xFF989898)),
+                              ),
+                            ),
+                            SizedBox(height: 40),
+                            TextField(
+                              keyboardType: TextInputType.number,
+                              controller: _tankLengthController,
+                              decoration: InputDecoration(
+                                hintText: 'Base length ',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  color: Color(0xFF9FA5C0),
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(0xFF789CD2), width: 1),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(0xFF789CD2), width: 1),
+                                ),
+                                prefixIcon:
+                                    Icon(Icons.water, color: Color(0xFF989898)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    width: 157,
+                    height: 60,
+                    left: 117,
+                    top: 670,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Container(
+                        width: 112,
+                        height: 34,
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Add tank',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20,
+                            height: 1,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xFF789CD2),
+                        elevation: 8,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        shadowColor: Color(0xFF789CD2),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
