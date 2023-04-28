@@ -59,8 +59,8 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFF21457D),
-              Color.fromARGB(255, 105, 169, 247),
+              Color.fromARGB(255, 0, 41, 99),
+              Color.fromARGB(255, 84, 133, 194),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -72,7 +72,7 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
               left: 25,
               top: 50,
               child: Image.asset(
-                'assets/logo2.png',
+                'assets/logo_white.png',
                 width: 70,
                 height: 70,
               ),
