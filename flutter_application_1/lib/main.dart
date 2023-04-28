@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart'; //imports dart
 import 'package:hexcolor/hexcolor.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'Menu.dart';
+import 'LiveLevelPage.dart';
 import 'Home.dart';
-import 'SignIn.dart';
-import 'SignUp.dart';
+
 import 'Welcome.dart';
 import 'Preview.dart';
-import 'history.dart';
-import 'HistoryStats.dart';
-
-import 'FAQ.dart';
-import 'Graph.dart';
 import 'currentWaterLevel.dart';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -88,7 +82,7 @@ void main() {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      home: HistoryStats(),
+      home: LiveLevelPage(),
     ),
   );
 }

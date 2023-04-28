@@ -1,12 +1,9 @@
-import 'package:fluid/SignIn.dart';
-
+import 'package:fluid/currentWaterLevel.dart';
 import 'package:flutter/material.dart'; //imports dart
 import 'package:hexcolor/hexcolor.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 import 'package:drop_shadow_image/drop_shadow_image.dart';
-
-import 'SignUp.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome({Key? key}) : super(key: key);
@@ -88,7 +85,8 @@ class Welcome extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginPage()),
+                                builder: (context) =>
+                                    WaterLevelBucket(sensorId: '001')),
                           );
                         },
                         child: Padding(
@@ -125,7 +123,9 @@ class Welcome extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SignUpPage()),
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            WaterLevelBucket(sensorId: '001')),
                   );
                 },
                 child: Positioned(

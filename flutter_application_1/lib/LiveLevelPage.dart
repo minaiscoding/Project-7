@@ -1,84 +1,15 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'dart:async';
 import 'Home.dart';
-import 'currentWaterLevel.dart';
 import 'dart:ui';
+import 'currentWaterLevel.dart';
 
-class HistoryPage extends StatefulWidget {
+class LiveLevelPage extends StatefulWidget {
   @override
-  _HistoryPageState createState() => _HistoryPageState();
+  _LiveLevelPageState createState() => _LiveLevelPageState();
 }
 
-class _HistoryPageState extends State<HistoryPage> {
-  bool _isLevelSelected = true;
+class _LiveLevelPageState extends State<LiveLevelPage> {
   bool _isMenuOpen = false;
-  double _waterLevel = 0;
-
-  Future<double> _getWaterLevel() async {
-    final response =
-        await http.get(Uri.parse('http://192.168.1.4:5000/water-level'));
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      final waterLevel = data['water_level'];
-      return waterLevel;
-    } else {
-      throw Exception('Failed to load water level');
-    }
-  }
-
-  void triggerNotification(double waterLevel) {
-    AwesomeNotifications().createNotification(
-        content: NotificationContent(
-      id: 10, // -1 is replaced by a random number
-      channelKey: 'alerts',
-      title: 'Your tank is getting empty !',
-      body: "You only have ${waterLevel}% left in your tank",
-    ));
-  }
-
-  void _startTimer() {
-    Timer.periodic(Duration(seconds: 5), (timer) async {
-      try {
-        final waterLevel = await _getWaterLevel();
-        setState(() {
-          _waterLevel = waterLevel;
-        });
-        print('Water level: $_waterLevel');
-        triggerNotification(_waterLevel);
-      } catch (e) {
-        print(e);
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      if (!isAllowed) {
-        AwesomeNotifications().requestPermissionToSendNotifications();
-      }
-    });
-    super.initState();
-    _startTimer();
-  }
-
-  void _selectLevel() {
-    setState(() {
-      _isLevelSelected = true;
-      _isMenuOpen = false;
-    });
-  }
-
-  void _selectTemperature() {
-    setState(() {
-      _isLevelSelected = false;
-      _isMenuOpen = false;
-    });
-  }
 
   void _openMenu() {
     setState(() {
@@ -184,7 +115,6 @@ class _HistoryPageState extends State<HistoryPage> {
               ),
             ),
             Positioned(
-              // left: 100,
               top: 156,
               child: Column(
                 children: [
@@ -199,63 +129,24 @@ class _HistoryPageState extends State<HistoryPage> {
                       ),
                     ),
                     padding: EdgeInsets.all(16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(width: 20),
-                        GestureDetector(
-                          onTap: _selectLevel,
-                          child: Stack(children: [
-                            Container(
-                              width: 90,
-                              height: 36,
-                              child: Center(
-                                child: Text(
-                                  'Level',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20,
-                                    color: _isLevelSelected
-                                        ? Color(0xFF1A2A3A)
-                                        : Color(0xFF989898),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ]),
-                        ),
-                        VerticalDivider(
-                          width: 1,
-                          thickness: 1,
-                          color: Color(0xFF989898),
-                        ),
-                        SizedBox(width: 5),
-                        GestureDetector(
-                          onTap: _selectTemperature,
-                          child: Container(
-                            width: 150,
-                            height: 50,
-                            child: Center(
-                              child: Text(
-                                'Temperature',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20,
-                                  color: !_isLevelSelected
-                                      ? Color(0xFF1A2A3A)
-                                      : Color(0xFF989898),
-                                ),
-                              ),
+                    child: Stack(children: [
+                      Container(
+                        width: 90,
+                        height: 36,
+                        child: Center(
+                          child: Text(
+                            'Live',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20,
+                              color: Color(0xFF1A2A3A),
                             ),
                           ),
                         ),
-                        SizedBox(width: 15),
-                      ],
-                    ),
+                      ),
+                    ]),
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
@@ -271,9 +162,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         bottomRight: Radius.circular(20),
                       ),
                     ),
-                    child: _isLevelSelected
-                        ? _buildLevel(_waterLevel)
-                        : _buildTemperature(),
+                    child: _buildLive(),
                   ),
                 ],
               ),
@@ -300,7 +189,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   Container(
                     margin: const EdgeInsets.fromLTRB(59, 142, 0, 0),
                     width: 273,
-                    height: 490,
+                    height: 434,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(
@@ -319,9 +208,7 @@ class _HistoryPageState extends State<HistoryPage> {
                     child: Column(
                       children: [
                         SizedBox(height: 40),
-                        menuItem('Home', false),
-                        SizedBox(height: 28),
-                        menuItem('History', true),
+                        menuItem('Home', true),
                         SizedBox(height: 28),
                         menuItem('Settings', false),
                         SizedBox(height: 28),
@@ -377,21 +264,9 @@ class _HistoryPageState extends State<HistoryPage> {
     );
   }
 
-  Widget _buildLevel(double waterLevel) {
+  Widget _buildLive() {
     return Container(
-      child: WaterLevelBucket(sensorId: "'001'"),
-
-    );
-  }
-
-  Widget _buildTemperature() {
-    return Container(
-      child: Center(
-        child: Text(
-          'Temperature',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
+      child: WaterLevelBucket(sensorId: '001'),
     );
   }
 }

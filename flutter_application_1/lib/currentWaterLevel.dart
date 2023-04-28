@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:influxdb_client/api.dart';
+import 'package:http/http.dart' as http;
 
 class WaterLevelBucket extends StatefulWidget {
   final String sensorId;
@@ -22,39 +23,26 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
   }
 
   Future<void> _fetchData() async {
-    var token =
-        'MRYbOmaiLDqsc2yCPN39KUxmnSdhQGzQ_X4-hn3PVOd-us1QlkeOCQYw_0ROCt34Y5D-IhOGRXkO4PGS7MEK-Q==';
-    var bucket = 'tanks';
-    var org = 'Esi';
-    var client = InfluxDBClient(
-        url: 'http://192.168.139.102:8086',
-        token: token,
-        org: org,
-        bucket: bucket);
-    var fluxQuery = '''from(bucket: "tanks")
-      |> range(start: -5m)
-      |> filter(fn: (r) => r["_measurement"] == "water_level")
-      |> filter(fn: (r) => r["_field"] == "value")
-      |> filter(fn: (r) => r["sensor"] == "${widget.sensorId}")
-      |> last()
-      |> yield(name: "value")''';
-    var queryService = client.getQueryService();
+    var url =
+        'http://192.168.167.102:5000'; // Replace with your API endpoint URL
 
-    var recordStream = await queryService.query(fluxQuery);
-    var data = <double>[];
-    await recordStream.forEach((record) {
-      print(
-          'record: ${record['_time']}: water level: ${record['_value']} ${record['sensor']}');
-      var value = record['_value'];
-      if (value != null) {
-        data.add(value);
+    try {
+      var response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        var value = double.tryParse(response.body);
+        if (value != null) {
+          setState(() {
+            _waterLevel = value;
+          });
+        } else {
+          print('Failed to parse the response body as a double.');
+        }
+      } else {
+        print('HTTP request failed with status code: ${response.statusCode}');
       }
-    });
-
-    if (data.isNotEmpty) {
-      setState(() {
-        _waterLevel = data[0];
-      });
+    } catch (e) {
+      print('An error occurred during the HTTP request: $e');
     }
   }
 
