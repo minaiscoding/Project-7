@@ -46,25 +46,27 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: 200.0,
-        height: 200.0,
+        width: MediaQuery.of(context).size.width * 0.7,
+        height: MediaQuery.of(context).size.width * 0.7,
         child: LiquidCircularProgressIndicator(
-          value: _waterLevel /
-              100, // Specify the progress value between 0.0 and 1.0
-          valueColor: AlwaysStoppedAnimation(
-              Colors.blue), // Color of the progress indicator
-          backgroundColor: Colors.grey[200], // Color of the background
-          borderColor: Colors.blue, // Color of the border
-          borderWidth: 5.0, // Width of the border
-          direction: Axis
-              .vertical, // Progress direction (Axis.vertical or Axis.horizontal)
+          value: _waterLevel / 100,
+          valueColor: AlwaysStoppedAnimation(Color.fromARGB(92, 112, 198, 255)),
+          backgroundColor: Colors.white,
+          borderColor: Colors.white,
+          borderWidth: 3.0,
+          direction: Axis.vertical,
           center: Text(
-            '${_waterLevel.toStringAsFixed(1)} cm',
-            style: TextStyle(fontSize: 16),
-          ), // Text displayed at the center of the indicator
+            '${_waterLevel.toStringAsFixed(1)} %',
+            style: TextStyle(
+              fontSize: 36,
+              color: Color.fromARGB(255, 6, 57, 73),
+              fontWeight: FontWeight.w100,
+            ),
+          ),
         ),
       ),
     );
