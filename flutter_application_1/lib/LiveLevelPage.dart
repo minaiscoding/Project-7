@@ -10,6 +10,7 @@ class LiveLevelPage extends StatefulWidget {
 
 class _LiveLevelPageState extends State<LiveLevelPage> {
   bool _isMenuOpen = false;
+  String lastUpdateTime = '';
 
   void _openMenu() {
     setState(() {
@@ -24,6 +25,18 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
   }
 
   final Color primaryColor = const Color(0xFF21457D);
+
+  String getLastUpdatedTime() {
+    var now = DateTime.now();
+    var formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+    return formatter.format(now);
+  }
+
+  void updateLastUpdateTime() {
+    setState(() {
+      lastUpdateTime = getLastUpdatedTime();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +81,32 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
               ),
             ),
             Positioned(
-              bottom: MediaQuery.of(context).size.height * 0.309,
+              bottom: MediaQuery.of(context).size.height * 0.1,
               left: MediaQuery.of(context).size.width * 0.3,
               right: MediaQuery.of(context).size.width * 0.3,
               child: _buildGetDataButton(),
+            ),
+            Positioned(
+              bottom: MediaQuery.of(context).size.height * 0.3,
+              left: MediaQuery.of(context).size.width * 0.38,
+              right: MediaQuery.of(context).size.width * 0.1,
+              child: Text(
+                '100 L',
+                style: TextStyle(
+                    color: Colors.white, fontFamily: 'Aquire', fontSize: 35),
+              ),
+            ),
+            Positioned(
+              bottom: MediaQuery.of(context).size.height * 0.05,
+              left: MediaQuery.of(context).size.width * 0.19,
+              right: MediaQuery.of(context).size.width * 0.1,
+              child: Text(
+                'Last updated: $lastUpdateTime',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Montserrat',
+                ),
+              ),
             ),
           ],
         ),
@@ -89,11 +124,20 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
     return ElevatedButton(
       onPressed: () {
         // Add your logic here to fetch data
+
+        updateLastUpdateTime();
       },
-      child: Text('Update'),
+      child: Text(
+        'Update',
+        style: TextStyle(fontFamily: 'Montserrat', fontSize: 20),
+      ),
       style: ElevatedButton.styleFrom(
         backgroundColor: Color.fromARGB(
-            221, 96, 167, 255), // Transparent with alpha value of 0
+          221,
+          96,
+          167,
+          255,
+        ), // Transparent with alpha value of 0
 
         elevation: 4, // Adjust the elevation value as needed
         shape: RoundedRectangleBorder(
