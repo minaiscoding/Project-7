@@ -14,6 +14,7 @@ final TextEditingController _confirmpasswordController =
 final TextEditingController _tankWidthController = TextEditingController();
 final TextEditingController _tankHeightController = TextEditingController();
 final TextEditingController _tankLengthController = TextEditingController();
+bool isCylinder = false;
 
 class SignUpPage extends StatefulWidget {
   @override
