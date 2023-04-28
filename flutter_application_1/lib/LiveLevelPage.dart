@@ -70,7 +70,7 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
           children: [
             Positioned(
               left: 25,
-              top: 50,
+              top: 60,
               child: Image.asset(
                 'assets/logo_white.png',
                 width: 70,
