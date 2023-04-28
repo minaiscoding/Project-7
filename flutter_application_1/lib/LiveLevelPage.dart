@@ -68,10 +68,10 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
               ),
             ),
             Positioned(
-              bottom: MediaQuery.of(context).size.height * 0.03,
-              left: MediaQuery.of(context).size.width * 0.05,
-              right: MediaQuery.of(context).size.width * 0.05,
-              child: _buildDateTimeContainer(),
+              bottom: MediaQuery.of(context).size.height * 0.309,
+              left: MediaQuery.of(context).size.width * 0.3,
+              right: MediaQuery.of(context).size.width * 0.3,
+              child: _buildGetDataButton(),
             ),
           ],
         ),
@@ -85,45 +85,21 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
     );
   }
 
-  Widget _buildDateTimeContainer() {
-    DateTime now = DateTime.now();
-    String formattedDate = DateFormat('EEEE, MMMM d').format(now);
-    String formattedTime = DateFormat.jm().format(now);
+  Widget _buildGetDataButton() {
+    return ElevatedButton(
+      onPressed: () {
+        // Add your logic here to fetch data
+      },
+      child: Text('Update'),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color.fromARGB(
+            221, 96, 167, 255), // Transparent with alpha value of 0
 
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.3,
-      decoration: BoxDecoration(
-        color: Color.fromARGB(218, 255, 255, 255),
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromARGB(255, 2, 84, 87).withOpacity(0.2),
-            spreadRadius: 3,
-            blurRadius: 5,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      padding: EdgeInsets.all(20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            formattedDate,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 10),
-          Text(
-            formattedTime,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.normal,
-            ),
-          ),
-        ],
+        elevation: 4, // Adjust the elevation value as needed
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       ),
     );
   }
