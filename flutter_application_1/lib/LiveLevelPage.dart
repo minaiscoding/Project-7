@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
-import 'currentWaterLevel.dart';
+
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+import 'package:http/http.dart' as http;
 
 class LiveLevelPage extends StatefulWidget {
   @override
@@ -11,6 +13,13 @@ class LiveLevelPage extends StatefulWidget {
 class _LiveLevelPageState extends State<LiveLevelPage> {
   bool _isMenuOpen = false;
   String lastUpdateTime = '';
+  late WaterLevelFetcher dataFetcher;
+
+  @override
+  void initState() {
+    super.initState();
+    dataFetcher = WaterLevelFetcher('001');
+  }
 
   void _openMenu() {
     setState(() {
@@ -36,6 +45,11 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
     setState(() {
       lastUpdateTime = getLastUpdatedTime();
     });
+  }
+
+  void fetchDataAndUpdate() async {
+    await dataFetcher.fetchData();
+    updateLastUpdateTime();
   }
 
   @override
@@ -91,7 +105,7 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
               left: MediaQuery.of(context).size.width * 0.37,
               right: MediaQuery.of(context).size.width * 0.1,
               child: Text(
-                '100 L',
+                '${dataFetcher.waterLevel} L',
                 style: TextStyle(
                     color: Colors.white, fontFamily: 'Aquire', fontSize: 35),
               ),
@@ -116,15 +130,16 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
 
   Widget _buildLive() {
     return Container(
-      child: WaterLevelBucket(sensorId: '001'),
+      child: WaterLevelBucket(
+        dataFetcher: dataFetcher,
+      ),
     );
   }
 
   Widget _buildGetDataButton() {
     return ElevatedButton(
       onPressed: () {
-        // Add your logic here to fetch data
-        updateLastUpdateTime();
+        fetchDataAndUpdate();
       },
       child: Text(
         'Update',
@@ -136,13 +151,88 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
           96,
           167,
           255,
-        ), // Transparent with alpha value of 0
-
-        elevation: 4, // Adjust the elevation value as needed
+        ),
+        elevation: 4,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      ),
+    );
+  }
+}
+
+class WaterLevelFetcher {
+  final String sensorId;
+  double waterLevel = 4.0;
+
+  WaterLevelFetcher(this.sensorId);
+
+  Future<void> fetchData() async {
+    var url =
+        'http://192.168.167.102:5000'; // Replace with your API endpoint URL
+
+    try {
+      var response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        var value = double.tryParse(response.body);
+        if (value != null) {
+          waterLevel = value;
+        } else {
+          print('Failed to parse the response body as a double.');
+        }
+      } else {
+        print('HTTP request failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('An error occurred during the HTTP request: $e');
+    }
+  }
+}
+
+class WaterLevelBucket extends StatefulWidget {
+  final WaterLevelFetcher dataFetcher;
+
+  const WaterLevelBucket({Key? key, required this.dataFetcher})
+      : super(key: key);
+
+  @override
+  _WaterLevelBucketState createState() => _WaterLevelBucketState();
+}
+
+class _WaterLevelBucketState extends State<WaterLevelBucket> {
+  @override
+  void initState() {
+    super.initState();
+    widget.dataFetcher.fetchData();
+    Timer.periodic(
+        Duration(seconds: 5), (Timer t) => widget.dataFetcher.fetchData());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.7,
+        height: MediaQuery.of(context).size.width * 0.7,
+        child: LiquidCircularProgressIndicator(
+          value: widget.dataFetcher.waterLevel / 100,
+          valueColor: AlwaysStoppedAnimation(Color.fromARGB(123, 96, 167, 255)),
+          backgroundColor: Color.fromARGB(0, 255, 255, 255),
+          borderColor: Colors.white,
+          borderWidth: 1,
+          direction: Axis.vertical,
+          center: Text(
+            '${widget.dataFetcher.waterLevel.toStringAsFixed(1)} %',
+            style: TextStyle(
+              fontSize: 56,
+              fontFamily: "Aquire",
+              color: Color.fromARGB(255, 255, 255, 255),
+              fontWeight: FontWeight.w100,
+            ),
+          ),
+        ),
       ),
     );
   }
