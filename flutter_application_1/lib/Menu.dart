@@ -77,11 +77,11 @@ class Menu extends StatelessWidget {
               SizedBox(height: 40),
               menuItem('Home', true),
               SizedBox(height: 28),
-              menuItem('My tank ', false),
+              menuItem('My tanks ', false),
               SizedBox(height: 28),
-              menuItem('FAQ', false),
+              menuItem('Settings', false),
               SizedBox(height: 28),
-              SizedBox(
+              /*SizedBox(
                 height: 40,
                 width: 100,
                 child: ElevatedButton(
@@ -104,7 +104,7 @@ class Menu extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
+              ),*/
             ],
           ),
         ),

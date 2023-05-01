@@ -235,8 +235,6 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
   void initState() {
     super.initState();
     widget.dataFetcher.fetchData();
-    Timer.periodic(
-        Duration(seconds: 5), (Timer t) => widget.dataFetcher.fetchData());
   }
 
   @override
