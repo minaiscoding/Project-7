@@ -4,11 +4,6 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 import hashlib
 
 
-def hash_password(password):
-    salt = "some_random_salt"
-    hash_obj = hashlib.sha256((password + salt).encode())
-    return hash_obj.hexdigest()
-
 
 app = Flask(__name__)
 bucket = "myusers"
@@ -80,6 +75,75 @@ def signup():
     return jsonify({'message': 'User created successfully'}), 201
 
 
+@app.route('/add_tank_cuboid', methods=['POST'])
+def add_tank_cuboid():
+    data = request.json
+    required_fields = ['tank_number',
+                       'tank_height', 'base_width', 'base_length']
+    for field in required_fields:
+        if (data.get(field) == ""):
+            field = field.replace("_", " ")
+            return jsonify({'error': f'{field} is required'}), 400
+
+    tank_number = int(data['tank_number'])
+    tank_volume = float(data['tank_height'])*float(data['base_width'])*float(data['base_length'])
+
+    # Store the tank information in the 'tanks' measurement
+    write_api = client.write_api(write_options=SYNCHRONOUS)
+
+    data = [
+        {
+            "measurement": "tanks",
+            "tags": {
+                "org": org,
+                "bucket": bucket
+            },
+            "fields": {
+                "tank_number": tank_number,
+                "tank_volume": tank_volume
+            }
+        }
+    ]
+
+    write_api.write(bucket=bucket, org=org, record=data)
+
+    return jsonify({'message': 'Tank information stored successfully'}), 201
+
+
+@app.route('/add_tank_cylinder', methods=['POST'])
+def add_tank_cylinder():
+    data = request.json
+    required_fields = ['tank_number',
+                       'tank_height', 'tank_width']
+    for field in required_fields:
+        if (data.get(field) == ""):
+            field = field.replace("_", " ")
+            return jsonify({'error': f'{field} is required'}), 400
+
+    tank_number = int(data['tank_number'])
+    tank_volume = float(data['tank_height'])*3.14*(float(data['tank_width'])/2)**2
+
+    # Store the tank information in the 'tanks-cylinder' measurement
+    write_api = client.write_api(write_options=SYNCHRONOUS)
+
+    data = [
+        {
+            "measurement": "tanks",
+            "tags": {
+                "org": org,
+                "bucket": bucket
+            },
+            "fields": {
+                "tank_number": tank_number,
+                "tank_volume": tank_volume
+            }
+        }
+    ]
+
+    write_api.write(bucket=bucket, org=org, record=data)
+
+    return jsonify({'message': 'Tank information stored successfully'}), 201
+
 @app.route('/signin', methods=['POST'])
 def signin():
     data = request.json
@@ -102,7 +166,7 @@ def signin():
 
     if len(result) > 0:
         tank_number = result[0].get('tank_number')
-        return jsonify({'tank_number': tank_number}), 200
+        return jsonify({'tank_number': str(tank_number)}), 200
     else:
         return jsonify({'error': 'Incorrect password or phone number'}), 401
 

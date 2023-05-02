@@ -438,6 +438,48 @@ class TankInformation extends StatefulWidget {
 
 class _TankInformationState extends State<TankInformation> {
   final Color primaryColor = const Color(0xFF21457D);
+  Future<void> _submitTankCuboidForm() async {
+    final String apiUrl = "http://192.168.78.9:5000/add_tank-cuboid";
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'tank_number': _tankNumberController.text,
+        'tank_height': _tankHeightController.text,
+        'base_width': _tankWidthController.text,
+        'base_length': _tankLengthController.text,
+      }),
+    );
+
+    final responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 201) {
+      // Tank information submission successful
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text("An error occurred!"),
+          content: Text(responseData['error']),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text("Okay"),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -656,6 +698,48 @@ class TankInformationCylinder extends StatefulWidget {
 
 class _TankInformationCylinderState extends State<TankInformationCylinder> {
   final Color primaryColor = const Color(0xFF21457D);
+
+  Future<void> _submitTankCylinderForm() async {
+    final String apiUrl = "http://192.168.78.9:5000/add_tank_cylinder";
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'tank_number': _tankNumberController.text,
+        'tank_height': _tankHeightController.text,
+        'tank_width': _tankWidthController.text,
+      }),
+    );
+
+    final responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 201) {
+      // Navigate to the home page after successful signup
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text("An error occurred!"),
+          content: Text(responseData['error']),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text("Okay"),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

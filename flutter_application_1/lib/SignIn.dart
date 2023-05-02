@@ -5,6 +5,7 @@ import 'SignUp.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -13,11 +14,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmpasswordController =
-      TextEditingController();
-  Future<void> _signIn() async {
-    final String apiUrl = "http://192.168.78.9:5000/signin";
 
+  Future<Map<String, dynamic>> _signIn(BuildContext context) async {
+    final String apiUrl = "http://192.168.78.9:5000/signin";
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: <String, String>{
@@ -32,11 +31,14 @@ class _LoginPageState extends State<LoginPage> {
     final responseData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
-      // Navigate to the home page after successful signin
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Home()),
       );
+      return {
+        'signedIn': true,
+        'tank_number': responseData['tank_number'],
+      };
     } else {
       showDialog(
         context: context,
@@ -45,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
           content: Text(responseData['error']),
           actions: <Widget>[
             ElevatedButton(
-              child: Text("Ok"),
+              child: Text("Okay"),
               onPressed: () {
                 Navigator.of(ctx).pop();
               },
@@ -53,6 +55,10 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       );
+      return {
+        'signedIn': false,
+        'tank_number': '',
+      };
     }
   }
 
@@ -194,8 +200,10 @@ class _LoginPageState extends State<LoginPage> {
             left: 117,
             top: 410,
             child: ElevatedButton(
-              onPressed: () {
-                _signIn();
+              onPressed: () async {
+                final result = await _signIn(context);
+            final bool signedIn = result['signedIn'];
+            final String tankNumber = result['tank_number'];
               },
               child: Container(
                 width: 112,
@@ -344,4 +352,5 @@ class CustomWavePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomWavePainter oldDelegate) => false;
+  
 }
