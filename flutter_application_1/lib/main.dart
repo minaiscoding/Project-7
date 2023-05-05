@@ -6,7 +6,7 @@ import 'Home.dart';
 import 'add_tank.dart';
 import 'Welcome.dart';
 import 'Preview.dart';
-
+import 'my_tanks.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
 class PageViewDemo extends StatefulWidget {
@@ -59,7 +59,10 @@ class _PageViewDemoState extends State<PageViewDemo> {
   }
 }
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Tank tank = Tank();
+  await tank.loadFromSharedPreferences();
   AwesomeNotifications().initialize(
       null, //'resource://drawable/res_app_icon',
       [
@@ -81,7 +84,8 @@ void main() {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      home: TankShapePage(),
+      // home: tank.height == "0" ? TankInformation() : LiveLevelPage(),
+      home: TankPage(),
     ),
   );
 }

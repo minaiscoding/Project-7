@@ -1,3 +1,4 @@
+import 'package:fluid/add_tank.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
@@ -5,6 +6,8 @@ import 'dart:ui';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:http/http.dart' as http;
 import 'Menu.dart';
+
+Tank tank = Tank();
 
 class LiveLevelPage extends StatefulWidget {
   @override
@@ -21,6 +24,16 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
   void initState() {
     super.initState();
     dataFetcher = WaterLevelFetcher('001');
+    _initializeData();
+  }
+
+  Future<void> _initializeData() async {
+    await tank.loadFromSharedPreferences();
+    print(tank.height);
+
+    setState(() {
+      // Update the widget state with the loaded tank data
+    });
   }
 
   void _openMenu() {
@@ -113,7 +126,9 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
               left: MediaQuery.of(context).size.width * 0.37,
               right: MediaQuery.of(context).size.width * 0.1,
               child: Text(
-                '${((12.4 - dataFetcher.waterLevel * 0.1) * 0.1).toStringAsFixed(2)} L',
+                tank.isCylinder
+                    ? '${((double.parse(tank.height) - dataFetcher.waterLevel * 0.1) * double.parse(tank.baseD) * double.parse(tank.baseD) * 3.14).toStringAsFixed(2)} L'
+                    : '${((double.parse(tank.height) - dataFetcher.waterLevel * 0.1) * double.parse(tank.length) * double.parse(tank.width)).toStringAsFixed(2)} L',
                 style: TextStyle(
                     color: Colors.white, fontFamily: 'Aquire', fontSize: 35),
               ),
@@ -244,14 +259,17 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
         width: MediaQuery.of(context).size.width * 0.7,
         height: MediaQuery.of(context).size.width * 0.7,
         child: LiquidCircularProgressIndicator(
-          value: ((12.4 - widget.dataFetcher.waterLevel * 0.1) * 10 / 124),
+          value: ((double.parse(tank.height) -
+                  widget.dataFetcher.waterLevel * 0.1) *
+              10 /
+              124),
           valueColor: AlwaysStoppedAnimation(Color.fromARGB(123, 96, 167, 255)),
           backgroundColor: Color.fromARGB(0, 255, 255, 255),
           borderColor: Colors.white,
           borderWidth: 1,
           direction: Axis.vertical,
           center: Text(
-            '${((12.4 - widget.dataFetcher.waterLevel * 0.1) * 10000 / 1240).toStringAsFixed(2)} %',
+            '${((double.parse(tank.height) - widget.dataFetcher.waterLevel * 0.1) * 1000 / 124).toStringAsFixed(2)} %',
             style: TextStyle(
               fontSize: 56,
               fontFamily: "Aquire",

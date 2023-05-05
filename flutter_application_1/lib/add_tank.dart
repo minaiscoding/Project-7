@@ -1,3 +1,4 @@
+import 'package:fluid/LiveLevelPage.dart';
 import 'package:flutter/material.dart'; //imports dart
 import 'package:hexcolor/hexcolor.dart';
 import 'package:wave/config.dart';
@@ -5,12 +6,42 @@ import 'package:wave/wave.dart';
 import 'package:drop_shadow_image/drop_shadow_image.dart';
 import 'Welcome.dart';
 import 'Preview.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 bool isCylinder = false;
 final TextEditingController _tankNumberController = TextEditingController();
 final TextEditingController _tankWidthController = TextEditingController();
 final TextEditingController _tankHeightController = TextEditingController();
 final TextEditingController _tankLengthController = TextEditingController();
+
+class Tank {
+  String tankId = "001";
+  late bool isCylinder;
+  String width = "0";
+  String height = "0";
+  String length = "0";
+  String baseD = "0";
+
+  // Method to save the tank data to shared preferences
+  Future<void> saveToSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('_isCylinder', isCylinder);
+    await prefs.setString('_width', width);
+    await prefs.setString('_height', height);
+    await prefs.setString('_length', length);
+    await prefs.setString('_baseD', baseD);
+  }
+
+  // Method to load the tank data from shared preferences
+  Future<void> loadFromSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isCylinder = prefs.getBool('_isCylinder') ?? false;
+    width = prefs.getString('_width') ?? width;
+    height = prefs.getString('_height') ?? height;
+    length = prefs.getString('_length') ?? length;
+    baseD = prefs.getString('_baseD') ?? baseD;
+  }
+}
 
 class TankInformation extends StatefulWidget {
   @override
@@ -194,7 +225,19 @@ class _TankInformationState extends State<TankInformation> {
             width: 157,
             height: 50,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Tank tank = new Tank();
+                tank.height = _tankHeightController.text;
+                tank.isCylinder = false;
+                tank.width = _tankWidthController.text;
+                tank.length = _tankLengthController.text;
+                tank.tankId = _tankNumberController.text;
+                tank.saveToSharedPreferences();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LiveLevelPage()),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 primary: Color(0xFF789CD2),
                 elevation: 8,
