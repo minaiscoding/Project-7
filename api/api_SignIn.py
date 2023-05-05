@@ -101,8 +101,8 @@ def signin():
     result = query_api.query(org=org, query=query)
 
     if len(result) > 0:
-        tank_number = result[0].get('tank_number')
-        return jsonify({'tank_number': tank_number}), 200
+        phone_number = result[0].get('phone_number')
+        return jsonify({'phone_number': phone_number}), 200
     else:
         return jsonify({'error': 'Incorrect password or phone number'}), 401
 
