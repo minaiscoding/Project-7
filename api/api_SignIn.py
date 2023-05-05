@@ -3,7 +3,6 @@ import influxdb_client
 from influxdb_client.client.write_api import SYNCHRONOUS
 import hashlib
 
-
 def hash_password(password):
     salt = "some_random_salt"
     hash_obj = hashlib.sha256((password + salt).encode())
