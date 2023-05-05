@@ -56,11 +56,11 @@ class _TankInformationState extends State<TankInformation> {
                   ),
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 40,
                 ),
                 Container(
                   width: 288,
-                  height: 400,
+                  height: 365,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(30),
@@ -75,7 +75,7 @@ class _TankInformationState extends State<TankInformation> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(
-                      top: 50,
+                      top: 30,
                       left: 30,
                       right: 30,
                     ),
@@ -189,7 +189,7 @@ class _TankInformationState extends State<TankInformation> {
             ),
           ),
           Positioned(
-            top: 630,
+            top: 600,
             right: 120,
             width: 157,
             height: 50,
