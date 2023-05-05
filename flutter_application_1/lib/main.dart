@@ -3,7 +3,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'LiveLevelPage.dart';
 import 'Home.dart';
-
+import 'add_tank.dart';
 import 'Welcome.dart';
 import 'Preview.dart';
 
@@ -81,7 +81,7 @@ void main() {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      home: LiveLevelPage(),
+      home: TankShapePage(),
     ),
   );
 }

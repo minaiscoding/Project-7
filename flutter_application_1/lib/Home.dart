@@ -5,6 +5,7 @@ import 'package:wave/wave.dart';
 import 'package:drop_shadow_image/drop_shadow_image.dart';
 import 'Welcome.dart';
 import 'Preview.dart';
+import 'add_tank.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
