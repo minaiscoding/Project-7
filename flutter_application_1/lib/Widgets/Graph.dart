@@ -35,20 +35,20 @@ class _WaterLevelChartState extends State<WaterLevelChart> {
 
   Stream<List<WaterLevelData>> _fetchData() async* {
     var token =
-        'MRYbOmaiLDqsc2yCPN39KUxmnSdhQGzQ_X4-hn3PVOd-us1QlkeOCQYw_0ROCt34Y5D-IhOGRXkO4PGS7MEK-Q==';
-    var bucket = 'tanks';
-    var org = 'Esi';
+        'mGpEPXdlrVSi7hDng6LusuUtI2J8VAqvwiqaQXzi56X6m_jtbhmqGil8SaeNXjkdue1E77amnBvpvObPh6RM3Q==';
+    var bucket = 'Level';
+    var org = 'Projet2CP';
     var client = InfluxDBClient(
-        url: 'http://192.168.139.102:8086',
+        url: 'http://192.168.220.224:8086',
         token: token,
         org: org,
         bucket: bucket);
-    var fluxQuery = '''from(bucket: "tanks")
+    var fluxQuery = '''from(bucket: "Level")
   |> range(start: -${widget.rangeStart.inHours}h)
   |> filter(fn: (r) => r["_measurement"] == "water_level")
   |> filter(fn: (r) => r["_field"] == "value")
   |> filter(fn: (r) => r["sensor"] == "${widget.sensorID}")
-  |> aggregateWindow(every: 1400s, fn: mean, createEmpty: false)
+  |> aggregateWindow(every: 5s, fn: mean, createEmpty: false)
   |> yield(name: "mean")''';
     var queryService = client.getQueryService();
 
@@ -72,6 +72,8 @@ class _WaterLevelChartState extends State<WaterLevelChart> {
       }
 
       await Future.delayed(const Duration(seconds: 5));
+      yield data;
+      await Future.delayed(const Duration(seconds: 5));
     }
   }
 
@@ -80,10 +82,9 @@ class _WaterLevelChartState extends State<WaterLevelChart> {
     return Center(
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: 300,
+        height: 400,
         padding: const EdgeInsets.all(8),
-        child: Card(
-          elevation: 6,
+        child: Container(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: StreamBuilder<List<WaterLevelData>>(
@@ -94,6 +95,7 @@ class _WaterLevelChartState extends State<WaterLevelChart> {
                     primaryXAxis: DateTimeAxis(),
                     primaryYAxis: NumericAxis(
                       labelFormat: '{value} cm',
+                      labelStyle: TextStyle(fontSize: 8),
                       title: AxisTitle(
                         text: 'Level (cm)',
                         textStyle: TextStyle(fontSize: 8),
@@ -104,7 +106,19 @@ class _WaterLevelChartState extends State<WaterLevelChart> {
                         dataSource: snapshot.data!,
                         xValueMapper: (datum, _) => datum.time,
                         yValueMapper: (datum, _) => datum.value,
-                        cardinalSplineTension: 0.2,
+                        splineType: SplineType.clamped,
+                        color: const Color.fromARGB(255, 2, 40, 78),
+                        width: 1,
+                        markerSettings: const MarkerSettings(
+                          isVisible: true,
+                          color: Color.fromARGB(255, 34, 97, 160),
+                          shape: DataMarkerType.circle,
+                          borderWidth: 0,
+                          height: 3,
+                          width: 3,
+                        ),
+                        dataLabelSettings: DataLabelSettings(isVisible: false),
+                        enableTooltip: false,
                       ),
                     ],
                   );

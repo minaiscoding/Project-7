@@ -10,7 +10,7 @@ class LiveHistoryPage extends StatefulWidget {
 }
 
 WaterLevelChart chartWidget = WaterLevelChart(
-    rangeStart: const Duration(days: 1), sensorID: "'001'", key: UniqueKey());
+    rangeStart: const Duration(hours: 1), sensorID: "'001'", key: UniqueKey());
 String dropdownValue = 'Daily';
 
 class _LiveHistoryPageState extends State<LiveHistoryPage> {
@@ -167,18 +167,7 @@ class _LiveHistoryPageState extends State<LiveHistoryPage> {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: 459,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                        width: 1,
-                        color: Color.fromRGBO(0, 0, 0, 0.2),
-                      ),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                      ),
-                    ),
+                    height: MediaQuery.of(context).size.height * 0.6,
                     child: _isLiveSelected ? _buildLive() : _buildHistory(),
                   ),
                 ],
@@ -237,7 +226,7 @@ class _LiveHistoryPageState extends State<LiveHistoryPage> {
                 dropdownValue == 'Daily',
             child: Positioned(
               width: MediaQuery.of(context).size.width,
-              bottom: 90,
+              bottom: 40,
               child: chartWidget,
             ),
           ),
@@ -291,7 +280,7 @@ class _LiveHistoryPageState extends State<LiveHistoryPage> {
                         break;
                       case 'Daily':
                         chartWidget = WaterLevelChart(
-                            rangeStart: Duration(hours: 24),
+                            rangeStart: Duration(hours: 1),
                             sensorID: "'001'",
                             key: UniqueKey());
                         break;

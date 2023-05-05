@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:influxdb_client/api.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+import 'dart:async';
+import 'package:intl/intl.dart';
 
 class WaterLevelBucket extends StatefulWidget {
   final String sensorId;
@@ -15,32 +15,38 @@ class WaterLevelBucket extends StatefulWidget {
 }
 
 class _WaterLevelBucketState extends State<WaterLevelBucket> {
-  double _waterLevel = 0.0;
+  late double _waterLevel = 4.0;
 
   @override
   void initState() {
     super.initState();
-    _fetchData();
-    Timer.periodic(Duration(seconds: 5), (Timer t) => _fetchData());
+    _waterLevel = 4.0;
+    lastUpdateTime = getLastUpdatedTime();
   }
 
-  Future<void> _fetchData() async {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    getWaterLevelData();
+  }
+
+  Future<void> getWaterLevelData() async {
     var token =
-        'MRYbOmaiLDqsc2yCPN39KUxmnSdhQGzQ_X4-hn3PVOd-us1QlkeOCQYw_0ROCt34Y5D-IhOGRXkO4PGS7MEK-Q==';
-    var bucket = 'tanks';
-    var org = 'Esi';
+        'mGpEPXdlrVSi7hDng6LusuUtI2J8VAqvwiqaQXzi56X6m_jtbhmqGil8SaeNXjkdue1E77amnBvpvObPh6RM3Q==';
+    var bucket = 'Level';
+    var org = 'Projet2CP';
     var client = InfluxDBClient(
-        url: 'http://192.168.139.102:8086',
+        url: 'http://192.168.220.224:8086',
         token: token,
         org: org,
         bucket: bucket);
-    var fluxQuery = '''from(bucket: "tanks")
-      |> range(start: -5m)
-      |> filter(fn: (r) => r["_measurement"] == "water_level")
-      |> filter(fn: (r) => r["_field"] == "value")
-      |> filter(fn: (r) => r["sensor"] == "${widget.sensorId}")
-      |> last()
-      |> yield(name: "value")''';
+    var fluxQuery = '''from(bucket: "Level")
+    |> range(start: -1m)
+    |> filter(fn: (r) => r["_measurement"] == "water_level")
+    |> filter(fn: (r) => r["_field"] == "value")
+    |> filter(fn: (r) => r["sensor"] == "'001'")
+    |> aggregateWindow(every: 5s, fn: mean)
+    |> yield(name: "mean")''';
     var queryService = client.getQueryService();
 
     var recordStream = await queryService.query(fluxQuery);
@@ -54,76 +60,86 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
       }
     });
 
-    if (data.isNotEmpty) {
+    if (mounted && data.isNotEmpty) {
       setState(() {
-        _waterLevel = data[0];
+        _waterLevel = data.isNotEmpty ? data.last : _waterLevel;
       });
     }
+    updateLastUpdateTime();
   }
 
+  late _WaterLevelBucketState dataFetcher;
+  String getLastUpdatedTime() {
+    var now = DateTime.now();
+    var formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+    return formatter.format(now);
+  }
+
+  late String lastUpdateTime;
+
+  void updateLastUpdateTime() {
+    setState(() {
+      lastUpdateTime = getLastUpdatedTime();
+    });
+  }
+
+  Widget _buildGetDataButton() {
+    return ElevatedButton(
+      onPressed: () {
+        getWaterLevelData();
+      },
+      child: Text(
+        'Update',
+        style: TextStyle(fontFamily: 'Montserrat', fontSize: 20),
+      ),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color.fromARGB(255, 2, 40, 78),
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        width: 100,
-        height: 200,
-        decoration: BoxDecoration(
-          border: Border.all(),
-          shape: BoxShape.circle,
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: (_waterLevel / 100) * 180,
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
-                  ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(height: 50),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.7,
+            height: MediaQuery.of(context).size.width * 0.7,
+            child: LiquidCircularProgressIndicator(
+              value: _waterLevel / 100,
+              valueColor:
+                  AlwaysStoppedAnimation(Color.fromARGB(123, 96, 167, 255)),
+              backgroundColor: Color.fromARGB(0, 255, 255, 255),
+              borderColor: Colors.white,
+              borderWidth: 1,
+              direction: Axis.vertical,
+              center: Text(
+                '${_waterLevel.toStringAsFixed(1)} %',
+                style: TextStyle(
+                  fontSize: 56,
+                  fontFamily: "Aquire",
+                  color: Color.fromARGB(255, 2, 40, 78),
+                  fontWeight: FontWeight.w100,
                 ),
               ),
             ),
-            Positioned.fill(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Text(
-                    '${_waterLevel.toStringAsFixed(1)} cm',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
-            ),
-            WaveWidget(
-              //user Stack() widget to overlap content and waves
-              config: CustomConfig(
-                colors: [
-                  Color.fromARGB(255, 122, 188, 204).withOpacity(0.43),
-                  Color(0xff1D9FC9).withOpacity(0.56),
-                  Color.fromARGB(255, 20, 63, 150).withOpacity(0.3),
-                ],
-                durations: [6500, 7500, 9500],
-                //durations of animations for each colors,
-                // make numbers equal to numbers of colors
-                heightPercentages: [0.5, 0.51, 0.48],
-                //height percentage for each colors.
-                blur: MaskFilter.blur(BlurStyle.solid, 5),
-                //blur intensity for waves
-              ),
-              waveAmplitude: 10.00, //depth of curves
-              waveFrequency: 1.25, //number of curves in waves
-              size: Size(
-                double.infinity,
-                double.infinity,
-              ),
-            ),
-          ],
-        ),
+          ),
+          SizedBox(height: 30),
+          Text(
+            'Last update: $lastUpdateTime',
+            style: TextStyle(fontSize: 16),
+          ),
+          SizedBox(height: 50),
+          _buildGetDataButton(),
+        ],
       ),
     );
   }
