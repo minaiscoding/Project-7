@@ -110,9 +110,10 @@ def add_tank_cuboid():
     return jsonify({'message': 'Tank information stored successfully'}), 201
 
 
-@app.route('/add_tank_cylinder', methods=['POST'])
+@app.route('/add_tank_cylinder', methods=['POST']) # for the cylinder shape
 def add_tank_cylinder():
     data = request.json
+    
     required_fields = ['tank_number',
                        'tank_height', 'tank_width']
     for field in required_fields:
