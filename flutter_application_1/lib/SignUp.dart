@@ -23,6 +23,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   Future<void> _submitSignUpForm() async {
+    
     final String apiUrl = "http://192.168.78.9:5000/signup";
 
     final response = await http.post(
