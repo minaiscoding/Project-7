@@ -3,6 +3,7 @@ import 'live_history_page.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'sign_up.dart';
 import '../Widgets/page_view_demo.dart';
+import 'login_page.dart';
 
 void main() {
   AwesomeNotifications().initialize(

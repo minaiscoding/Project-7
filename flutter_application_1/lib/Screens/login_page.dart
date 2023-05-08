@@ -6,6 +6,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../Widgets/page_view_demo.dart';
 
+bool isgay() {
+  return true;
+}
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -203,7 +207,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () async {
                 final result = await _signIn(context);
                 final bool signedIn = result['signedIn'];
-                final String tankNumber = result['tank_number'];
+                //final String tankNumber = result['tank_number'];
               },
               child: Container(
                 width: 112,

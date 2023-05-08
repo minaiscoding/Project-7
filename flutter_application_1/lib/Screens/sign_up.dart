@@ -44,10 +44,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
     if (response.statusCode == 201) {
       // Navigate to the home page after successful signup
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Home()),
-      );
     } else {
       showDialog(
         context: context,
@@ -333,6 +329,10 @@ class _SignUpPageState extends State<SignUpPage> {
             child: ElevatedButton(
               onPressed: () {
                 _submitSignUpForm();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => TankShapePage()),
+                );
               },
               child: Container(
                 width: 112,
@@ -657,7 +657,9 @@ class _TankInformationState extends State<TankInformation> {
               width: 157,
               height: 50,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  _submitTankCuboidForm();
+                },
                 child: Container(
                   width: 112,
                   height: 50,
@@ -893,7 +895,9 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
               width: 157,
               height: 50,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  _submitTankCylinderForm();
+                },
                 child: Container(
                   width: 112,
                   height: 50,
