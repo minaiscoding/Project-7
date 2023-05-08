@@ -31,7 +31,7 @@ def signup():
             return jsonify({'error': f'{field} is required'}), 400
 
     full_name = data['full_name']
-    tank_number = int(data['tank_number'])
+    tank_number = data['tank_number']
     phone_number = int(data['phone_number'])
     password = (data['password'])
     confirm_password = (data['confirm_password'])
@@ -85,8 +85,10 @@ def add_tank_cuboid():
             field = field.replace("_", " ")
             return jsonify({'error': f'{field} is required'}), 400
 
-    tank_number = int(data['tank_number'])
-    tank_volume = float(data['tank_height'])*float(data['base_width'])*float(data['base_length'])
+    tank_number = data['tank_number']
+    tank_height = float(data['tank_height'])
+    tank_width = float(data['base_width'])
+    tank_length = float(data['base_length'])
 
     # Store the tank information in the 'tanks' measurement
     write_api = client.write_api(write_options=SYNCHRONOUS)
@@ -95,12 +97,13 @@ def add_tank_cuboid():
         {
             "measurement": "tanks",
             "tags": {
-                "org": org,
-                "bucket": bucket
+                "tank_number": tank_number,
             },
             "fields": {
-                "tank_number": tank_number,
-                "tank_volume": tank_volume
+                "tank_shape":"Cuboid",
+                "tank_height": tank_height,
+                "tank_width": tank_width,
+                "tank_length": tank_length,
             }
         }
     ]
@@ -123,7 +126,8 @@ def add_tank_cylinder():
             return jsonify({'error': f'{field} is required'}), 400
 
     tank_number = int(data['tank_number'])
-    tank_volume = float(data['tank_height'])*3.14*(float(data['tank_width'])/2)**2
+    tank_height = float(data['tank_height'])
+    tank_baseDiameter = float(data['tank_width'])
 
     # Store the tank information in the 'tanks-cylinder' measurement
     write_api = client.write_api(write_options=SYNCHRONOUS)
@@ -132,12 +136,12 @@ def add_tank_cylinder():
         {
             "measurement": "tanks",
             "tags": {
-                "org": org,
-                "bucket": bucket
+                "tank_number": tank_number,
             },
             "fields": {
-                "tank_number": tank_number,
-                "tank_volume": tank_volume
+                "tank_shape" : "Cylinder",
+                "tank_height": tank_height,
+                "tank_baseDiameter": tank_baseDiameter,
             }
         }
     ]

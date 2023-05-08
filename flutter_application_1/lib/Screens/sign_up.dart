@@ -44,6 +44,10 @@ class _SignUpPageState extends State<SignUpPage> {
 
     if (response.statusCode == 201) {
       // Navigate to the home page after successful signup
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => TankShapePage()),
+      );
     } else {
       showDialog(
         context: context,
