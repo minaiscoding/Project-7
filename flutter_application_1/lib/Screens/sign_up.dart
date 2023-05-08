@@ -329,10 +329,6 @@ class _SignUpPageState extends State<SignUpPage> {
             child: ElevatedButton(
               onPressed: () {
                 _submitSignUpForm();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => TankShapePage()),
-                );
               },
               child: Container(
                 width: 112,
@@ -440,7 +436,7 @@ class TankInformation extends StatefulWidget {
 class _TankInformationState extends State<TankInformation> {
   final Color primaryColor = const Color(0xFF21457D);
   Future<void> _submitTankCuboidForm() async {
-    final String apiUrl = "http://192.168.167.102:5000/add_tank-cuboid";
+    final String apiUrl = "http://192.168.167.102:5000/add_tank_cuboid";
 
     final response = await http.post(
       Uri.parse(apiUrl),
