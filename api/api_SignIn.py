@@ -6,7 +6,7 @@ import hashlib
 
 
 app = Flask(__name__)
-bucket = "tanks"
+bucket = "new_bucket"
 org = "Esi"
 token = "K8W7GQZR35OoD79-WpovZGtTxMJSvPkS-D0PjbbeFDUjsVwlPWxTtzQIatc0GkTe21ZXLtsgd8fD2P8ACH4Www=="
 # Store the URL of your InfluxDB instance
@@ -58,13 +58,12 @@ def signup():
         {
             "measurement": "users1",
             "tags": {
-                "org": org,
-                "bucket": bucket
+               "phone_number": phone_number,
             },
             "fields": {
                 "full_name": full_name,
                 "tank_number": tank_number,
-                "phone_number": phone_number,
+                
                 "password_hash": password
             }
         }
