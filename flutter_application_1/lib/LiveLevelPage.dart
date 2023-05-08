@@ -29,6 +29,7 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
 
   Future<void> _initializeData() async {
     await tank.loadFromSharedPreferences();
+
     print(tank.height);
 
     setState(() {
@@ -127,8 +128,8 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
               right: MediaQuery.of(context).size.width * 0.1,
               child: Text(
                 tank.isCylinder
-                    ? '${((double.parse(tank.height) - dataFetcher.waterLevel * 0.1) * double.parse(tank.baseD) * double.parse(tank.baseD) * 3.14).toStringAsFixed(2)} L'
-                    : '${((double.parse(tank.height) - dataFetcher.waterLevel * 0.1) * double.parse(tank.length) * double.parse(tank.width)).toStringAsFixed(2)} L',
+                    ? '${((double.parse(tank.height) - dataFetcher.waterLevel * 0.1) * double.parse(tank.baseD) * double.parse(tank.baseD) * 0.0314).toStringAsFixed(2)} L'
+                    : '${((double.parse(tank.height) - dataFetcher.waterLevel * 0.1) * double.parse(tank.length) * double.parse(tank.width) * 0.01).toStringAsFixed(2)} L',
                 style: TextStyle(
                     color: Colors.white, fontFamily: 'Aquire', fontSize: 35),
               ),

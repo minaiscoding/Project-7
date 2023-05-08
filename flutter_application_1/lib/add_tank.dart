@@ -16,7 +16,7 @@ final TextEditingController _tankLengthController = TextEditingController();
 
 class Tank {
   String tankId = "001";
-  late bool isCylinder;
+  bool isCylinder = false;
   String width = "0";
   String height = "0";
   String length = "0";
