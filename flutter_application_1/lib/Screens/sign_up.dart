@@ -440,7 +440,7 @@ class TankInformation extends StatefulWidget {
 class _TankInformationState extends State<TankInformation> {
   final Color primaryColor = const Color(0xFF21457D);
   Future<void> _submitTankCuboidForm() async {
-    final String apiUrl = "http://192.168.78.9:5000/add_tank-cuboid";
+    final String apiUrl = "http://192.168.167.102:5000/add_tank-cuboid";
 
     final response = await http.post(
       Uri.parse(apiUrl),
@@ -703,7 +703,7 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
   final Color primaryColor = const Color(0xFF21457D);
 
   Future<void> _submitTankCylinderForm() async {
-    final String apiUrl = "http://192.168.78.9:5000/add_tank_cylinder";
+    final String apiUrl = "http://192.168.167.102:5000/add_tank_cylinder";
 
     final response = await http.post(
       Uri.parse(apiUrl),
