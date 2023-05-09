@@ -6,6 +6,7 @@ import 'Home.dart';
 import 'login_page.dart';
 import '../Widgets/page_view_demo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'live_history_page.dart';
 
 Future<void> storePhoneNumberAndSignInStatus(
     String phoneNumber, bool isSignedIn) async {
@@ -60,7 +61,7 @@ class _SignUpPageState extends State<SignUpPage> {
     if (response.statusCode == 201) {
       // save  the user on phone
       storePhoneNumberAndSignInStatus(_phoneNumberController.text, true);
-      Navigator.pushReplacement(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => TankShapePage()),
       );
@@ -477,7 +478,7 @@ class _TankInformationState extends State<TankInformation> {
       // Tank information submission successful
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Home()),
+        MaterialPageRoute(builder: (context) => LiveHistoryPage()),
       );
     } else {
       showDialog(

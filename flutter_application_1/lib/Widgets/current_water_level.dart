@@ -34,7 +34,7 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
     var token =
         'K8W7GQZR35OoD79-WpovZGtTxMJSvPkS-D0PjbbeFDUjsVwlPWxTtzQIatc0GkTe21ZXLtsgd8fD2P8ACH4Www==';
     var bucket = 'tanks';
-    var org = 'esi';
+    var org = 'Esi';
     var client = InfluxDBClient(
         url: 'http://192.168.167.102:8086',
         token: token,

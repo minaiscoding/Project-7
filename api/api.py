@@ -10,7 +10,7 @@ bucket = "tanks"
 org = "Esi"
 token = "ol5mrXy-T5LzEa6wJVMlq1YASlBa9kPOcZZBvm963HIGO6bts0_BUHJT8pqN1MbKo2TQe8-2YqGrS-_J_5N84A=="
 # Store the URL of your InfluxDB instance
-url="http://localhost:8086"
+url="http://192.168.167.102:8086/"
 
 client = influxdb_client.InfluxDBClient(
     url=url,
