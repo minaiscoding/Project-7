@@ -32,7 +32,7 @@ def signup():
 
     full_name = data['full_name']
     tank_number = data['tank_number']
-    phone_number = int(data['phone_number'])
+    phone_number = (data['phone_number'])
     password = (data['password'])
     confirm_password = (data['confirm_password'])
 
@@ -123,7 +123,7 @@ def add_tank_cylinder():
             field = field.replace("_", " ")
             return jsonify({'error': f'{field} is required'}), 400
 
-    tank_number = int(data['tank_number'])
+    tank_number = (data['tank_number'])
     tank_height = float(data['tank_height'])
     tank_baseDiameter = float(data['tank_width'])
 
@@ -157,7 +157,7 @@ def signin():
             field = field.replace("_", " ")
             return jsonify({'error': f'{field} is required'}), 400
 
-    phone_number = int(data['phone_number'])
+    phone_number = (data['phone_number'])
     password = (data['password'])
 
     query = f'from(bucket:"{bucket}") \
