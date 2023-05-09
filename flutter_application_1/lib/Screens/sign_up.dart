@@ -5,6 +5,21 @@ import 'package:flutter/material.dart';
 import 'Home.dart';
 import 'login_page.dart';
 import '../Widgets/page_view_demo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+Future<void> storePhoneNumberAndSignInStatus(
+    String phoneNumber, bool isSignedIn) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString('phone_number', phoneNumber);
+  await prefs.setBool('is_signed_in', isSignedIn);
+}
+
+Future<Map<String, dynamic>> retrievePhoneNumberAndSignInStatus() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String phoneNumber = prefs.getString('phone_number') ?? "0";
+  bool isSignedIn = prefs.getBool('is_signed_in') ?? false;
+  return {'phone_number': phoneNumber, 'is_signed_in': isSignedIn};
+}
 
 final TextEditingController _fullnameController = TextEditingController();
 final TextEditingController _phoneNumberController = TextEditingController();
@@ -43,7 +58,8 @@ class _SignUpPageState extends State<SignUpPage> {
     final responseData = jsonDecode(response.body);
 
     if (response.statusCode == 201) {
-      // Navigate to the home page after successful signup
+      // save  the user on phone
+      storePhoneNumberAndSignInStatus(_phoneNumberController.text, true);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => TankShapePage()),

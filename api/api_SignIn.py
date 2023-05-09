@@ -44,8 +44,7 @@ def signup():
     query = f'from(bucket:"{bucket}") \
      |> range(start: -1h) \
      |> filter(fn: (r) => r["_measurement"] == "users1") \
-     |> filter(fn: (r) => r["_field"] == "phone_number" )\
-     |> filter(fn: (r) => r["_value"] == {phone_number})'
+     |> filter(fn: (r) => r["phone_number"] == "{phone_number}")'
 
     result = query_api.query(org=org, query=query)
     if len(result) > 0:
@@ -164,8 +163,9 @@ def signin():
     query = f'from(bucket:"{bucket}") \
      |> range(start: -1h) \
      |> filter(fn: (r) => r["_measurement"] == "users1") \
-     |> pivot(rowKey:["_time"], columnKey:["_field"], valueColumn:"_value")\
-     |> filter(fn: (r) => r.password_hash == "{password}" and r.phone_number == {phone_number})'
+     |> filter(fn: (r) => r["phone_number"] == "{phone_number}") \
+     |> filter(fn: (r) => r["_field"] == "password_hash") \
+     |> filter(fn: (r) => r["_value"] == "{password}")'
 
     result = query_api.query(org=org, query=query)
 

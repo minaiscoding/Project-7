@@ -1,8 +1,10 @@
+import 'package:fluid/Screens/login_page.dart';
 import 'package:flutter/material.dart'; //imports dart
 import 'package:hexcolor/hexcolor.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 import 'package:drop_shadow_image/drop_shadow_image.dart';
+import '../Screens/sign_up.dart';
 
 Widget menuItem(String title, bool isSelected) {
   final textStyle = TextStyle(
@@ -85,7 +87,13 @@ class Menu extends StatelessWidget {
                 height: 40,
                 width: 100,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    storePhoneNumberAndSignInStatus("", false);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
+                  },
                   child: const Text(
                     'Log out',
                     style: TextStyle(

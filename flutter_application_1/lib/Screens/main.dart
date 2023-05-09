@@ -4,8 +4,17 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'sign_up.dart';
 import '../Widgets/page_view_demo.dart';
 import 'login_page.dart';
+import 'Preview.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Map<String, dynamic> phoneAndSignInData =
+      await retrievePhoneNumberAndSignInStatus();
+
+// then you can access the values like this
+  String phoneNumber = phoneAndSignInData['phone_number'];
+  bool isSignedIn = phoneAndSignInData['is_signed_in'];
+
   AwesomeNotifications().initialize(
       null,
       [
@@ -28,7 +37,7 @@ void main() {
         fontFamily: 'Montserrat',
       ),
       // home: PageViewDemo(),
-      home: SignUpPage(),
+      home: isSignedIn ? LiveHistoryPage() : PageViewDemo(),
     ),
   );
 }

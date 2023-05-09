@@ -6,10 +6,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../Widgets/page_view_demo.dart';
 
-bool isgay() {
-  return true;
-}
-
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -35,13 +31,13 @@ class _LoginPageState extends State<LoginPage> {
     final responseData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
+      storePhoneNumberAndSignInStatus(_phoneNumberController.text, true);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Home()),
       );
       return {
         'signedIn': true,
-        'tank_number': responseData['tank_number'],
       };
     } else {
       showDialog(
