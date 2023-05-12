@@ -1,13 +1,15 @@
 import 'package:fluid/add_tank.dart';
+import 'package:fluid/my_tank.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
 import 'dart:ui';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:http/http.dart' as http;
-import 'Menu.dart';
+//import 'Menu.dart';
 
 Tank tank = Tank();
+bool _isMenuOpen = false;
 
 class LiveLevelPage extends StatefulWidget {
   @override
@@ -15,8 +17,6 @@ class LiveLevelPage extends StatefulWidget {
 }
 
 class _LiveLevelPageState extends State<LiveLevelPage> {
-  bool _isMenuOpen = false;
-
   String lastUpdateTime = '';
   late WaterLevelFetcher dataFetcher;
 
@@ -280,6 +280,110 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class Menu extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final TextStyle textStyle = TextStyle(
+      fontFamily: 'Montserrat',
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w700,
+      fontSize: 24,
+      height: 1,
+      color: Colors.white,
+    );
+    final elevation = 8.0;
+    final backgroundColor = Color(0xFF21457D);
+    final boxShadow = [
+      BoxShadow(
+        color: Color.fromRGBO(101, 160, 255, 0.5),
+        offset: Offset(0, 8),
+        blurRadius: 30,
+      ),
+    ];
+    final borderRadius = BorderRadius.circular(30);
+
+    return Stack(
+      children: <Widget>[
+        Container(
+          margin: const EdgeInsets.fromLTRB(59, 142, 0, 0),
+          width: 273,
+          height: 334,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              color: const Color.fromRGBO(26, 42, 58, 0.25),
+              width: 1,
+            ),
+            boxShadow: boxShadow,
+            borderRadius: BorderRadius.circular(33),
+          ),
+          child: Column(
+            children: [
+              SizedBox(height: 90),
+              ElevatedButton(
+                onPressed: () {
+                  _isMenuOpen = false;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LiveLevelPage()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: backgroundColor,
+                  elevation: elevation,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: borderRadius,
+                  ),
+                  shadowColor: Color(0xFF21457D),
+                ),
+                child: Container(
+                  width: 121,
+                  height: 56,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Home',
+                    style: textStyle,
+                  ),
+                ),
+              ),
+              SizedBox(height: 28),
+              ElevatedButton(
+                onPressed: () {
+                  _isMenuOpen = false;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TankPage()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  elevation: 0.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: borderRadius,
+                  ),
+                  shadowColor: Color(0xFF21457D),
+                ),
+                child: Container(
+                  width: 121,
+                  height: 56,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'My tank',
+                    style: textStyle.copyWith(
+                      color: Color(0xFF21457D),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 28),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

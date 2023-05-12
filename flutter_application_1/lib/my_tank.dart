@@ -1,103 +1,273 @@
 import 'package:flutter/material.dart';
+import 'LiveLevelPage.dart';
+import 'add_tank.dart';
 
 class TankPage extends StatefulWidget {
   @override
   _TankPageState createState() => _TankPageState();
 }
 
+bool _isMenuOpen = false;
+
 class _TankPageState extends State<TankPage> {
-  List<TankData> tanks = [];
+  void _openMenu() {
+    setState(() {
+      _isMenuOpen = true;
+    });
+  }
+
+  void _closeMenu() {
+    setState(() {
+      _isMenuOpen = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFBBD0EA),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 40),
-            child: Image.asset('assets/logo2.png'),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromARGB(255, 0, 41, 99),
+              Color.fromARGB(255, 84, 133, 194),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: tanks.length,
-              itemBuilder: (context, index) {
-                return TankBox(tank: tanks[index]);
-              },
+        ),
+        child: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.transparent,
             ),
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              setState(() {
-                tanks.add(TankData(
-                  tankId: 'Tank ${tanks.length + 1}',
-                  shape: 'Cylinder',
-                  volume: '10,000 liters',
-                ));
-              });
-            },
-            child: Icon(Icons.add),
-          ),
-        ],
+            Positioned(
+              left: 25,
+              top: 60,
+              child: Image.asset(
+                'assets/logo_white.png',
+                width: 70,
+                height: 70,
+              ),
+            ),
+            Positioned(
+              right: 25,
+              top: 70,
+              child: GestureDetector(
+                onTapDown: (details) {
+                  _openMenu();
+                },
+                child: Icon(Icons.menu, size: 32, color: Colors.white),
+              ),
+            ),
+            Positioned(
+              top: 250,
+              left: 50,
+              right: 50,
+              child: Container(
+                padding: EdgeInsets.all(30),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('My tank',
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue[900],
+                        )),
+                    Text(
+                      tank.isCylinder ? 'Shape: Cylinder' : 'Shape: Cuboid',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue[900],
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Height: ${tank.height} cm',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue[900],
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      tank.isCylinder
+                          ? 'Base diameter: ${tank.baseD} cm'
+                          : 'Width: ${tank.width} cm',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue[900],
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      tank.isCylinder ? '' : 'Length: ${tank.length} cm',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue[900],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 100,
+              left: 0,
+              right: 0,
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 50),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TankShapePage()),
+                    );
+                  },
+                  child: Text('Edit Tank Info'),
+                ),
+              ),
+            ),
+            Visibility(
+              visible: _isMenuOpen,
+              child: Stack(
+                children: <Widget>[
+                  Menu(),
+                  Positioned(
+                    top: 150,
+                    right: 20,
+                    child: IconButton(
+                      icon: Icon(Icons.close),
+                      iconSize: 40,
+                      color: const Color(0xFF21457D),
+                      onPressed: () {
+                        setState(() {
+                          _closeMenu();
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class TankData {
-  final String tankId;
-  final String shape;
-  final String volume;
-
-  TankData({required this.tankId, required this.shape, required this.volume});
-}
-
-class TankBox extends StatelessWidget {
-  final TankData tank;
-
-  TankBox({required this.tank});
-
+class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            blurRadius: 4,
-            spreadRadius: 2,
-          ),
-        ],
+    final TextStyle textStyle = TextStyle(
+      fontFamily: 'Montserrat',
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w700,
+      fontSize: 24,
+      height: 1,
+      color: Colors.white,
+    );
+    final elevation = 8.0;
+    final backgroundColor = Color(0xFF21457D);
+    final boxShadow = [
+      BoxShadow(
+        color: Color.fromRGBO(101, 160, 255, 0.5),
+        offset: Offset(0, 8),
+        blurRadius: 30,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Tank ID: ${tank.tankId}',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
+    ];
+    final borderRadius = BorderRadius.circular(30);
+
+    return Stack(
+      children: <Widget>[
+        Container(
+          margin: const EdgeInsets.fromLTRB(59, 142, 0, 0),
+          width: 273,
+          height: 334,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              color: const Color.fromRGBO(26, 42, 58, 0.25),
+              width: 1,
             ),
+            boxShadow: boxShadow,
+            borderRadius: BorderRadius.circular(33),
           ),
-          SizedBox(height: 10),
-          Text(
-            'Tank\'s Shape: ${tank.shape}',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-            ),
+          child: Column(
+            children: [
+              SizedBox(height: 90),
+              ElevatedButton(
+                onPressed: () {
+                  _isMenuOpen = false;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LiveLevelPage()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: backgroundColor,
+                  elevation: elevation,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: borderRadius,
+                  ),
+                  shadowColor: Color(0xFF21457D),
+                ),
+                child: Container(
+                  width: 121,
+                  height: 56,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Home',
+                    style: textStyle,
+                  ),
+                ),
+              ),
+              SizedBox(height: 28),
+              ElevatedButton(
+                onPressed: () {
+                  _isMenuOpen = false;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TankPage()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  elevation: 0.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: borderRadius,
+                  ),
+                  shadowColor: Color(0xFF21457D),
+                ),
+                child: Container(
+                  width: 121,
+                  height: 56,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'My tank',
+                    style: textStyle.copyWith(
+                      color: Color(0xFF21457D),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 28),
+            ],
           ),
-          SizedBox(height: 10),
-          Text(
-            'Tank\'s Volume: ${tank.volume}',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

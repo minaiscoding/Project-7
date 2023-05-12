@@ -429,7 +429,18 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
             width: 157,
             height: 50,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Tank tank = new Tank();
+                tank.height = _tankHeightController.text;
+                tank.isCylinder = true;
+                tank.baseD = _tankWidthController.text;
+
+                tank.saveToSharedPreferences();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LiveLevelPage()),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF789CD2),
                 elevation: 8,
