@@ -23,10 +23,12 @@ class _FAQState extends State<FAQ> {
             // bottom: MediaQuery.of(context).size.height * 0.90,
             child: InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PageViewDemo()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PageViewDemo()));
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back,
                 color: Color(0xff1A2A3A),
                 size: 40,

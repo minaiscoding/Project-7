@@ -7,20 +7,18 @@ import 'package:intl/intl.dart';
 
 class WaterLevelBucket extends StatefulWidget {
   final String sensorId;
-
   const WaterLevelBucket({Key? key, required this.sensorId}) : super(key: key);
-
   @override
   _WaterLevelBucketState createState() => _WaterLevelBucketState();
 }
 
 class _WaterLevelBucketState extends State<WaterLevelBucket> {
-  late double _waterLevel = 4.0;
+  late double _waterLevel = 0.0;
 
   @override
   void initState() {
     super.initState();
-    _waterLevel = 4.0;
+    _waterLevel = 0.0;
     lastUpdateTime = getLastUpdatedTime();
   }
 
@@ -30,21 +28,70 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
     getWaterLevelData();
   }
 
-  Future<void> getWaterLevelData() async {
+  late String tank_shape;
+  late double tank_width, tank_height, tank_length, tank_baseDiameter;
+  Future<void> tankInformation() async {
     var token =
-        'K8W7GQZR35OoD79-WpovZGtTxMJSvPkS-D0PjbbeFDUjsVwlPWxTtzQIatc0GkTe21ZXLtsgd8fD2P8ACH4Www==';
-    var bucket = 'tanks';
-    var org = 'Esi';
+        'dknAI50ifXk0EEXmu9tY3VTzx9cp5mHj2eMclm_izY17l_PjeVjiGdX7fezpQ3oNO90XdsqcX_NUrNgVXYtyJQ==';
+    var bucket = 'new_bucket';
+    var org = 'Projet2CP';
     var client = InfluxDBClient(
-        url: 'http://192.168.167.102:8086',
+        url: 'http://192.168.5.224:8086',
         token: token,
         org: org,
         bucket: bucket);
-    var fluxQuery = '''from(bucket: "tanks")
+    var fluxQuery = '''from(bucket: "new_bucket")
+    |> range(start: -1m)
+    |> filter(fn: (r) => r["_measurement"] == "tanks")
+    |> filter(fn: (r) => r["tank_number"] == "${widget.sensorId}")
+    |> last()
+    |> yield(name: "mean")''';
+    var queryService = client.getQueryService();
+    var result = await queryService.query(fluxQuery);
+    await for (var record in result) {
+      if (record.containsKey('_field') &&
+          record.containsKey('_value') &&
+          record['_field'] == 'tank_shape') {
+        tank_shape = record['_value'] as String;
+      }
+      if (record.containsKey('_field') &&
+          record.containsKey('_value') &&
+          record['_field'] == 'tank_width') {
+        tank_width = record['_value'] as double;
+      }
+      if (record.containsKey('_field') &&
+          record.containsKey('_value') &&
+          record['_field'] == 'tank_height') {
+        tank_height = record['_value'] as double;
+      }
+      if (record.containsKey('_field') &&
+          record.containsKey('_value') &&
+          record['_field'] == 'tank_length') {
+        tank_length = record['_value'] as double;
+      }
+      if (record.containsKey('_field') &&
+          record.containsKey('_value') &&
+          record['_field'] == 'tank_baseDiameter') {
+        tank_baseDiameter = record['_value'] as double;
+      }
+    }
+  }
+
+  Future<void> getWaterLevelData() async {
+    var token =
+        'dknAI50ifXk0EEXmu9tY3VTzx9cp5mHj2eMclm_izY17l_PjeVjiGdX7fezpQ3oNO90XdsqcX_NUrNgVXYtyJQ==';
+    var bucket = 'Level';
+    var org = 'Projet2CP';
+    var client = InfluxDBClient(
+        url: 'http://192.168.5.224:8086',
+        token: token,
+        org: org,
+        bucket: bucket);
+    var fluxQuery = '''from(bucket: "Level")
     |> range(start: -1m)
     |> filter(fn: (r) => r["_measurement"] == "water_level")
     |> filter(fn: (r) => r["_field"] == "value")
-    |> filter(fn: (r) => r["sensor"] == "'001'")
+    |> filter(fn: (r) => r["sensor"] == "${widget.sensorId}")
     |> aggregateWindow(every: 5s, fn: mean)
     |> yield(name: "mean")''';
     var queryService = client.getQueryService();
@@ -52,8 +99,6 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
     var recordStream = await queryService.query(fluxQuery);
     var data = <double>[];
     await recordStream.forEach((record) {
-      print(
-          'record: ${record['_time']}: water level: ${record['_value']} ${record['sensor']}');
       var value = record['_value'];
       if (value != null) {
         data.add(value);
@@ -65,6 +110,7 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
         _waterLevel = data.isNotEmpty ? data.last : _waterLevel;
       });
     }
+    updateVolume(_waterLevel);
     updateLastUpdateTime();
   }
 
@@ -76,6 +122,7 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
   }
 
   late String lastUpdateTime;
+  late double waterVolumeLeft;
 
   void updateLastUpdateTime() {
     setState(() {
@@ -83,9 +130,19 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
     });
   }
 
+  void updateVolume(double water_level) {
+    setState(() {
+      if (tank_shape == "Cuboid") {
+        waterVolumeLeft = tank_height * tank_width * tank_length -
+            tank_width * tank_length * water_level;
+      }
+    });
+  }
+
   Widget _buildGetDataButton() {
     return ElevatedButton(
       onPressed: () {
+        tankInformation();
         getWaterLevelData();
       },
       child: Text(
@@ -115,15 +172,15 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
             height: MediaQuery.of(context).size.width * 0.7,
             child: LiquidCircularProgressIndicator(
               value: _waterLevel / 100,
-              valueColor:
-                  AlwaysStoppedAnimation(Color.fromARGB(123, 96, 167, 255)),
-              backgroundColor: Color.fromARGB(0, 255, 255, 255),
+              valueColor: const AlwaysStoppedAnimation(
+                  Color.fromARGB(123, 96, 167, 255)),
+              backgroundColor: const Color.fromARGB(0, 255, 255, 255),
               borderColor: Colors.white,
               borderWidth: 1,
               direction: Axis.vertical,
               center: Text(
                 '${_waterLevel.toStringAsFixed(1)} %',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 56,
                   fontFamily: "Aquire",
                   color: Color.fromARGB(255, 2, 40, 78),
@@ -135,6 +192,11 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
           SizedBox(height: 30),
           Text(
             'Last update: $lastUpdateTime',
+            style: TextStyle(fontSize: 16),
+          ),
+          SizedBox(height: 30),
+          Text(
+            'Water volume left: $waterVolumeLeft',
             style: TextStyle(fontSize: 16),
           ),
           SizedBox(height: 50),

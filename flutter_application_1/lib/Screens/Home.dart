@@ -14,7 +14,7 @@ class Home extends StatelessWidget {
               end: Alignment.bottomCenter,
               colors: [Color(0xfff5fdff), Color(0xff4675C0)])),
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(0, 0, 0, 0),
+        backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
         body: Stack(
           children: <Widget>[
             Positioned(

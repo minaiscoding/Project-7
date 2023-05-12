@@ -11,10 +11,8 @@ void main() async {
   Map<String, dynamic> phoneAndSignInData =
       await retrievePhoneNumberAndSignInStatus();
 
-// then you can access the values like this
   String phoneNumber = phoneAndSignInData['phone_number'];
   bool isSignedIn = phoneAndSignInData['is_signed_in'];
-
   AwesomeNotifications().initialize(
       null,
       [
@@ -36,8 +34,10 @@ void main() async {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      // home: PageViewDemo(),
-      home: isSignedIn ? LiveHistoryPage() : PageViewDemo(),
+      home: PageViewDemo(),
+      // home: isSignedIn
+      //     ? LiveHistoryPage((getTankNumber('6')).toString())
+      //     : PageViewDemo(),
     ),
   );
 }

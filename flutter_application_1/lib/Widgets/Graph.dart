@@ -35,15 +35,15 @@ class _WaterLevelChartState extends State<WaterLevelChart> {
 
   Stream<List<WaterLevelData>> _fetchData() async* {
     var token =
-        'K8W7GQZR35OoD79-WpovZGtTxMJSvPkS-D0PjbbeFDUjsVwlPWxTtzQIatc0GkTe21ZXLtsgd8fD2P8ACH4Www==';
-    var bucket = 'tanks';
-    var org = 'esi';
+        'dknAI50ifXk0EEXmu9tY3VTzx9cp5mHj2eMclm_izY17l_PjeVjiGdX7fezpQ3oNO90XdsqcX_NUrNgVXYtyJQ==';
+    var bucket = 'Level';
+    var org = 'Projet2CP';
     var client = InfluxDBClient(
-        url: 'http://192.168.167.102:8086',
+        url: 'http://192.168.5.224:8086',
         token: token,
         org: org,
         bucket: bucket);
-    var fluxQuery = '''from(bucket: "tanks")
+    var fluxQuery = '''from(bucket: "Level")
   |> range(start: -${widget.rangeStart.inHours}h)
   |> filter(fn: (r) => r["_measurement"] == "water_level")
   |> filter(fn: (r) => r["_field"] == "value")

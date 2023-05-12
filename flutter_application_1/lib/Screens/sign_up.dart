@@ -40,8 +40,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   Future<void> _submitSignUpForm() async {
-    final String apiUrl = "http://192.168.167.102:5000/signup";
-
+    final String apiUrl = "http://192.168.5.224:5000/signup";
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: <String, String>{
@@ -50,7 +49,7 @@ class _SignUpPageState extends State<SignUpPage> {
       body: jsonEncode(<String, String>{
         'full_name': _fullnameController.text,
         'phone_number': _phoneNumberController.text,
-        'tank_number': _tankNumberController.text,
+        'tank_number': "'" + _tankNumberController.text.padLeft(3, '0') + "'",
         'password': _passwordController.text,
         'confirm_password': _confirmpasswordController.text,
       }),
@@ -457,7 +456,7 @@ class TankInformation extends StatefulWidget {
 class _TankInformationState extends State<TankInformation> {
   final Color primaryColor = const Color(0xFF21457D);
   Future<void> _submitTankCuboidForm() async {
-    final String apiUrl = "http://192.168.167.102:5000/add_tank_cuboid";
+    final String apiUrl = "http://192.168.5.224:5000/add_tank_cuboid";
 
     final response = await http.post(
       Uri.parse(apiUrl),
@@ -465,20 +464,20 @@ class _TankInformationState extends State<TankInformation> {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'tank_number': _tankNumberController.text,
+        'tank_number': "'" + _tankNumberController.text.padLeft(3, '0') + "'",
         'tank_height': _tankHeightController.text,
         'base_width': _tankWidthController.text,
         'base_length': _tankLengthController.text,
       }),
     );
-
+    String tankNumber = "'" + _tankNumberController.text.padLeft(3, '0') + "'";
     final responseData = jsonDecode(response.body);
 
     if (response.statusCode == 201) {
       // Tank information submission successful
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LiveHistoryPage()),
+        MaterialPageRoute(builder: (context) => LiveHistoryPage(tankNumber)),
       );
     } else {
       showDialog(
@@ -720,7 +719,7 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
   final Color primaryColor = const Color(0xFF21457D);
 
   Future<void> _submitTankCylinderForm() async {
-    final String apiUrl = "http://192.168.167.102:5000/add_tank_cylinder";
+    final String apiUrl = "http://192.168.5.224:5000/add_tank_cylinder";
 
     final response = await http.post(
       Uri.parse(apiUrl),
@@ -728,7 +727,7 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'tank_number': _tankNumberController.text,
+        'tank_number': "'" + _tankNumberController.text.padLeft(3, '0') + "'",
         'tank_height': _tankHeightController.text,
         'tank_width': _tankWidthController.text,
       }),
@@ -738,9 +737,11 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
 
     if (response.statusCode == 201) {
       // Navigate to the home page after successful signup
+      String tankNumber =
+          "'" + _tankNumberController.text.padLeft(3, '0') + "'";
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Home()),
+        MaterialPageRoute(builder: (context) => LiveHistoryPage(tankNumber)),
       );
     } else {
       showDialog(
@@ -965,13 +966,13 @@ class _TankShapePageState extends State<TankShapePage> {
             Container(
               width: double.infinity,
               height: double.infinity,
-              color: Color(0xFFBBD0EA),
+              color: const Color(0xFFBBD0EA),
               child: Stack(
                 children: [
                   Positioned(
                     left: MediaQuery.of(context).size.width * 0.2,
                     top: 100,
-                    child: Padding(
+                    child: const Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Text(
                         'Add a tank',
@@ -980,7 +981,7 @@ class _TankShapePageState extends State<TankShapePage> {
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w700,
                           fontSize: 35.16,
-                          color: const Color(0xff1a2a3a),
+                          color: Color(0xff1a2a3a),
                           height: 1.2,
                         ),
                       ),
@@ -988,10 +989,10 @@ class _TankShapePageState extends State<TankShapePage> {
                   ),
                   Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 200,
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Center(
                           child: Text(
@@ -1004,7 +1005,7 @@ class _TankShapePageState extends State<TankShapePage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 40),
+                      const SizedBox(height: 40),
                       GestureDetector(
                         onTap: () {
                           isCylinder = true;
@@ -1021,7 +1022,7 @@ class _TankShapePageState extends State<TankShapePage> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 color: Color(0xFF789CD2),
                                 blurRadius: 20,
@@ -1031,7 +1032,7 @@ class _TankShapePageState extends State<TankShapePage> {
                             ],
                           ),
                           child: Column(
-                            children: [
+                            children: const [
                               SizedBox(height: 60),
                               SizedBox(
                                 width: 60,
@@ -1046,7 +1047,7 @@ class _TankShapePageState extends State<TankShapePage> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 26,
                       ),
                       GestureDetector(
@@ -1064,7 +1065,7 @@ class _TankShapePageState extends State<TankShapePage> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 color: Color(0xFF789CD2),
                                 blurRadius: 20,
@@ -1074,7 +1075,7 @@ class _TankShapePageState extends State<TankShapePage> {
                             ],
                           ),
                           child: Column(
-                            children: [
+                            children: const [
                               SizedBox(height: 60),
                               SizedBox(
                                 width: 70,

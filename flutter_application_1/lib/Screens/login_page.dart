@@ -1,8 +1,11 @@
+import 'package:fluid/Screens/live_history_page.dart';
+
 import 'main.dart';
 import 'package:flutter/material.dart';
 import 'Home.dart';
 import 'sign_up.dart';
 import 'dart:convert';
+import 'package:influxdb_client/api.dart';
 import 'package:http/http.dart' as http;
 import '../Widgets/page_view_demo.dart';
 
@@ -11,12 +14,44 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+Future<String?> getTankNumber(String phoneNumber) async {
+  var client = InfluxDBClient(
+    url: 'http://192.168.5.224:8086',
+    token:
+        'dknAI50ifXk0EEXmu9tY3VTzx9cp5mHj2eMclm_izY17l_PjeVjiGdX7fezpQ3oNO90XdsqcX_NUrNgVXYtyJQ==',
+    org: 'Projet2CP',
+    bucket: 'new_bucket',
+  );
+
+  // Construct the Flux query
+  var fluxQuery = '''
+    from(bucket: "new_bucket")
+    |> range(start: -999999h)
+    |> filter(fn: (r) => r["_measurement"] == "users1")
+    |> filter(fn: (r) => r["phone_number"] == "$phoneNumber")
+    |> last()
+    |> yield(name: "mean")
+  ''';
+
+  // Execute the query and extract the tank_number field from the last record
+  var result = await client.getQueryService().query(fluxQuery);
+
+  await for (var record in result) {
+    print(record);
+    if (record.containsKey('_field') &&
+        record.containsKey('_value') &&
+        record['_field'] == 'tank_number') {
+      return record['_value'] as String?;
+    }
+  }
+}
+
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   Future<Map<String, dynamic>> _signIn(BuildContext context) async {
-    final String apiUrl = "http://192.168.167.102:5000/signin";
+    final String apiUrl = "http://192.168.5.224:5000/signin";
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: <String, String>{
@@ -31,13 +66,17 @@ class _LoginPageState extends State<LoginPage> {
     final responseData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
+      String phoneNumber = _phoneNumberController.text;
+      String? tankNumber = await getTankNumber(phoneNumber);
+      print("phone: " + phoneNumber);
       storePhoneNumberAndSignInStatus(_phoneNumberController.text, true);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Home()),
+        MaterialPageRoute(builder: (context) => LiveHistoryPage(tankNumber!)),
       );
       return {
         'signedIn': true,
+        'tankNumber': tankNumber,
       };
     } else {
       showDialog(
@@ -57,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
       );
       return {
         'signedIn': false,
-        'tank_number': '',
+        'tankNumber': '',
       };
     }
   }
@@ -102,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
           Positioned(
             left: MediaQuery.of(context).size.width * 0.2,
             top: 72,
-            child: Text(
+            child: const Text(
               'Sign In',
               style: TextStyle(
                 fontFamily: 'Montserrat',
@@ -123,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Color(0xFF789CD2),
                     blurRadius: 20,

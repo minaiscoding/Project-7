@@ -7,10 +7,10 @@ import hashlib
 
 app = Flask(__name__)
 bucket = "new_bucket"
-org = "Esi"
-token = "K8W7GQZR35OoD79-WpovZGtTxMJSvPkS-D0PjbbeFDUjsVwlPWxTtzQIatc0GkTe21ZXLtsgd8fD2P8ACH4Www=="
+org = "Projet2CP"
+token = "dknAI50ifXk0EEXmu9tY3VTzx9cp5mHj2eMclm_izY17l_PjeVjiGdX7fezpQ3oNO90XdsqcX_NUrNgVXYtyJQ=="
 # Store the URL of your InfluxDB instance
-url = "http://192.168.167.102:8086"
+url = "http://192.168.5.224:8086"
 
 client = influxdb_client.InfluxDBClient(
     url=url,
@@ -170,7 +170,6 @@ def signin():
     result = query_api.query(org=org, query=query)
 
     if len(result) > 0:
-        #tank_number = result[0].get('tank_number')
         return jsonify({'success':'correct'} ), 200
     else:
         return jsonify({'error': 'Incorrect password or phone number'}), 401
