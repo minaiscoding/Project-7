@@ -1,4 +1,4 @@
-import 'package:fluid/Screens/main.dart';
+import 'package:Fluid/Screens/main.dart';
 import 'package:flutter/material.dart';
 import 'Home.dart';
 import 'sign_up.dart';

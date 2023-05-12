@@ -3,14 +3,11 @@ import influxdb_client
 from influxdb_client.client.write_api import SYNCHRONOUS
 import hashlib
 
-
-
 app = Flask(__name__)
 bucket = "new_bucket"
 org = "Projet2CP"
 token = "dknAI50ifXk0EEXmu9tY3VTzx9cp5mHj2eMclm_izY17l_PjeVjiGdX7fezpQ3oNO90XdsqcX_NUrNgVXYtyJQ=="
-# Store the URL of your InfluxDB instance
-url = "http://192.168.5.224:8086"
+url = "http://192.168.110.224:8086"
 
 client = influxdb_client.InfluxDBClient(
     url=url,

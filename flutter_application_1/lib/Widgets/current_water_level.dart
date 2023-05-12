@@ -36,7 +36,7 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
     var bucket = 'new_bucket';
     var org = 'Projet2CP';
     var client = InfluxDBClient(
-        url: 'http://192.168.5.224:8086',
+        url: 'http://192.168.110.224:8086',
         token: token,
         org: org,
         bucket: bucket);
@@ -83,7 +83,7 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
     var bucket = 'Level';
     var org = 'Projet2CP';
     var client = InfluxDBClient(
-        url: 'http://192.168.5.224:8086',
+        url: 'http://192.168.110.224:8086',
         token: token,
         org: org,
         bucket: bucket);
