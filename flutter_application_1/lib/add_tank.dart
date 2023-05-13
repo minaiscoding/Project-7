@@ -39,6 +39,8 @@ class Tank {
 }
 
 class TankInformation extends StatefulWidget {
+  const TankInformation({super.key});
+
   @override
   _TankInformationState createState() => _TankInformationState();
 }
@@ -221,7 +223,7 @@ class _TankInformationState extends State<TankInformation> {
             height: 50,
             child: ElevatedButton(
               onPressed: () {
-                Tank tank = new Tank();
+                Tank tank = Tank();
                 tank.height = _tankHeightController.text;
                 tank.isCylinder = false;
                 tank.width = _tankWidthController.text;
@@ -230,11 +232,12 @@ class _TankInformationState extends State<TankInformation> {
                 tank.saveToSharedPreferences();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LiveLevelPage()),
+                  MaterialPageRoute(
+                      builder: (context) => const LiveLevelPage()),
                 );
               },
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFF789CD2),
+                backgroundColor: const Color(0xFF789CD2),
                 elevation: 8,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -266,6 +269,8 @@ class _TankInformationState extends State<TankInformation> {
 }
 
 class TankInformationCylinder extends StatefulWidget {
+  const TankInformationCylinder({super.key});
+
   @override
   _TankInformationCylinderState createState() =>
       _TankInformationCylinderState();
@@ -425,7 +430,7 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
             height: 50,
             child: ElevatedButton(
               onPressed: () {
-                Tank tank = new Tank();
+                Tank tank = Tank();
                 tank.height = _tankHeightController.text;
                 tank.isCylinder = true;
                 tank.baseD = _tankWidthController.text;
@@ -433,7 +438,8 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
                 tank.saveToSharedPreferences();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LiveLevelPage()),
+                  MaterialPageRoute(
+                      builder: (context) => const LiveLevelPage()),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -469,6 +475,8 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
 }
 
 class TankShapePage extends StatefulWidget {
+  const TankShapePage({super.key});
+
   @override
   _TankShapePageState createState() => _TankShapePageState();
 }
@@ -499,7 +507,7 @@ class _TankShapePageState extends State<TankShapePage> {
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.w700,
                         fontSize: 35.16,
-                        color: const Color(0xff1a2a3a),
+                        color: Color(0xff1a2a3a),
                         height: 1.2,
                       ),
                     ),
@@ -507,10 +515,10 @@ class _TankShapePageState extends State<TankShapePage> {
                 ),
                 Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 200,
                     ),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Center(
                         child: Text(
@@ -523,14 +531,15 @@ class _TankShapePageState extends State<TankShapePage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     GestureDetector(
                       onTap: () {
                         isCylinder = true;
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => TankInformationCylinder()),
+                              builder: (context) =>
+                                  const TankInformationCylinder()),
                         );
                       },
                       child: Container(
@@ -573,7 +582,7 @@ class _TankShapePageState extends State<TankShapePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => TankInformation()),
+                              builder: (context) => const TankInformation()),
                         );
                       },
                       child: Container(

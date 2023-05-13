@@ -4,8 +4,6 @@ import 'live_level.dart';
 
 import 'add_tank.dart';
 
-import 'package:awesome_notifications/awesome_notifications.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Tank tank = Tank();
@@ -15,7 +13,7 @@ void main() async {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      home: tank.height == "0" ? TankShapePage() : LiveLevelPage(),
+      home: tank.height == "0" ? const TankShapePage() : const LiveLevelPage(),
       // home: TankPage(),
     ),
   );

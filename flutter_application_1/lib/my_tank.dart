@@ -3,7 +3,10 @@ import 'live_level.dart';
 import 'add_tank.dart';
 
 class TankPage extends StatefulWidget {
+  const TankPage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _TankPageState createState() => _TankPageState();
 }
 
@@ -26,7 +29,7 @@ class _TankPageState extends State<TankPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color.fromARGB(255, 0, 41, 99),
@@ -59,7 +62,7 @@ class _TankPageState extends State<TankPage> {
                 onTapDown: (details) {
                   _openMenu();
                 },
-                child: Icon(Icons.menu, size: 32, color: Colors.white),
+                child: const Icon(Icons.menu, size: 32, color: Colors.white),
               ),
             ),
             Positioned(
@@ -67,7 +70,7 @@ class _TankPageState extends State<TankPage> {
               left: 50,
               right: 50,
               child: Container(
-                padding: EdgeInsets.all(30),
+                padding: const EdgeInsets.all(30),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
@@ -89,7 +92,7 @@ class _TankPageState extends State<TankPage> {
                         color: Colors.blue[900],
                       ),
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Text(
                       'Height: ${tank.height} cm',
                       style: TextStyle(
@@ -98,7 +101,7 @@ class _TankPageState extends State<TankPage> {
                         color: Colors.blue[900],
                       ),
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Text(
                       tank.isCylinder
                           ? 'Base diameter: ${tank.baseD} cm'
@@ -109,7 +112,7 @@ class _TankPageState extends State<TankPage> {
                         color: Colors.blue[900],
                       ),
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Text(
                       tank.isCylinder ? '' : 'Length: ${tank.length} cm',
                       style: TextStyle(
@@ -127,15 +130,16 @@ class _TankPageState extends State<TankPage> {
               left: 0,
               right: 0,
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 50),
+                margin: const EdgeInsets.symmetric(horizontal: 50),
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => TankShapePage()),
+                      MaterialPageRoute(
+                          builder: (context) => const TankShapePage()),
                     );
                   },
-                  child: Text('Edit Tank Info'),
+                  child: const Text('Edit Tank Info'),
                 ),
               ),
             ),
@@ -143,12 +147,12 @@ class _TankPageState extends State<TankPage> {
               visible: _isMenuOpen,
               child: Stack(
                 children: <Widget>[
-                  Menu(),
+                  const Menu(),
                   Positioned(
                     top: 150,
                     right: 20,
                     child: IconButton(
-                      icon: Icon(Icons.close),
+                      icon: const Icon(Icons.close),
                       iconSize: 40,
                       color: const Color(0xFF21457D),
                       onPressed: () {
@@ -169,9 +173,11 @@ class _TankPageState extends State<TankPage> {
 }
 
 class Menu extends StatelessWidget {
+  const Menu({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final TextStyle textStyle = TextStyle(
+    const TextStyle textStyle = TextStyle(
       fontFamily: 'Montserrat',
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w700,
@@ -179,10 +185,10 @@ class Menu extends StatelessWidget {
       height: 1,
       color: Colors.white,
     );
-    final elevation = 8.0;
-    final backgroundColor = Color(0xFF21457D);
+    const elevation = 8.0;
+    const backgroundColor = Color(0xFF21457D);
     final boxShadow = [
-      BoxShadow(
+      const BoxShadow(
         color: Color.fromRGBO(101, 160, 255, 0.5),
         offset: Offset(0, 8),
         blurRadius: 30,
@@ -207,13 +213,14 @@ class Menu extends StatelessWidget {
           ),
           child: Column(
             children: [
-              SizedBox(height: 90),
+              const SizedBox(height: 90),
               ElevatedButton(
                 onPressed: () {
                   _isMenuOpen = false;
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LiveLevelPage()),
+                    MaterialPageRoute(
+                        builder: (context) => const LiveLevelPage()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -222,25 +229,25 @@ class Menu extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: borderRadius,
                   ),
-                  shadowColor: Color(0xFF21457D),
+                  shadowColor: const Color(0xFF21457D),
                 ),
                 child: Container(
                   width: 121,
                   height: 56,
                   alignment: Alignment.center,
-                  child: Text(
+                  child: const Text(
                     'Home',
                     style: textStyle,
                   ),
                 ),
               ),
-              SizedBox(height: 28),
+              const SizedBox(height: 28),
               ElevatedButton(
                 onPressed: () {
                   _isMenuOpen = false;
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => TankPage()),
+                    MaterialPageRoute(builder: (context) => const TankPage()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -249,7 +256,7 @@ class Menu extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: borderRadius,
                   ),
-                  shadowColor: Color(0xFF21457D),
+                  shadowColor: const Color(0xFF21457D),
                 ),
                 child: Container(
                   width: 121,
@@ -258,12 +265,12 @@ class Menu extends StatelessWidget {
                   child: Text(
                     'My tank',
                     style: textStyle.copyWith(
-                      color: Color(0xFF21457D),
+                      color: const Color(0xFF21457D),
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 28),
+              const SizedBox(height: 28),
             ],
           ),
         ),
