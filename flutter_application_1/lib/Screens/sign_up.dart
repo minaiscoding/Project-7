@@ -1,8 +1,6 @@
-import 'main.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'front_page.dart';
 import 'login_page.dart';
 import '../Widgets/page_view_demo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
