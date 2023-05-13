@@ -2,7 +2,7 @@ import 'main.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'Home.dart';
+import 'front_page.dart';
 import 'login_page.dart';
 import '../Widgets/page_view_demo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,7 +40,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   Future<void> _submitSignUpForm() async {
-    final String apiUrl = "http://192.168.110.224:5000/signup";
+    const String apiUrl = "http://192.168.110.224:5000/signup";
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: <String, String>{
@@ -95,56 +95,56 @@ class _SignUpPageState extends State<SignUpPage> {
             color: Colors.transparent,
           ),
           Container(
-            height: 350,
+            height: MediaQuery.of(context).size.height * 0.6,
             child: ClipPath(
               clipper: MyClipper(),
               child: Container(
-                color: Color(0xFF789CD2),
+                color: const Color(0xFF789CD2),
               ),
             ),
           ),
           Positioned(
-            //left: MediaQuery.of(context).size.width * 0.0709,
             right: MediaQuery.of(context).size.width * 0.86,
             top: MediaQuery.of(context).size.height * 0.1,
-            // bottom: MediaQuery.of(context).size.height * 0.90,
             child: InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PageViewDemo()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PageViewDemo()));
               },
               child: Icon(
                 Icons.arrow_back,
                 color: Colors.white,
-                size: 40,
+                size: MediaQuery.of(context).size.width * 0.1,
               ),
             ),
           ),
           Positioned(
             left: MediaQuery.of(context).size.width * 0.2,
-            top: 72,
-            child: Text(
+            top: MediaQuery.of(context).size.width * 0.15,
+            child: const Text(
               'Sign Up',
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.w700,
-                fontSize: 60.16,
+                fontSize: 50.16,
                 color: Colors.white,
                 height: 1.2,
               ),
             ),
           ),
           Positioned(
-            left: 52,
-            top: 160,
+            left: MediaQuery.of(context).size.width * 0.13,
+            top: MediaQuery.of(context).size.height * 0.19,
             child: Container(
-              width: 288,
-              height: 460,
+              width: MediaQuery.of(context).size.width * 0.74,
+              height: MediaQuery.of(context).size.height * 0.525,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Color(0xFF789CD2),
                     blurRadius: 20,
@@ -155,16 +155,16 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                  top: 30,
-                  left: 30,
-                  right: 30,
+                  top: MediaQuery.of(context).size.height * 0.04,
+                  left: MediaQuery.of(context).size.height * 0.04,
+                  right: MediaQuery.of(context).size.height * 0.04,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     TextField(
                       controller: _fullnameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Full name',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
@@ -187,13 +187,13 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     SizedBox(
-                      height: 30,
+                      height: MediaQuery.of(context).size.width * 0.053,
                     ),
                     TextField(
                       keyboardType: TextInputType.phone,
                       controller: _tankNumberController,
-                      decoration: InputDecoration(
-                        hintText: 'tank number',
+                      decoration: const InputDecoration(
+                        hintText: 'Tank number',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.normal,
@@ -213,12 +213,12 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     SizedBox(
-                      height: 30,
+                      height: MediaQuery.of(context).size.width * 0.053,
                     ),
                     TextField(
                       keyboardType: TextInputType.phone,
                       controller: _phoneNumberController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Phone number',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
@@ -238,11 +238,13 @@ class _SignUpPageState extends State<SignUpPage> {
                         prefixIcon: Icon(Icons.phone, color: Color(0xFF989898)),
                       ),
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.width * 0.053,
+                    ),
                     TextField(
                       controller: _passwordController,
                       obscureText: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Password',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
@@ -265,7 +267,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     SizedBox(height: 30),
                     TextField(
                       controller: _confirmpasswordController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Confirm password',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
@@ -310,7 +312,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           Positioned(
             top: 670,
-            left: 72,
+            left: MediaQuery.of(context).size.width * 0.18,
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -318,7 +320,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   MaterialPageRoute(builder: (context) => LoginPage()),
                 );
               },
-              child: Text.rich(
+              child: const Text.rich(
                 TextSpan(
                   text: 'Already have an account? ',
                   style: TextStyle(
@@ -342,30 +344,14 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           Positioned(
-            width: 157,
+            width: MediaQuery.of(context).size.width * 0.38,
             height: 60,
-            left: 117,
-            top: 590,
+            left: MediaQuery.of(context).size.width * 0.3,
+            top: MediaQuery.of(context).size.height * 0.68,
             child: ElevatedButton(
               onPressed: () {
                 _submitSignUpForm();
               },
-              child: Container(
-                width: 112,
-                height: 34,
-                alignment: Alignment.center,
-                child: Text(
-                  'Sign Up',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 20,
-                    height: 1,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
               style: ElevatedButton.styleFrom(
                 primary: Color(0xFF789CD2),
                 elevation: 8,
@@ -373,6 +359,17 @@ class _SignUpPageState extends State<SignUpPage> {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 shadowColor: Color(0xFF789CD2),
+              ),
+              child: const Text(
+                'Sign Up',
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 20,
+                  height: 1,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
@@ -510,8 +507,8 @@ class _TankInformationState extends State<TankInformation> {
               color: Color(0xFFBBD0EA),
               child: Column(
                 children: [
-                  SizedBox(height: 100),
-                  Text(
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.12),
+                  const Text(
                     'Add a tank',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
@@ -521,11 +518,11 @@ class _TankInformationState extends State<TankInformation> {
                       color: const Color(0xff1a2a3a),
                     ),
                   ),
-                  SizedBox(height: 40),
-                  Container(
-                    width: 400,
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
                     height: 20,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         softWrap: true,
                         'Enter the information relative to your tank',
@@ -535,15 +532,15 @@ class _TankInformationState extends State<TankInformation> {
                     ),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: MediaQuery.of(context).size.height * 0.06,
                   ),
                   Container(
-                    width: 288,
-                    height: 400,
+                    width: MediaQuery.of(context).size.width * 0.75,
+                    height: MediaQuery.of(context).size.height * 0.47,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: Color(0xFF789CD2),
                           blurRadius: 20,
@@ -554,9 +551,9 @@ class _TankInformationState extends State<TankInformation> {
                     ),
                     child: Padding(
                       padding: EdgeInsets.only(
-                        top: 50,
-                        left: 30,
-                        right: 30,
+                        top: MediaQuery.of(context).size.height * 0.04,
+                        left: MediaQuery.of(context).size.width * 0.08,
+                        right: MediaQuery.of(context).size.width * 0.08,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -564,7 +561,7 @@ class _TankInformationState extends State<TankInformation> {
                           TextField(
                             keyboardType: TextInputType.phone,
                             controller: _tankNumberController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Tank number',
                               hintStyle: TextStyle(
                                 fontFamily: 'Montserrat',
@@ -585,11 +582,12 @@ class _TankInformationState extends State<TankInformation> {
                                   Icon(Icons.water, color: Color(0xFF989898)),
                             ),
                           ),
-                          SizedBox(height: 40),
+                          SizedBox(
+                              height: MediaQuery.of(context).size.width * 0.08),
                           TextField(
                             keyboardType: TextInputType.phone,
                             controller: _tankHeightController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Tank height',
                               hintStyle: TextStyle(
                                 fontFamily: 'Montserrat',
@@ -610,11 +608,12 @@ class _TankInformationState extends State<TankInformation> {
                                   Icon(Icons.water, color: Color(0xFF989898)),
                             ),
                           ),
-                          SizedBox(height: 30),
+                          SizedBox(
+                              height: MediaQuery.of(context).size.width * 0.08),
                           TextField(
                             keyboardType: TextInputType.number,
                             controller: _tankWidthController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Base width',
                               hintStyle: TextStyle(
                                 fontFamily: 'Montserrat',
@@ -635,11 +634,12 @@ class _TankInformationState extends State<TankInformation> {
                                   Icon(Icons.water, color: Color(0xFF989898)),
                             ),
                           ),
-                          SizedBox(height: 40),
+                          SizedBox(
+                              height: MediaQuery.of(context).size.width * 0.08),
                           TextField(
                             keyboardType: TextInputType.number,
                             controller: _tankLengthController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Base length ',
                               hintStyle: TextStyle(
                                 fontFamily: 'Montserrat',
@@ -668,37 +668,32 @@ class _TankInformationState extends State<TankInformation> {
               ),
             ),
             Positioned(
-              top: 630,
-              right: 120,
-              width: 157,
+              top: MediaQuery.of(context).size.height * 0.745,
+              right: MediaQuery.of(context).size.width * 0.305,
+              width: MediaQuery.of(context).size.width * 0.41,
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
                   _submitTankCuboidForm();
                 },
-                child: Container(
-                  width: 112,
-                  height: 50,
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Add tank',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20,
-                      height: 1,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF789CD2),
+                  primary: const Color(0xFF789CD2),
                   elevation: 8,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  shadowColor: Color(0xFF789CD2),
+                  shadowColor: const Color(0xFF789CD2),
+                ),
+                child: const Text(
+                  'Add tank',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                    height: 1,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -774,8 +769,8 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
               color: Color(0xFFBBD0EA),
               child: Column(
                 children: [
-                  SizedBox(height: 100),
-                  Text(
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.12),
+                  const Text(
                     'Add a tank',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
@@ -785,11 +780,11 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
                       color: const Color(0xff1a2a3a),
                     ),
                   ),
-                  SizedBox(height: 40),
-                  Container(
-                    width: 400,
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
                     height: 20,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         softWrap: true,
                         'Enter the information relative to your tank',
@@ -799,15 +794,15 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
                     ),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: MediaQuery.of(context).size.height * 0.06,
                   ),
                   Container(
-                    width: 288,
-                    height: 340,
+                    width: MediaQuery.of(context).size.width * 0.75,
+                    height: MediaQuery.of(context).size.height * 0.38,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: Color(0xFF789CD2),
                           blurRadius: 20,
@@ -818,9 +813,9 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
                     ),
                     child: Padding(
                       padding: EdgeInsets.only(
-                        top: 50,
-                        left: 30,
-                        right: 30,
+                        top: MediaQuery.of(context).size.height * 0.04,
+                        left: MediaQuery.of(context).size.width * 0.08,
+                        right: MediaQuery.of(context).size.width * 0.08,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -828,7 +823,7 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
                           TextField(
                             keyboardType: TextInputType.phone,
                             controller: _tankNumberController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Tank number',
                               hintStyle: TextStyle(
                                 fontFamily: 'Montserrat',
@@ -849,11 +844,12 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
                                   Icon(Icons.water, color: Color(0xFF989898)),
                             ),
                           ),
-                          SizedBox(height: 40),
+                          SizedBox(
+                              height: MediaQuery.of(context).size.width * 0.08),
                           TextField(
                             keyboardType: TextInputType.phone,
                             controller: _tankHeightController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Tank height',
                               hintStyle: TextStyle(
                                 fontFamily: 'Montserrat',
@@ -874,11 +870,12 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
                                   Icon(Icons.water, color: Color(0xFF989898)),
                             ),
                           ),
-                          SizedBox(height: 30),
+                          SizedBox(
+                              height: MediaQuery.of(context).size.width * 0.08),
                           TextField(
                             keyboardType: TextInputType.number,
                             controller: _tankWidthController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Base diameter',
                               hintStyle: TextStyle(
                                 fontFamily: 'Montserrat',
@@ -899,7 +896,8 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
                                   Icon(Icons.water, color: Color(0xFF989898)),
                             ),
                           ),
-                          SizedBox(height: 40),
+                          SizedBox(
+                              height: MediaQuery.of(context).size.width * 0.08),
                         ],
                       ),
                     ),
@@ -908,37 +906,32 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
               ),
             ),
             Positioned(
-              top: 570,
-              right: 120,
-              width: 157,
+              top: MediaQuery.of(context).size.height * 0.655,
+              right: MediaQuery.of(context).size.width * 0.305,
+              width: MediaQuery.of(context).size.width * 0.41,
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
                   _submitTankCylinderForm();
                 },
-                child: Container(
-                  width: 112,
-                  height: 50,
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Add tank',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20,
-                      height: 1,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF789CD2),
+                  primary: const Color(0xFF789CD2),
                   elevation: 8,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  shadowColor: Color(0xFF789CD2),
+                  shadowColor: const Color(0xFF789CD2),
+                ),
+                child: const Text(
+                  'Add tank',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                    height: 1,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -960,143 +953,144 @@ class _TankShapePageState extends State<TankShapePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: const Color(0xFFBBD0EA),
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: MediaQuery.of(context).size.width * 0.2,
-                    top: 100,
-                    child: const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text(
-                        'Add a tank',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 35.16,
-                          color: Color(0xff1a2a3a),
-                          height: 1.2,
-                        ),
+      body: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: const Color(0xFFBBD0EA),
+            child: Stack(
+              children: [
+                Positioned(
+                  left: MediaQuery.of(context).size.width * 0.2,
+                  top: MediaQuery.of(context).size.height * 0.11,
+                  child: const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                      'Add a tank',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 35.16,
+                        color: Color(0xff1a2a3a),
+                        height: 1.2,
                       ),
                     ),
                   ),
-                  Column(
-                    children: [
-                      const SizedBox(
-                        height: 200,
+                ),
+                Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.22,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Center(
+                        child: Text(
+                          'Select the shape of the tank',
+                          softWrap: true,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Center(
-                          child: Text(
-                            'Select the shape of the tank',
-                            softWrap: true,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w300,
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.width * 0.1),
+                    GestureDetector(
+                      onTap: () {
+                        isCylinder = true;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TankInformationCylinder()),
+                        );
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.53,
+                        height: MediaQuery.of(context).size.width * 0.53,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0xFF789CD2),
+                              blurRadius: 20,
+                              spreadRadius: 0,
+                              offset: Offset(0, 0),
                             ),
-                          ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.07),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.height * 0.07,
+                              height: MediaQuery.of(context).size.height * 0.07,
+                              child: const Image(
+                                image: AssetImage('assets/cylinder.png'),
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            const Text("Cylinder"),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 40),
-                      GestureDetector(
-                        onTap: () {
-                          isCylinder = true;
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    TankInformationCylinder()),
-                          );
-                        },
-                        child: Container(
-                          width: 200,
-                          height: 200,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color(0xFF789CD2),
-                                blurRadius: 20,
-                                spreadRadius: 0,
-                                offset: Offset(0, 0),
+                    ),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        isCylinder = false;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TankInformation()),
+                        );
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.53,
+                        height: MediaQuery.of(context).size.width * 0.53,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0xFF789CD2),
+                              blurRadius: 20,
+                              spreadRadius: 0,
+                              offset: Offset(0, 0),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.07),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.height * 0.07,
+                              height: MediaQuery.of(context).size.height * 0.07,
+                              child: const Image(
+                                image: AssetImage('assets/cuboidshape.png'),
                               ),
-                            ],
-                          ),
-                          child: Column(
-                            children: const [
-                              SizedBox(height: 60),
-                              SizedBox(
-                                width: 60,
-                                height: 60,
-                                child: Image(
-                                  image: AssetImage('assets/cylinder.png'),
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              Text("Cylinder"),
-                            ],
-                          ),
+                            ),
+                            SizedBox(height: 20),
+                            const Text("Cuboid"),
+                          ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 26,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          isCylinder = false;
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => TankInformation()),
-                          );
-                        },
-                        child: Container(
-                          width: 200,
-                          height: 200,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color(0xFF789CD2),
-                                blurRadius: 20,
-                                spreadRadius: 0,
-                                offset: Offset(0, 0),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: const [
-                              SizedBox(height: 60),
-                              SizedBox(
-                                width: 70,
-                                height: 60,
-                                child: Image(
-                                  image: AssetImage('assets/cuboidshape.png'),
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              Text("Cuboid"),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

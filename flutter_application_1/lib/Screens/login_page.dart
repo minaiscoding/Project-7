@@ -1,7 +1,5 @@
-import 'package:Fluid/Screens/live_history_page.dart';
-import 'main.dart';
+import 'package:fluid/Screens/live_history_page.dart';
 import 'package:flutter/material.dart';
-import 'Home.dart';
 import 'sign_up.dart';
 import 'dart:convert';
 import 'package:influxdb_client/api.dart';
@@ -36,13 +34,13 @@ Future<String?> getTankNumber(String phoneNumber) async {
   var result = await client.getQueryService().query(fluxQuery);
 
   await for (var record in result) {
-    print(record);
     if (record.containsKey('_field') &&
         record.containsKey('_value') &&
         record['_field'] == 'tank_number') {
       return record['_value'] as String?;
     }
   }
+  return null;
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -50,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   Future<Map<String, dynamic>> _signIn(BuildContext context) async {
-    final String apiUrl = "http://192.168.110.224:5000/signin";
+    const String apiUrl = "http://192.168.110.224:5000/signin";
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: <String, String>{
@@ -67,7 +65,6 @@ class _LoginPageState extends State<LoginPage> {
     if (response.statusCode == 200) {
       String phoneNumber = _phoneNumberController.text;
       String? tankNumber = await getTankNumber(phoneNumber);
-      print("phone: " + phoneNumber);
       storePhoneNumberAndSignInStatus(_phoneNumberController.text, true);
       Navigator.pushReplacement(
         context,
@@ -111,53 +108,53 @@ class _LoginPageState extends State<LoginPage> {
             width: double.infinity,
             color: Colors.transparent,
           ),
-          Container(
-            height: 350,
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.4,
             child: ClipPath(
               clipper: MyClipper(),
               child: Container(
-                color: Color(0xFF789CD2),
+                color: const Color(0xFF789CD2),
               ),
             ),
           ),
           Positioned(
-            //left: MediaQuery.of(context).size.width * 0.0709,
             right: MediaQuery.of(context).size.width * 0.86,
             top: MediaQuery.of(context).size.height * 0.1,
-            // bottom: MediaQuery.of(context).size.height * 0.90,
             child: InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PageViewDemo()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PageViewDemo()));
               },
               child: Icon(
                 Icons.arrow_back,
                 color: Colors.white,
-                size: 40,
+                size: MediaQuery.of(context).size.width * 0.1,
               ),
             ),
           ),
           Positioned(
             left: MediaQuery.of(context).size.width * 0.2,
-            top: 72,
+            top: MediaQuery.of(context).size.width * 0.15,
             child: const Text(
               'Sign In',
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.w700,
-                fontSize: 60.16,
+                fontSize: 50.16,
                 color: Colors.white,
                 height: 1.2,
               ),
             ),
           ),
           Positioned(
-            left: 52,
-            top: 167,
+            left: MediaQuery.of(context).size.width * 0.13,
+            top: MediaQuery.of(context).size.height * 0.19,
             child: Container(
-              width: 288,
-              height: 280,
+              width: MediaQuery.of(context).size.width * 0.74,
+              height: MediaQuery.of(context).size.width * 0.71,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
@@ -172,9 +169,9 @@ class _LoginPageState extends State<LoginPage> {
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                  top: 50,
-                  left: 30,
-                  right: 30,
+                  top: MediaQuery.of(context).size.height * 0.07,
+                  left: MediaQuery.of(context).size.width * 0.07,
+                  right: MediaQuery.of(context).size.width * 0.07,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -182,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextField(
                       keyboardType: TextInputType.phone,
                       controller: _phoneNumberController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Phone number',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
@@ -202,11 +199,12 @@ class _LoginPageState extends State<LoginPage> {
                         prefixIcon: Icon(Icons.phone, color: Color(0xFF989898)),
                       ),
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.044),
                     TextField(
                       controller: _passwordController,
                       obscureText: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Password',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
@@ -226,39 +224,25 @@ class _LoginPageState extends State<LoginPage> {
                         prefixIcon: Icon(Icons.lock, color: Color(0xFF989898)),
                       ),
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.width * 0.03,
+                    ),
                   ],
                 ),
               ),
             ),
           ),
           Positioned(
-            width: 157,
+            width: MediaQuery.of(context).size.width * 0.37,
             height: 60,
-            left: 117,
-            top: 410,
+            left: MediaQuery.of(context).size.width * 0.315,
+            top: MediaQuery.of(context).size.height * 0.47,
             child: ElevatedButton(
               onPressed: () async {
                 final result = await _signIn(context);
                 final bool signedIn = result['signedIn'];
                 //final String tankNumber = result['tank_number'];
               },
-              child: Container(
-                width: 112,
-                height: 34,
-                alignment: Alignment.center,
-                child: Text(
-                  'Sign In',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 20,
-                    height: 1,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
               style: ElevatedButton.styleFrom(
                 primary: Color(0xFF789CD2),
                 elevation: 8,
@@ -266,6 +250,17 @@ class _LoginPageState extends State<LoginPage> {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 shadowColor: Color(0xFF789CD2),
+              ),
+              child: const Text(
+                'Sign In',
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 20,
+                  height: 1,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
@@ -288,8 +283,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           Positioned(
-            top: 552,
-            left: 72,
+            top: MediaQuery.of(context).size.height * 0.65,
+            left: MediaQuery.of(context).size.width * 0.19,
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -297,7 +292,7 @@ class _LoginPageState extends State<LoginPage> {
                   MaterialPageRoute(builder: (context) => SignUpPage()),
                 );
               },
-              child: Text.rich(
+              child: const Text.rich(
                 TextSpan(
                   text: 'Don\'t have an account? ',
                   style: TextStyle(
@@ -350,7 +345,7 @@ class WavePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Color.fromRGBO(120, 156, 210, 0.5)
+      ..color = const Color.fromRGBO(120, 156, 210, 0.5)
       ..style = PaintingStyle.fill;
     final path = Path()
       ..moveTo(0, size.height * 0.7)
@@ -373,7 +368,7 @@ class CustomWavePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Color.fromRGBO(120, 156, 210, 0.69)
+      ..color = const Color.fromRGBO(120, 156, 210, 0.69)
       ..style = PaintingStyle.fill;
     final path = Path()
       ..moveTo(size.width, size.height * 0.7)

@@ -4,7 +4,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'sign_up.dart';
 import '../Widgets/page_view_demo.dart';
 import 'login_page.dart';
-import 'Preview.dart';
+import 'features_description.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,9 +34,9 @@ void main() async {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      home: PageViewDemo(),
+      home: TankShapePage(),
       // home: isSignedIn
-      //     ? LiveHistoryPage((getTankNumber('6')).toString())
+      //     ? LiveHistoryPage((getTankNumber(phoneNumber)).toString())
       //     : PageViewDemo(),
     ),
   );

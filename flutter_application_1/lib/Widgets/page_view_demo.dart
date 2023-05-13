@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../Screens/Home.dart';
-import '../Screens/Preview.dart';
+import '../Screens/front_page.dart';
+import '../Screens/features_description.dart';
 import '../Screens/Welcome.dart';
 
 class PageViewDemo extends StatefulWidget {

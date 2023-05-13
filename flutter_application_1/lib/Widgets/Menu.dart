@@ -1,9 +1,5 @@
-import 'package:Fluid/Screens/login_page.dart';
+import 'package:fluid/Screens/login_page.dart';
 import 'package:flutter/material.dart'; //imports dart
-import 'package:hexcolor/hexcolor.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
-import 'package:drop_shadow_image/drop_shadow_image.dart';
 import '../Screens/sign_up.dart';
 
 Widget menuItem(String title, bool isSelected) {

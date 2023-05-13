@@ -1,4 +1,4 @@
-import 'package:Fluid/Screens/login_page.dart';
+import 'package:fluid/Screens/login_page.dart';
 
 import 'package:flutter/material.dart'; //imports dart
 import 'package:hexcolor/hexcolor.dart';
