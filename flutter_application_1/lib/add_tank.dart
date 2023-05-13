@@ -1,11 +1,6 @@
-import 'package:fluid/LiveLevelPage.dart';
+import 'package:fluid/live_level.dart';
 import 'package:flutter/material.dart'; //imports dart
-import 'package:hexcolor/hexcolor.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
-import 'package:drop_shadow_image/drop_shadow_image.dart';
-import 'Welcome.dart';
-import 'Preview.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 bool isCylinder = false;
