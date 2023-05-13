@@ -3,7 +3,6 @@ import 'package:fluid/my_tank.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
-import 'dart:ui';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:http/http.dart' as http;
 //import 'Menu.dart';
@@ -12,6 +11,8 @@ Tank tank = Tank();
 bool _isMenuOpen = false;
 
 class LiveLevelPage extends StatefulWidget {
+  const LiveLevelPage({super.key});
+
   @override
   _LiveLevelPageState createState() => _LiveLevelPageState();
 }
@@ -29,8 +30,6 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
 
   Future<void> _initializeData() async {
     await tank.loadFromSharedPreferences();
-
-    print(tank.height);
 
     setState(() {
       // Update the widget state with the loaded tank data
@@ -72,7 +71,7 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color.fromARGB(255, 0, 41, 99),
@@ -105,12 +104,12 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
                 onTapDown: (details) {
                   _openMenu();
                 },
-                child: Icon(Icons.menu, size: 32, color: Colors.white),
+                child: const Icon(Icons.menu, size: 32, color: Colors.white),
               ),
             ),
             Positioned(
               top: MediaQuery.of(context).size.height * 0.04,
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.709,
                 child: _buildLive(),
@@ -130,7 +129,7 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
                 tank.isCylinder
                     ? '${((double.parse(tank.height) - dataFetcher.waterLevel * 0.1) * double.parse(tank.baseD) * double.parse(tank.baseD) * 0.0314).toStringAsFixed(2)} L'
                     : '${((double.parse(tank.height) - dataFetcher.waterLevel * 0.1) * double.parse(tank.length) * double.parse(tank.width) * 0.01).toStringAsFixed(2)} L',
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.white, fontFamily: 'Aquire', fontSize: 35),
               ),
             ),
@@ -140,7 +139,7 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
               right: MediaQuery.of(context).size.width * 0.1,
               child: Text(
                 'Last updated: $lastUpdateTime',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontFamily: 'Montserrat',
                 ),
@@ -150,12 +149,12 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
               visible: _isMenuOpen,
               child: Stack(
                 children: <Widget>[
-                  Menu(),
+                  const Menu(),
                   Positioned(
                     top: 150,
                     right: 20,
                     child: IconButton(
-                      icon: Icon(Icons.close),
+                      icon: const Icon(Icons.close),
                       iconSize: 40,
                       color: const Color(0xFF21457D),
                       onPressed: () {
@@ -175,10 +174,8 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
   }
 
   Widget _buildLive() {
-    return Container(
-      child: WaterLevelBucket(
-        dataFetcher: dataFetcher,
-      ),
+    return WaterLevelBucket(
+      dataFetcher: dataFetcher,
     );
   }
 
@@ -187,12 +184,8 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
       onPressed: () {
         fetchDataAndUpdate();
       },
-      child: Text(
-        'Update',
-        style: TextStyle(fontFamily: 'Montserrat', fontSize: 20),
-      ),
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color.fromARGB(
+        backgroundColor: const Color.fromARGB(
           221,
           96,
           167,
@@ -202,7 +195,11 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      ),
+      child: const Text(
+        'Update',
+        style: TextStyle(fontFamily: 'Montserrat', fontSize: 20),
       ),
     );
   }
@@ -224,14 +221,10 @@ class WaterLevelFetcher {
         var value = double.tryParse(response.body);
         if (value != null) {
           waterLevel = value;
-        } else {
-          print('Failed to parse the response body as a double.');
         }
-      } else {
-        print('HTTP request failed with status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('An error occurred during the HTTP request: $e');
+      //
     }
   }
 }
@@ -243,6 +236,7 @@ class WaterLevelBucket extends StatefulWidget {
       : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _WaterLevelBucketState createState() => _WaterLevelBucketState();
 }
 
@@ -256,7 +250,7 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.7,
         height: MediaQuery.of(context).size.width * 0.7,
         child: LiquidCircularProgressIndicator(
@@ -264,14 +258,15 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
                   widget.dataFetcher.waterLevel * 0.1) *
               10 /
               124),
-          valueColor: AlwaysStoppedAnimation(Color.fromARGB(123, 96, 167, 255)),
-          backgroundColor: Color.fromARGB(0, 255, 255, 255),
+          valueColor:
+              const AlwaysStoppedAnimation(Color.fromARGB(123, 96, 167, 255)),
+          backgroundColor: const Color.fromARGB(0, 255, 255, 255),
           borderColor: Colors.white,
           borderWidth: 1,
           direction: Axis.vertical,
           center: Text(
             '${((double.parse(tank.height) - widget.dataFetcher.waterLevel * 0.1) * 1000 / 124).toStringAsFixed(2)} %',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 56,
               fontFamily: "Aquire",
               color: Color.fromARGB(255, 255, 255, 255),
@@ -285,9 +280,11 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
 }
 
 class Menu extends StatelessWidget {
+  const Menu({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final TextStyle textStyle = TextStyle(
+    const TextStyle textStyle = TextStyle(
       fontFamily: 'Montserrat',
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w700,
@@ -295,10 +292,10 @@ class Menu extends StatelessWidget {
       height: 1,
       color: Colors.white,
     );
-    final elevation = 8.0;
-    final backgroundColor = Color(0xFF21457D);
+    const elevation = 8.0;
+    const backgroundColor = Color(0xFF21457D);
     final boxShadow = [
-      BoxShadow(
+      const BoxShadow(
         color: Color.fromRGBO(101, 160, 255, 0.5),
         offset: Offset(0, 8),
         blurRadius: 30,
@@ -323,13 +320,14 @@ class Menu extends StatelessWidget {
           ),
           child: Column(
             children: [
-              SizedBox(height: 90),
+              const SizedBox(height: 90),
               ElevatedButton(
                 onPressed: () {
                   _isMenuOpen = false;
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LiveLevelPage()),
+                    MaterialPageRoute(
+                        builder: (context) => const LiveLevelPage()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -338,25 +336,25 @@ class Menu extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: borderRadius,
                   ),
-                  shadowColor: Color(0xFF21457D),
+                  shadowColor: const Color(0xFF21457D),
                 ),
                 child: Container(
                   width: 121,
                   height: 56,
                   alignment: Alignment.center,
-                  child: Text(
+                  child: const Text(
                     'Home',
                     style: textStyle,
                   ),
                 ),
               ),
-              SizedBox(height: 28),
+              const SizedBox(height: 28),
               ElevatedButton(
                 onPressed: () {
                   _isMenuOpen = false;
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => TankPage()),
+                    MaterialPageRoute(builder: (context) => const TankPage()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -365,7 +363,7 @@ class Menu extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: borderRadius,
                   ),
-                  shadowColor: Color(0xFF21457D),
+                  shadowColor: const Color(0xFF21457D),
                 ),
                 child: Container(
                   width: 121,
@@ -374,12 +372,12 @@ class Menu extends StatelessWidget {
                   child: Text(
                     'My tank',
                     style: textStyle.copyWith(
-                      color: Color(0xFF21457D),
+                      color: const Color(0xFF21457D),
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 28),
+              const SizedBox(height: 28),
             ],
           ),
         ),
