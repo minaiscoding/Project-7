@@ -9,10 +9,10 @@ Widget menuItem(String title, bool isSelected) {
     fontWeight: FontWeight.w700,
     fontSize: 24,
     height: 1,
-    color: isSelected ? Colors.white : Color(0xFF21457D),
+    color: isSelected ? Colors.white : const Color(0xFF21457D),
   );
   final elevation = isSelected ? 8.0 : 0.0;
-  final backgroundColor = isSelected ? Color(0xFF21457D) : Colors.white;
+  final backgroundColor = isSelected ?const Color(0xFF21457D) : Colors.white;
   final boxShadow = isSelected
       ? [
           BoxShadow(
@@ -90,6 +90,12 @@ class Menu extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => LoginPage()),
                     );
                   },
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color(0xFF21457D),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
                   child: const Text(
                     'Log out',
                     style: TextStyle(
@@ -99,12 +105,6 @@ class Menu extends StatelessWidget {
                       fontSize: 15,
                       height: 1,
                       color: Colors.white,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: const Color(0xFF21457D),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                 ),

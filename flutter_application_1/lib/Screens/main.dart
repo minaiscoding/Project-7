@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'live_history_page.dart';
+import 'package:flutter/services.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'sign_up.dart';
-import '../Widgets/page_view_demo.dart';
+import 'live_history_page.dart';
 import 'login_page.dart';
-import 'features_description.dart';
+import '../Widgets/page_view_demo.dart';
+import 'sign_up.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   Map<String, dynamic> phoneAndSignInData =
       await retrievePhoneNumberAndSignInStatus();
 
@@ -31,13 +32,13 @@ void main() async {
       debug: true);
   runApp(
     MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      home: TankShapePage(),
-      // home: isSignedIn
-      //     ? LiveHistoryPage((getTankNumber(phoneNumber)).toString())
-      //     : PageViewDemo(),
+      home: isSignedIn
+          ? LiveHistoryPage((getTankNumber(phoneNumber)).toString())
+          : PageViewDemo(),
     ),
   );
 }

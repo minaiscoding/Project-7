@@ -32,6 +32,8 @@ final TextEditingController _tankLengthController = TextEditingController();
 bool isCylinder = false;
 
 class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
+
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
@@ -47,7 +49,7 @@ class _SignUpPageState extends State<SignUpPage> {
       body: jsonEncode(<String, String>{
         'full_name': _fullnameController.text,
         'phone_number': _phoneNumberController.text,
-        'tank_number': "'" + _tankNumberController.text.padLeft(3, '0') + "'",
+        'tank_number': "'${_tankNumberController.text.padLeft(3, '0')}'",
         'password': _passwordController.text,
         'confirm_password': _confirmpasswordController.text,
       }),
@@ -60,7 +62,7 @@ class _SignUpPageState extends State<SignUpPage> {
       storePhoneNumberAndSignInStatus(_phoneNumberController.text, true);
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => TankShapePage()),
+        MaterialPageRoute(builder: (context) => const TankShapePage()),
       );
     } else {
       showDialog(
@@ -70,7 +72,7 @@ class _SignUpPageState extends State<SignUpPage> {
           content: Text(responseData['error']),
           actions: <Widget>[
             ElevatedButton(
-              child: Text("Okay"),
+              child: const Text("Okay"),
               onPressed: () {
                 Navigator.of(ctx).pop();
               },
@@ -444,6 +446,8 @@ class CustomWavePainter extends CustomPainter {
 }
 
 class TankInformation extends StatefulWidget {
+  const TankInformation({super.key});
+
   @override
   _TankInformationState createState() => _TankInformationState();
 }
@@ -459,13 +463,13 @@ class _TankInformationState extends State<TankInformation> {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'tank_number': "'" + _tankNumberController.text.padLeft(3, '0') + "'",
+        'tank_number': "'${_tankNumberController.text.padLeft(3, '0')}'",
         'tank_height': _tankHeightController.text,
         'base_width': _tankWidthController.text,
         'base_length': _tankLengthController.text,
       }),
     );
-    String tankNumber = "'" + _tankNumberController.text.padLeft(3, '0') + "'";
+    String tankNumber = "'${_tankNumberController.text.padLeft(3, '0')}'";
     final responseData = jsonDecode(response.body);
 
     if (response.statusCode == 201) {
@@ -703,6 +707,8 @@ class _TankInformationState extends State<TankInformation> {
 }
 
 class TankInformationCylinder extends StatefulWidget {
+  const TankInformationCylinder({super.key});
+
   @override
   _TankInformationCylinderState createState() =>
       _TankInformationCylinderState();
@@ -720,7 +726,7 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'tank_number': "'" + _tankNumberController.text.padLeft(3, '0') + "'",
+        'tank_number': "'${_tankNumberController.text.padLeft(3, '0')}'",
         'tank_height': _tankHeightController.text,
         'tank_width': _tankWidthController.text,
       }),
@@ -730,8 +736,7 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
 
     if (response.statusCode == 201) {
       // Navigate to the home page after successful signup
-      String tankNumber =
-          "'" + _tankNumberController.text.padLeft(3, '0') + "'";
+      String tankNumber = "'${_tankNumberController.text.padLeft(3, '0')}'";
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => LiveHistoryPage(tankNumber)),
@@ -941,6 +946,8 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
 }
 
 class TankShapePage extends StatefulWidget {
+  const TankShapePage({super.key});
+
   @override
   _TankShapePageState createState() => _TankShapePageState();
 }
@@ -1032,14 +1039,16 @@ class _TankShapePageState extends State<TankShapePage> {
                                 image: AssetImage('assets/cylinder.png'),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.025),
                             const Text("Cylinder"),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 26,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.04,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -1077,7 +1086,9 @@ class _TankShapePageState extends State<TankShapePage> {
                                 image: AssetImage('assets/cuboidshape.png'),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.025),
                             const Text("Cuboid"),
                           ],
                         ),

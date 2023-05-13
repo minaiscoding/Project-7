@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:influxdb_client/api.dart';
@@ -13,9 +15,10 @@ class WaterLevelData {
 class WaterLevelChart extends StatefulWidget {
   final Duration rangeStart;
   final String sensorID;
+  @override
   final Key key;
 
-  WaterLevelChart(
+  const WaterLevelChart(
       {required this.rangeStart, required this.sensorID, required this.key})
       : super(key: key);
 
@@ -84,58 +87,57 @@ class _WaterLevelChartState extends State<WaterLevelChart> {
         width: MediaQuery.of(context).size.width,
         height: 400,
         padding: const EdgeInsets.all(8),
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: StreamBuilder<List<WaterLevelData>>(
-              stream: _dataStream,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return SfCartesianChart(
-                    primaryXAxis: DateTimeAxis(),
-                    primaryYAxis: NumericAxis(
-                      labelFormat: '{value} cm',
-                      labelStyle: TextStyle(fontSize: 8),
-                      title: AxisTitle(
-                        text: 'Level (cm)',
-                        textStyle: TextStyle(fontSize: 8),
-                      ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: StreamBuilder<List<WaterLevelData>>(
+            stream: _dataStream,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return SfCartesianChart(
+                  primaryXAxis: DateTimeAxis(),
+                  primaryYAxis: NumericAxis(
+                    labelFormat: '{value} cm',
+                    labelStyle: const TextStyle(fontSize: 8),
+                    title: AxisTitle(
+                      text: 'Level (cm)',
+                      textStyle: const TextStyle(fontSize: 8),
                     ),
-                    series: <ChartSeries>[
-                      SplineSeries<WaterLevelData, DateTime>(
-                        dataSource: snapshot.data!,
-                        xValueMapper: (datum, _) => datum.time,
-                        yValueMapper: (datum, _) => datum.value,
-                        splineType: SplineType.clamped,
-                        color: const Color.fromARGB(255, 2, 40, 78),
-                        width: 1,
-                        markerSettings: const MarkerSettings(
-                          isVisible: true,
-                          color: Color.fromARGB(255, 34, 97, 160),
-                          shape: DataMarkerType.circle,
-                          borderWidth: 0,
-                          height: 3,
-                          width: 3,
-                        ),
-                        dataLabelSettings: DataLabelSettings(isVisible: false),
-                        enableTooltip: false,
+                  ),
+                  series: <ChartSeries>[
+                    SplineSeries<WaterLevelData, DateTime>(
+                      dataSource: snapshot.data!,
+                      xValueMapper: (datum, _) => datum.time,
+                      yValueMapper: (datum, _) => datum.value,
+                      splineType: SplineType.clamped,
+                      color: const Color.fromARGB(255, 2, 40, 78),
+                      width: 1,
+                      markerSettings: const MarkerSettings(
+                        isVisible: true,
+                        color: Color.fromARGB(255, 34, 97, 160),
+                        shape: DataMarkerType.circle,
+                        borderWidth: 0,
+                        height: 3,
+                        width: 3,
                       ),
-                    ],
-                  );
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  return const Center(
-                    child: Positioned(
-                      child: Text(
-                        'Loading graph',
-                        style: TextStyle(fontSize: 14),
-                      ),
+                      dataLabelSettings:
+                          const DataLabelSettings(isVisible: false),
+                      enableTooltip: false,
                     ),
-                  );
-                }
-              },
-            ),
+                  ],
+                );
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                return const Center(
+                  child: Positioned(
+                    child: Text(
+                      'Loading graph',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ),
+                );
+              }
+            },
           ),
         ),
       ),

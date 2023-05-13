@@ -207,7 +207,7 @@ class Preview extends StatelessWidget {
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                     Image(
-                      image: AssetImage('assets/SMSlogo.png'),
+                      image: const AssetImage('assets/SMSlogo.png'),
                       width: MediaQuery.of(context).size.width *
                           0.07, // set the width of the image
                     ),

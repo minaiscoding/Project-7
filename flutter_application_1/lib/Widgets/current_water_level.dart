@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:influxdb_client/api.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
@@ -122,7 +123,7 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
   }
 
   late String lastUpdateTime;
-  late double waterVolumeLeft;
+  late double waterVolumeLeft = 0.0;
 
   void updateLastUpdateTime() {
     setState(() {
@@ -130,11 +131,14 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
     });
   }
 
-  void updateVolume(double water_level) {
+  void updateVolume(double waterLevel) {
     setState(() {
       if (tank_shape == "Cuboid") {
         waterVolumeLeft = tank_height * tank_width * tank_length -
-            tank_width * tank_length * water_level;
+            tank_width * tank_length * waterLevel;
+      } else {
+        waterVolumeLeft =
+            pi * tank_baseDiameter * tank_baseDiameter * (1 / 4) * tank_height;
       }
     });
   }
@@ -145,17 +149,17 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
         tankInformation();
         getWaterLevelData();
       },
-      child: Text(
-        'Update',
-        style: TextStyle(fontFamily: 'Montserrat', fontSize: 20),
-      ),
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color.fromARGB(255, 2, 40, 78),
+        backgroundColor: const Color.fromARGB(255, 2, 40, 78),
         elevation: 4,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      ),
+      child: const Text(
+        'Update',
+        style: TextStyle(fontFamily: 'Montserrat', fontSize: 20),
       ),
     );
   }
@@ -166,8 +170,8 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 50),
-          Container(
+          const SizedBox(height: 50),
+          SizedBox(
             width: MediaQuery.of(context).size.width * 0.7,
             height: MediaQuery.of(context).size.width * 0.7,
             child: LiquidCircularProgressIndicator(
@@ -189,17 +193,17 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
               ),
             ),
           ),
-          SizedBox(height: 30),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
           Text(
             'Last update: $lastUpdateTime',
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           ),
-          SizedBox(height: 30),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
           Text(
             'Water volume left: $waterVolumeLeft',
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           ),
-          SizedBox(height: 50),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
           _buildGetDataButton(),
         ],
       ),
