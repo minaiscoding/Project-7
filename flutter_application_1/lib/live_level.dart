@@ -212,7 +212,8 @@ class WaterLevelFetcher {
   WaterLevelFetcher(this.sensorId);
 
   Future<void> fetchData() async {
-    var url = 'http://192.168.167.131'; // Replace with your API endpoint URL
+    var url =
+        'https://minaree.pythonanywhere.com/'; // Replace with your API endpoint URL
 
     try {
       var response = await http.get(Uri.parse(url));
