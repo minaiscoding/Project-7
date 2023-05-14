@@ -66,72 +66,79 @@ class _TankPageState extends State<TankPage> {
               ),
             ),
             Positioned(
-              top: 250,
+              top: 200,
               left: 50,
               right: 50,
-              child: Container(
-                padding: const EdgeInsets.all(30),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('My tank',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue[900],
-                        )),
-                    Text(
-                      tank.isCylinder ? 'Shape: Cylinder' : 'Shape: Cuboid',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 140,
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: const Text(
+                      'My tank',
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue[900],
+                        color: Color.fromARGB(255, 0, 41, 99),
                       ),
                     ),
-                    const SizedBox(height: 5),
-                    Text(
-                      'Height: ${tank.height} cm',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue[900],
-                      ),
+                  ),
+                  SizedBox(height: 30),
+                  Text(
+                    tank.isCylinder ? 'Shape: Cylinder' : 'Shape: Cuboid',
+                    style: const TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 255, 255, 255),
                     ),
-                    const SizedBox(height: 5),
-                    Text(
-                      tank.isCylinder
-                          ? 'Base diameter: ${tank.baseD} cm'
-                          : 'Width: ${tank.width} cm',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue[900],
-                      ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    'Height: ${tank.height} cm',
+                    style: const TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 255, 255, 255),
                     ),
-                    const SizedBox(height: 5),
-                    Text(
-                      tank.isCylinder ? '' : 'Length: ${tank.length} cm',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue[900],
-                      ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    tank.isCylinder
+                        ? 'Base diameter: ${tank.baseD} cm'
+                        : 'Width: ${tank.width} cm',
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 255, 255, 255),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    tank.isCylinder ? '' : 'Length: ${tank.length} cm',
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 255, 255, 255),
+                    ),
+                  ),
+                ],
               ),
             ),
             Positioned(
               bottom: 100,
-              left: 0,
               right: 0,
               child: Container(
+                width: 162,
                 margin: const EdgeInsets.symmetric(horizontal: 50),
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.white,
+                  ),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -139,7 +146,14 @@ class _TankPageState extends State<TankPage> {
                           builder: (context) => const TankShapePage()),
                     );
                   },
-                  child: const Text('Edit Tank Info'),
+                  child: Text(
+                    'Edit Tank Info',
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 84, 133, 194),
+                    ),
+                  ),
                 ),
               ),
             ),
