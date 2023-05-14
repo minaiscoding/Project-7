@@ -13,16 +13,15 @@ class LoginPage extends StatefulWidget {
 
 Future<String?> getTankNumber(String phoneNumber) async {
   var client = InfluxDBClient(
-    url: 'http://192.168.110.224:8086',
-    token:
-        'dknAI50ifXk0EEXmu9tY3VTzx9cp5mHj2eMclm_izY17l_PjeVjiGdX7fezpQ3oNO90XdsqcX_NUrNgVXYtyJQ==',
-    org: 'Projet2CP',
-    bucket: 'new_bucket',
-  );
+      url: 'https://us-east-1-1.aws.cloud2.influxdata.com',
+      token:
+          '8jtFDtDrQpDKrjceYg8ZKAyRL90Muwa1H0xm1dGsyNKPEbNUnG-Oz4t5XILOJAf2nZAu9lZIxZMfgvUuxOvY1g==',
+      org: 'Fluid',
+      bucket: 'UserData');
 
   // Construct the Flux query
   var fluxQuery = '''
-    from(bucket: "new_bucket")
+    from(bucket: "UserData")
     |> range(start: -999999h)
     |> filter(fn: (r) => r["_measurement"] == "users1")
     |> filter(fn: (r) => r["phone_number"] == "$phoneNumber")
@@ -48,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   Future<Map<String, dynamic>> _signIn(BuildContext context) async {
-    const String apiUrl = "http://192.168.110.224:5000/signin";
+    const String apiUrl = "https://featherlessbird.pythonanywhere.com/signin";
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: <String, String>{

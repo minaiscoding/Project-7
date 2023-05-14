@@ -4,10 +4,11 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 import hashlib
 
 app = Flask(__name__)
-bucket = "new_bucket"
-org = "Projet2CP"
-token = "dknAI50ifXk0EEXmu9tY3VTzx9cp5mHj2eMclm_izY17l_PjeVjiGdX7fezpQ3oNO90XdsqcX_NUrNgVXYtyJQ=="
-url = "http://192.168.110.224:8086"
+
+bucket = "UserData"
+org = "Fluid"
+token = "8jtFDtDrQpDKrjceYg8ZKAyRL90Muwa1H0xm1dGsyNKPEbNUnG-Oz4t5XILOJAf2nZAu9lZIxZMfgvUuxOvY1g=="
+url = "https://us-east-1-1.aws.cloud2.influxdata.com"
 
 client = influxdb_client.InfluxDBClient(
     url=url,

@@ -40,7 +40,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   Future<void> _submitSignUpForm() async {
-    const String apiUrl = "http://192.168.110.224:5000/signup";
+    const String apiUrl = "http://192.168.247.102:5000/signup";
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: <String, String>{
@@ -455,7 +455,7 @@ class TankInformation extends StatefulWidget {
 class _TankInformationState extends State<TankInformation> {
   final Color primaryColor = const Color(0xFF21457D);
   Future<void> _submitTankCuboidForm() async {
-    final String apiUrl = "http://192.168.110.224:5000/add_tank_cuboid";
+    final String apiUrl = "http://192.168.247.102:5000/add_tank_cuboid";
 
     final response = await http.post(
       Uri.parse(apiUrl),
@@ -718,7 +718,7 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
   final Color primaryColor = const Color(0xFF21457D);
 
   Future<void> _submitTankCylinderForm() async {
-    final String apiUrl = "http://192.168.110.224:5000/add_tank_cylinder";
+    final String apiUrl = "http://192.168.247.102:5000/add_tank_cylinder";
 
     final response = await http.post(
       Uri.parse(apiUrl),

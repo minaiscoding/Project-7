@@ -36,9 +36,10 @@ void main() async {
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),
-      home: isSignedIn
-          ? LiveHistoryPage((getTankNumber(phoneNumber)).toString())
-          : PageViewDemo(),
+      home: //isSignedIn
+          false
+              ? LiveHistoryPage((getTankNumber(phoneNumber)).toString())
+              : PageViewDemo(),
     ),
   );
 }
