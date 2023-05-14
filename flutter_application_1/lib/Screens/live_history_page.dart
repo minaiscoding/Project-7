@@ -3,6 +3,7 @@ import '../Widgets/graph.dart';
 import 'dart:ui';
 import '../Widgets/current_water_level.dart';
 import '../Widgets/menu.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 
 import 'package:influxdb_client/api.dart';
 import 'dart:async';
@@ -21,6 +22,55 @@ String dropdownValue = 'Daily';
 class _LiveHistoryPageState extends State<LiveHistoryPage> {
   bool _isLiveSelected = true;
   bool _isMenuOpen = false;
+
+  Future<double> _getWaterLevel() async {
+    final response =
+        await http.get(Uri.parse('http://192.168.1.4:5000/water-level'));
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final waterLevel = data['water_level'];
+      return waterLevel;
+    } else {
+      throw Exception('Failed to load water level');
+    }
+  }
+
+  void triggerNotification(double waterLevel) {
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+      id: 10, // -1 is replaced by a random number
+      channelKey: 'alerts',
+      title: 'Your tank is getting empty !',
+      body: "You only have ${waterLevel}% left in your tank",
+    ));
+  }
+
+  void _startTimer() {
+    Timer.periodic(Duration(seconds: 5), (timer) async {
+      try {
+        final waterLevel = await _getWaterLevel();
+        setState(() {
+          _waterLevel = waterLevel;
+        });
+        print('Water level: $_waterLevel');
+        triggerNotification(_waterLevel);
+      } catch (e) {
+        print(e);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+    super.initState();
+    _startTimer();
+  }
 
   void _selectLive() {
     setState(() {
