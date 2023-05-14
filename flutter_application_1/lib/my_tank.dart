@@ -32,7 +32,7 @@ class _TankPageState extends State<TankPage> {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color.fromARGB(255, 0, 41, 99),
+              Color(0xFF002963),
               Color.fromARGB(255, 84, 133, 194),
             ],
             begin: Alignment.topCenter,
