@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'live_history_page.dart';
-import 'login_page.dart';
-import '../Widgets/page_view_demo.dart';
-import 'sign_up.dart';
+import 'Screens/live_history_page.dart';
+import 'Screens/login_page.dart';
+import 'Widgets/page_view_demo.dart';
+import 'Screens/sign_up.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -510,7 +510,7 @@ class _TankInformationState extends State<TankInformation> {
               color: Color(0xFFBBD0EA),
               child: Column(
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.12),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                   const Text(
                     'Add a tank',
                     style: TextStyle(
@@ -521,7 +521,7 @@ class _TankInformationState extends State<TankInformation> {
                       color: const Color(0xff1a2a3a),
                     ),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     height: 20,
@@ -671,8 +671,8 @@ class _TankInformationState extends State<TankInformation> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.745,
-              right: MediaQuery.of(context).size.width * 0.305,
+              top: MediaQuery.of(context).size.height * 0.65,
+              right: MediaQuery.of(context).size.width * 0.295,
               width: MediaQuery.of(context).size.width * 0.41,
               height: 50,
               child: ElevatedButton(
@@ -774,7 +774,7 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
               color: Color(0xFFBBD0EA),
               child: Column(
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.12),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.08),
                   const Text(
                     'Add a tank',
                     style: TextStyle(
@@ -911,8 +911,8 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.655,
-              right: MediaQuery.of(context).size.width * 0.305,
+              top: MediaQuery.of(context).size.height * 0.62,
+              right: MediaQuery.of(context).size.width * 0.295,
               width: MediaQuery.of(context).size.width * 0.41,
               height: 50,
               child: ElevatedButton(

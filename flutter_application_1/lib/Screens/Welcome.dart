@@ -70,8 +70,11 @@ class Welcome extends StatelessWidget {
                         ]),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.transparent,
-                          onSurface: Colors.transparent,
+                          backgroundColor: Colors.transparent,
+                          disabledForegroundColor:
+                              Colors.transparent.withOpacity(0.38),
+                          disabledBackgroundColor:
+                              Colors.transparent.withOpacity(0.12),
                           shadowColor: Colors.transparent,
                           elevation: 8,
                           shape: RoundedRectangleBorder(
@@ -122,7 +125,7 @@ class Welcome extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const SignUpPage()),
                   );
                 },
-                child: const Positioned(
+                child: Positioned(
                   child: Text("Sign up",
                       style: TextStyle(
                         color: Color(0xff1A2A3A),
