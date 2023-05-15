@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart'; //imports dart
-
 import 'live_level.dart';
-
 import 'add_tank.dart';
 
 void main() async {
@@ -10,6 +8,7 @@ void main() async {
   await tank.loadFromSharedPreferences();
   runApp(
     MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Montserrat',
       ),

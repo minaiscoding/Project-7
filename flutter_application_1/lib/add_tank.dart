@@ -61,7 +61,7 @@ class _TankInformationState extends State<TankInformation> {
               children: [
                 const SizedBox(height: 100),
                 const Text(
-                  'Add a tank',
+                  'Tank Information',
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontStyle: FontStyle.normal,
@@ -290,7 +290,7 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
             color: const Color(0xFFBBD0EA),
             child: Column(
               children: [
-                const SizedBox(height: 100),
+                const SizedBox(height: 50),
                 const Text(
                   'Add a tank',
                   style: TextStyle(
@@ -301,7 +301,7 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
                     color: Color(0xff1a2a3a),
                   ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
                 const SizedBox(
                   width: 400,
                   height: 20,
@@ -455,7 +455,7 @@ class _TankInformationCylinderState extends State<TankInformationCylinder> {
                 height: 50,
                 alignment: Alignment.center,
                 child: const Text(
-                  'Add tank',
+                  'Confirm',
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontStyle: FontStyle.normal,
@@ -497,7 +497,7 @@ class _TankShapePageState extends State<TankShapePage> {
               children: [
                 Positioned(
                   left: MediaQuery.of(context).size.width * 0.2,
-                  top: 100,
+                  top: 50,
                   child: const Padding(
                     padding: EdgeInsets.all(16.0),
                     child: Text(
@@ -516,7 +516,7 @@ class _TankShapePageState extends State<TankShapePage> {
                 Column(
                   children: [
                     const SizedBox(
-                      height: 200,
+                      height: 150,
                     ),
                     const Padding(
                       padding: EdgeInsets.all(16.0),
