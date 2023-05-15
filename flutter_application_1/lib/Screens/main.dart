@@ -37,7 +37,7 @@ void main() async {
         fontFamily: 'Montserrat',
       ),
       home: //isSignedIn
-          false
+          isSignedIn
               ? LiveHistoryPage((getTankNumber(phoneNumber)).toString())
               : PageViewDemo(),
     ),
