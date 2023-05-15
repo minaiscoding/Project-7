@@ -16,6 +16,7 @@ client = influxdb_client.InfluxDBClient(
     org=org
 )
 query_api = client.query_api()
+proxy="http://proxy.server:3128"
 
 
 @app.route('/signup', methods=['POST'])
