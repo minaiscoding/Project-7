@@ -249,7 +249,7 @@ class _TankInformationState extends State<TankInformation> {
                 height: 50,
                 alignment: Alignment.center,
                 child: const Text(
-                  'Add tank',
+                  'Confirm',
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontStyle: FontStyle.normal,
