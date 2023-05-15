@@ -127,8 +127,8 @@ class _LiveLevelPageState extends State<LiveLevelPage> {
               right: MediaQuery.of(context).size.width * 0.1,
               child: Text(
                 tank.isCylinder
-                    ? '${((double.parse(tank.height) - dataFetcher.waterLevel * 0.1) * double.parse(tank.baseD) * double.parse(tank.baseD) * 0.0314).toStringAsFixed(2)} L'
-                    : '${((double.parse(tank.height) - dataFetcher.waterLevel * 0.1) * double.parse(tank.length) * double.parse(tank.width) * 0.01).toStringAsFixed(2)} L',
+                    ? '${((double.parse(tank.height) - dataFetcher.waterLevel * 0.1) * double.parse(tank.baseD) * double.parse(tank.baseD) / 4 * 0.00314).toStringAsFixed(2)} L'
+                    : '${((double.parse(tank.height) - dataFetcher.waterLevel * 0.1) * double.parse(tank.length) * double.parse(tank.width) * 0.001).toStringAsFixed(2)} L',
                 style: const TextStyle(
                     color: Colors.white, fontFamily: 'Aquire', fontSize: 35),
               ),
@@ -212,7 +212,8 @@ class WaterLevelFetcher {
   WaterLevelFetcher(this.sensorId);
 
   Future<void> fetchData() async {
-    var url = 'http://192.168.167.131'; // Replace with your API endpoint URL
+    var url =
+        'https://minaree.pythonanywhere.com/'; // Replace with your API endpoint URL
 
     try {
       var response = await http.get(Uri.parse(url));
@@ -255,9 +256,8 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
         height: MediaQuery.of(context).size.width * 0.7,
         child: LiquidCircularProgressIndicator(
           value: ((double.parse(tank.height) -
-                  widget.dataFetcher.waterLevel * 0.1) *
-              10 /
-              124),
+                  widget.dataFetcher.waterLevel * 0.1) /
+              double.parse(tank.height)),
           valueColor:
               const AlwaysStoppedAnimation(Color.fromARGB(123, 96, 167, 255)),
           backgroundColor: const Color.fromARGB(0, 255, 255, 255),
@@ -265,7 +265,7 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
           borderWidth: 1,
           direction: Axis.vertical,
           center: Text(
-            '${((double.parse(tank.height) - widget.dataFetcher.waterLevel * 0.1) * 1000 / 124).toStringAsFixed(2)} %',
+            '${((double.parse(tank.height) - widget.dataFetcher.waterLevel * 0.1) * 100 / double.parse(tank.height)).toStringAsFixed(2)} %',
             style: const TextStyle(
               fontSize: 56,
               fontFamily: "Aquire",
