@@ -40,7 +40,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   Future<void> _submitSignUpForm() async {
-    const String apiUrl = "http://192.168.247.102:5000/signup";
+    const String apiUrl = "https://featherlessbird.pythonanywhere.com/signup";
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: <String, String>{

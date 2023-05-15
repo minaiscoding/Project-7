@@ -23,7 +23,7 @@ String dropdownValue = 'Daily';
 class _LiveHistoryPageState extends State<LiveHistoryPage> {
   bool _isLiveSelected = true;
   bool _isMenuOpen = false;
-
+  double _waterLevel = 0;
   Future<double> _getWaterLevel() async {
     final response =
         await http.get(Uri.parse('http://192.168.1.4:5000/water-level'));
