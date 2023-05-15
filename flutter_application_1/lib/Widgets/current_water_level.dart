@@ -19,6 +19,8 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
   @override
   void initState() {
     super.initState();
+    tankInformation();
+    getWaterLevelData();
     _waterLevel = 0.0;
     lastUpdateTime = getLastUpdatedTime();
   }
@@ -30,7 +32,10 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
   }
 
   late String tank_shape = "";
-  late double tank_width, tank_height, tank_length, tank_baseDiameter = 0;
+  late double tank_width = 5;
+  late double tank_height = 13;
+  late double tank_length = 5;
+  late double tank_baseDiameter = 2;
   Future<void> tankInformation() async {
     var token =
         '8jtFDtDrQpDKrjceYg8ZKAyRL90Muwa1H0xm1dGsyNKPEbNUnG-Oz4t5XILOJAf2nZAu9lZIxZMfgvUuxOvY1g==';
@@ -42,7 +47,7 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
         org: org,
         bucket: bucket);
     var fluxQuery = '''from(bucket: "UserData")
-    |> range(start: -1m)
+    |> range(start: -600h)
     |> filter(fn: (r) => r["_measurement"] == "tanks")
     |> filter(fn: (r) => r["tank_number"] == "${widget.sensorId}")
     |> last()
@@ -134,8 +139,9 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
   void updateVolume(double waterLevel) {
     setState(() {
       if (tank_shape == "Cuboid") {
-        waterVolumeLeft = tank_height * tank_width * tank_length -
-            tank_width * tank_length * waterLevel;
+        waterVolumeLeft =
+            ((tank_height - waterLevel * 0.1) * tank_length * tank_width) *
+                0.001;
       } else {
         waterVolumeLeft =
             pi * tank_baseDiameter * tank_baseDiameter * (1 / 4) * tank_height;
@@ -175,7 +181,7 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
             width: MediaQuery.of(context).size.width * 0.7,
             height: MediaQuery.of(context).size.width * 0.7,
             child: LiquidCircularProgressIndicator(
-              value: _waterLevel / 100,
+              value: (tank_height - _waterLevel * 0.1) / tank_height,
               valueColor: const AlwaysStoppedAnimation(
                   Color.fromARGB(123, 96, 167, 255)),
               backgroundColor: const Color.fromARGB(0, 255, 255, 255),
@@ -183,7 +189,7 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
               borderWidth: 1,
               direction: Axis.vertical,
               center: Text(
-                '${_waterLevel.toStringAsFixed(1)} %',
+                '${((tank_height - _waterLevel * 0.1) * 100 / tank_height).toStringAsFixed(1)} %',
                 style: const TextStyle(
                   fontSize: 56,
                   fontFamily: "Aquire",
@@ -200,7 +206,7 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.03),
           Text(
-            'Water volume left: $waterVolumeLeft',
+            'Water volume left:${waterVolumeLeft.toStringAsFixed(2)}L',
             style: const TextStyle(fontSize: 16),
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.03),

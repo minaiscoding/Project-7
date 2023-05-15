@@ -24,16 +24,48 @@ class _LiveHistoryPageState extends State<LiveHistoryPage> {
   bool _isLiveSelected = true;
   bool _isMenuOpen = false;
   double _waterLevel = 0;
-  Future<double> _getWaterLevel() async {
-    final response = await http.get(
-        Uri.parse('https://featherlessbird.pythonanywhere.com/water-level'));
+  bool one = true;
+  Future<void> getWaterLevelData() async {
+    var token =
+        '8jtFDtDrQpDKrjceYg8ZKAyRL90Muwa1H0xm1dGsyNKPEbNUnG-Oz4t5XILOJAf2nZAu9lZIxZMfgvUuxOvY1g==';
+    var bucket = 'LevelData';
+    var org = 'Fluid';
+    var client = InfluxDBClient(
+        url: 'https://us-east-1-1.aws.cloud2.influxdata.com',
+        token: token,
+        org: org,
+        bucket: bucket);
+    var fluxQuery = '''from(bucket: "LevelData")
+    |> range(start: -1m)
+    |> filter(fn: (r) => r["_measurement"] == "water_level")
+    |> filter(fn: (r) => r["_field"] == "value")
+    |> filter(fn: (r) => r["sensor"] == "${widget.sensorID}")
+    |> aggregateWindow(every: 5s, fn: mean)
+    |> yield(name: "mean")''';
+    var queryService = client.getQueryService();
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      final waterLevel = data['water_level'];
-      return waterLevel;
+    var recordStream = await queryService.query(fluxQuery);
+    var data = <double>[];
+    await recordStream.forEach((record) {
+      var value = record['_value'];
+      if (value != null) {
+        data.add(value);
+      }
+    });
+
+    if (mounted && data.isNotEmpty) {
+      setState(() {
+        _waterLevel = data.isNotEmpty ? data.last : _waterLevel;
+      });
+    }
+    print(_waterLevel);
+    if (_waterLevel >= 100 && one) {
+      one = false;
+      triggerNotification(_waterLevel);
     } else {
-      throw Exception('Failed to load water level');
+      if (_waterLevel < 100) {
+        one = true;
+      }
     }
   }
 
@@ -43,22 +75,13 @@ class _LiveHistoryPageState extends State<LiveHistoryPage> {
       id: 10, // -1 is replaced by a random number
       channelKey: 'alerts',
       title: 'Your tank is getting empty !',
-      body: "You only have ${waterLevel}% left in your tank",
+      body: "Make sure to fill it as soon as possible",
     ));
   }
 
   void _startTimer() {
     Timer.periodic(Duration(seconds: 5), (timer) async {
-      try {
-        final waterLevel = await _getWaterLevel();
-        setState(() {
-          _waterLevel = waterLevel;
-        });
-        print('Water level: $_waterLevel');
-        triggerNotification(_waterLevel);
-      } catch (e) {
-        print(e);
-      }
+      getWaterLevelData();
     });
   }
 
@@ -70,6 +93,10 @@ class _LiveHistoryPageState extends State<LiveHistoryPage> {
       }
     });
     super.initState();
+    chartWidget = WaterLevelChart(
+        rangeStart: const Duration(hours: 1),
+        sensorID: "" + widget.sensorID + "",
+        key: UniqueKey());
     _startTimer();
   }
 
