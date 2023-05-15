@@ -31,7 +31,7 @@ def get_water_level():
     result = query_api.query(org=org, query=query)
     for table in result:
         for record in table.records:
-            if record.get_field() == 'value' and float(record.get_value()) < 20:
+            if record.get_field() == 'value' and float(record.get_value()) < 10:
                 return jsonify({'water_level': float(record.get_value())}), 200
     return '', 204
 

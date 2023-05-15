@@ -17,7 +17,7 @@ class LiveHistoryPage extends StatefulWidget {
 }
 
 WaterLevelChart chartWidget = WaterLevelChart(
-    rangeStart: const Duration(hours: 1), sensorID: '000', key: UniqueKey());
+    rangeStart: const Duration(hours: 1), sensorID: '001', key: UniqueKey());
 String dropdownValue = 'Daily';
 
 class _LiveHistoryPageState extends State<LiveHistoryPage> {
@@ -25,8 +25,8 @@ class _LiveHistoryPageState extends State<LiveHistoryPage> {
   bool _isMenuOpen = false;
   double _waterLevel = 0;
   Future<double> _getWaterLevel() async {
-    final response =
-        await http.get(Uri.parse('http://192.168.1.4:5000/water-level'));
+    final response = await http.get(
+        Uri.parse('https://featherlessbird.pythonanywhere.com/water-level'));
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);

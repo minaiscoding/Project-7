@@ -19,6 +19,24 @@ query_api = client.query_api()
 proxy="http://proxy.server:3128"
 
 
+
+@app.route('/water-level')
+def get_water_level():
+    query = f'from(bucket:"LevelData")\
+    |> range(start: -5s)\
+    |> filter(fn: (r) => r["_measurement"] == "water_level")\
+    |> filter(fn: (r) => r["_field"] == "value")\
+    |> filter(fn: (r) => r["sensor"] == "\'001\'")'
+    result = query_api.query(org=org, query=query)
+    level = 0
+    for table in result:
+        for record in table.records:
+            if record.get_field() == 'value' and float(record.get_value()) > 100 and level < 100:
+                level = float(record.get_value()) 
+                return jsonify({'water_level': float(record.get_value())}), 200
+    return '', 204
+
+
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.json
