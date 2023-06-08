@@ -66,7 +66,10 @@ def signup():
     result = query_api.query(org=org, query=query)
     if len(result) > 0:
         return jsonify({'error': 'User with this phone number already exists'}), 400
+    # check if the phone number entered is in a valid format 
 
+    if len(phone_number) != 10 or not phone_number.startswith(('05', '06', '07')):
+        return jsonify({'error': 'Incorrect phone number format'}), 400
     # create new user
     write_api = client.write_api(write_options=SYNCHRONOUS)
 
