@@ -10,7 +10,7 @@ class LiveHistoryPage extends StatefulWidget {
 }
 
 WaterLevelChart chartWidget = WaterLevelChart(
-    rangeStart: const Duration(hours: 1), sensorID: "'001'", key: UniqueKey());
+    rangeStart: const Duration(days: 1), sensorID: "'001'", key: UniqueKey());
 String dropdownValue = 'Daily';
 
 class _LiveHistoryPageState extends State<LiveHistoryPage> {
@@ -280,7 +280,7 @@ class _LiveHistoryPageState extends State<LiveHistoryPage> {
                         break;
                       case 'Daily':
                         chartWidget = WaterLevelChart(
-                            rangeStart: Duration(hours: 1),
+                            rangeStart: Duration(days: 1),
                             sensorID: "'001'",
                             key: UniqueKey());
                         break;
