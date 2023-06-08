@@ -1,8 +1,6 @@
+import 'package:fluid/Screens/login_page.dart';
 import 'package:flutter/material.dart'; //imports dart
-import 'package:hexcolor/hexcolor.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
-import 'package:drop_shadow_image/drop_shadow_image.dart';
+import '../Screens/sign_up.dart';
 
 Widget menuItem(String title, bool isSelected) {
   final textStyle = TextStyle(
@@ -11,10 +9,10 @@ Widget menuItem(String title, bool isSelected) {
     fontWeight: FontWeight.w700,
     fontSize: 24,
     height: 1,
-    color: isSelected ? Colors.white : Color(0xFF21457D),
+    color: isSelected ? Colors.white : const Color(0xFF21457D),
   );
   final elevation = isSelected ? 8.0 : 0.0;
-  final backgroundColor = isSelected ? Color(0xFF21457D) : Colors.white;
+  final backgroundColor = isSelected ?const Color(0xFF21457D) : Colors.white;
   final boxShadow = isSelected
       ? [
           BoxShadow(
@@ -85,7 +83,19 @@ class Menu extends StatelessWidget {
                 height: 40,
                 width: 100,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    storePhoneNumberAndSignInStatus("", false);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color(0xFF21457D),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
                   child: const Text(
                     'Log out',
                     style: TextStyle(
@@ -95,12 +105,6 @@ class Menu extends StatelessWidget {
                       fontSize: 15,
                       height: 1,
                       color: Colors.white,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: const Color(0xFF21457D),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                 ),

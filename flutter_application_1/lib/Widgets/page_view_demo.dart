@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../Screens/Home.dart';
-import '../Screens/Preview.dart';
-import '../Screens/Welcome.dart';
+import '../Screens/front_page.dart';
+import '../Screens/features_description.dart';
+import '../Screens/welcome.dart';
 
 class PageViewDemo extends StatefulWidget {
   const PageViewDemo({Key? key}) : super(key: key);
@@ -38,12 +38,12 @@ class _PageViewDemoState extends State<PageViewDemo> {
           ),
           Positioned(
               bottom: 0,
-              right: 165,
-              height: 100,
+              right: MediaQuery.of(context).size.width * 0.43,
+              height: MediaQuery.of(context).size.height * 0.1,
               child: SmoothPageIndicator(
                   controller: _pageController, // PageController
                   count: 3,
-                  effect: WormEffect(
+                  effect: const WormEffect(
                     spacing: 8.0,
                     activeDotColor: Color(0xff1A2A3A),
                   ),

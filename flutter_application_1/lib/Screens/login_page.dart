@@ -1,23 +1,105 @@
 import 'package:fluid/Screens/live_history_page.dart';
 import 'package:flutter/material.dart';
 import 'sign_up.dart';
-import '../Screens/welcome.dart';
+import 'dart:convert';
+import 'package:influxdb_client/api.dart';
+import 'package:http/http.dart' as http;
+import '../Widgets/page_view_demo.dart';
 
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
+Future<String?> getTankNumber(String phoneNumber) async {
+  var client = InfluxDBClient(
+      url: 'https://us-east-1-1.aws.cloud2.influxdata.com',
+      token:
+          '8jtFDtDrQpDKrjceYg8ZKAyRL90Muwa1H0xm1dGsyNKPEbNUnG-Oz4t5XILOJAf2nZAu9lZIxZMfgvUuxOvY1g==',
+      org: 'Fluid',
+      bucket: 'UserData');
+
+  // Construct the Flux query
+  var fluxQuery = '''
+    from(bucket: "UserData")
+    |> range(start: -999999h)
+    |> filter(fn: (r) => r["_measurement"] == "users1")
+    |> filter(fn: (r) => r["phone_number"] == "$phoneNumber")
+    |> last()
+    |> yield(name: "mean")
+  ''';
+
+  // Execute the query and extract the tank_number field from the last record
+  var result = await client.getQueryService().query(fluxQuery);
+
+  await for (var record in result) {
+    if (record.containsKey('_field') &&
+        record.containsKey('_value') &&
+        record['_field'] == 'tank_number') {
+      return record['_value'] as String?;
+    }
+  }
+  return null;
+}
+
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _tankNumberController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmpasswordController =
-      TextEditingController();
+
+  Future<Map<String, dynamic>> _signIn(BuildContext context) async {
+    const String apiUrl = "https://featherlessbird.pythonanywhere.com/signin";
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'phone_number': _phoneNumberController.text,
+        'password': _passwordController.text,
+      }),
+    );
+
+    final responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      String phoneNumber = _phoneNumberController.text;
+      String? tankNumber = await getTankNumber(phoneNumber);
+      storePhoneNumberAndSignInStatus(_phoneNumberController.text, true);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LiveHistoryPage(tankNumber!)),
+      );
+      return {
+        'signedIn': true,
+        'tankNumber': tankNumber,
+      };
+    } else {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text("An error occurred!"),
+          content: Text(responseData['error']),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text("Okay"),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            ),
+          ],
+        ),
+      );
+      return {
+        'signedIn': false,
+        'tankNumber': '',
+      };
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white, //Color(0xFF789CD2),
       body: Stack(
         children: [
           Container(
@@ -26,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
             color: Colors.transparent,
           ),
           SizedBox(
-            height: 350,
+            height: MediaQuery.of(context).size.height * 0.4,
             child: ClipPath(
               clipper: MyClipper(),
               child: Container(
@@ -35,43 +117,43 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           Positioned(
-            //left: MediaQuery.of(context).size.width * 0.0709,
             right: MediaQuery.of(context).size.width * 0.86,
             top: MediaQuery.of(context).size.height * 0.1,
-            // bottom: MediaQuery.of(context).size.height * 0.90,
             child: InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Welcome()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PageViewDemo()));
               },
-              child: const Icon(
+              child: Icon(
                 Icons.arrow_back,
                 color: Colors.white,
-                size: 40,
+                size: MediaQuery.of(context).size.width * 0.1,
               ),
             ),
           ),
           Positioned(
             left: MediaQuery.of(context).size.width * 0.2,
-            top: 72,
+            top: MediaQuery.of(context).size.width * 0.15,
             child: const Text(
               'Sign In',
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.w700,
-                fontSize: 60.16,
+                fontSize: 50.16,
                 color: Colors.white,
                 height: 1.2,
               ),
             ),
           ),
           Positioned(
-            left: 52,
-            top: 167,
+            left: MediaQuery.of(context).size.width * 0.13,
+            top: MediaQuery.of(context).size.height * 0.19,
             child: Container(
-              width: 288,
-              height: 280,
+              width: MediaQuery.of(context).size.width * 0.74,
+              height: MediaQuery.of(context).size.width * 0.71,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
@@ -85,19 +167,19 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
               child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 50,
-                  left: 30,
-                  right: 30,
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.07,
+                  left: MediaQuery.of(context).size.width * 0.07,
+                  right: MediaQuery.of(context).size.width * 0.07,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     TextField(
                       keyboardType: TextInputType.phone,
-                      controller: _tankNumberController,
+                      controller: _phoneNumberController,
                       decoration: const InputDecoration(
-                        hintText: 'tank number',
+                        hintText: 'Phone number',
                         hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.normal,
@@ -113,10 +195,11 @@ class _LoginPageState extends State<LoginPage> {
                           borderSide:
                               BorderSide(color: Color(0xFF789CD2), width: 1),
                         ),
-                        prefixIcon: Icon(Icons.water, color: Color(0xFF989898)),
+                        prefixIcon: Icon(Icons.phone, color: Color(0xFF989898)),
                       ),
                     ),
-                    const SizedBox(height: 40),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.044),
                     TextField(
                       controller: _passwordController,
                       obscureText: true,
@@ -140,46 +223,42 @@ class _LoginPageState extends State<LoginPage> {
                         prefixIcon: Icon(Icons.lock, color: Color(0xFF989898)),
                       ),
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.width * 0.03,
+                    ),
                   ],
                 ),
               ),
             ),
           ),
           Positioned(
-            width: 157,
+            width: MediaQuery.of(context).size.width * 0.37,
             height: 60,
-            left: 117,
-            top: 410,
+            left: MediaQuery.of(context).size.width * 0.315,
+            top: MediaQuery.of(context).size.height * 0.47,
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LiveHistoryPage()),
-                );
+              onPressed: () async {
+                final result = await _signIn(context);
+                final bool signedIn = result['signedIn'];
+                //final String tankNumber = result['tank_number'];
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF789CD2),
+                primary: Color(0xFF789CD2),
                 elevation: 8,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
-                shadowColor: const Color(0xFF789CD2),
+                shadowColor: Color(0xFF789CD2),
               ),
-              child: Container(
-                width: 112,
-                height: 34,
-                alignment: Alignment.center,
-                child: const Text(
-                  'Sign In',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 20,
-                    height: 1,
-                    color: Colors.white,
-                  ),
+              child: const Text(
+                'Sign In',
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 20,
+                  height: 1,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -203,8 +282,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           Positioned(
-            top: 552,
-            left: 72,
+            top: MediaQuery.of(context).size.height * 0.65,
+            left: MediaQuery.of(context).size.width * 0.19,
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -265,7 +344,7 @@ class WavePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Color.fromRGBO(120, 156, 210, 0.5)
+      ..color = const Color.fromRGBO(120, 156, 210, 0.5)
       ..style = PaintingStyle.fill;
     final path = Path()
       ..moveTo(0, size.height * 0.7)

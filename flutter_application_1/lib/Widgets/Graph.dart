@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:influxdb_client/api.dart';
@@ -13,9 +15,10 @@ class WaterLevelData {
 class WaterLevelChart extends StatefulWidget {
   final Duration rangeStart;
   final String sensorID;
+  @override
   final Key key;
 
-  WaterLevelChart(
+  const WaterLevelChart(
       {required this.rangeStart, required this.sensorID, required this.key})
       : super(key: key);
 
@@ -35,15 +38,15 @@ class _WaterLevelChartState extends State<WaterLevelChart> {
 
   Stream<List<WaterLevelData>> _fetchData() async* {
     var token =
-        'mGpEPXdlrVSi7hDng6LusuUtI2J8VAqvwiqaQXzi56X6m_jtbhmqGil8SaeNXjkdue1E77amnBvpvObPh6RM3Q==';
-    var bucket = 'Level';
-    var org = 'Projet2CP';
+        '8jtFDtDrQpDKrjceYg8ZKAyRL90Muwa1H0xm1dGsyNKPEbNUnG-Oz4t5XILOJAf2nZAu9lZIxZMfgvUuxOvY1g==';
+    var bucket = 'LevelData';
+    var org = 'Fluid';
     var client = InfluxDBClient(
-        url: 'http://192.168.220.224:8086',
+        url: 'https://us-east-1-1.aws.cloud2.influxdata.com',
         token: token,
         org: org,
         bucket: bucket);
-    var fluxQuery = '''from(bucket: "Level")
+    var fluxQuery = '''from(bucket: "LevelData")
   |> range(start: -${widget.rangeStart.inHours}h)
   |> filter(fn: (r) => r["_measurement"] == "water_level")
   |> filter(fn: (r) => r["_field"] == "value")
@@ -84,58 +87,57 @@ class _WaterLevelChartState extends State<WaterLevelChart> {
         width: MediaQuery.of(context).size.width,
         height: 400,
         padding: const EdgeInsets.all(8),
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: StreamBuilder<List<WaterLevelData>>(
-              stream: _dataStream,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return SfCartesianChart(
-                    primaryXAxis: DateTimeAxis(),
-                    primaryYAxis: NumericAxis(
-                      labelFormat: '{value} cm',
-                      labelStyle: TextStyle(fontSize: 8),
-                      title: AxisTitle(
-                        text: 'Level (cm)',
-                        textStyle: TextStyle(fontSize: 8),
-                      ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: StreamBuilder<List<WaterLevelData>>(
+            stream: _dataStream,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return SfCartesianChart(
+                  primaryXAxis: DateTimeAxis(),
+                  primaryYAxis: NumericAxis(
+                    labelFormat: '{value} cm',
+                    labelStyle: const TextStyle(fontSize: 8),
+                    title: AxisTitle(
+                      text: 'Level (cm)',
+                      textStyle: const TextStyle(fontSize: 8),
                     ),
-                    series: <ChartSeries>[
-                      SplineSeries<WaterLevelData, DateTime>(
-                        dataSource: snapshot.data!,
-                        xValueMapper: (datum, _) => datum.time,
-                        yValueMapper: (datum, _) => datum.value,
-                        splineType: SplineType.clamped,
-                        color: const Color.fromARGB(255, 2, 40, 78),
-                        width: 1,
-                        markerSettings: const MarkerSettings(
-                          isVisible: true,
-                          color: Color.fromARGB(255, 34, 97, 160),
-                          shape: DataMarkerType.circle,
-                          borderWidth: 0,
-                          height: 3,
-                          width: 3,
-                        ),
-                        dataLabelSettings: DataLabelSettings(isVisible: false),
-                        enableTooltip: false,
+                  ),
+                  series: <ChartSeries>[
+                    SplineSeries<WaterLevelData, DateTime>(
+                      dataSource: snapshot.data!,
+                      xValueMapper: (datum, _) => datum.time,
+                      yValueMapper: (datum, _) => datum.value,
+                      splineType: SplineType.clamped,
+                      color: const Color.fromARGB(255, 2, 40, 78),
+                      width: 1,
+                      markerSettings: const MarkerSettings(
+                        isVisible: true,
+                        color: Color.fromARGB(255, 34, 97, 160),
+                        shape: DataMarkerType.circle,
+                        borderWidth: 0,
+                        height: 3,
+                        width: 3,
                       ),
-                    ],
-                  );
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  return const Center(
-                    child: Positioned(
-                      child: Text(
-                        'Loading graph',
-                        style: TextStyle(fontSize: 14),
-                      ),
+                      dataLabelSettings:
+                          const DataLabelSettings(isVisible: false),
+                      enableTooltip: false,
                     ),
-                  );
-                }
-              },
-            ),
+                  ],
+                );
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                return const Center(
+                  child: Positioned(
+                    child: Text(
+                      'Loading graph',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ),
+                );
+              }
+            },
           ),
         ),
       ),

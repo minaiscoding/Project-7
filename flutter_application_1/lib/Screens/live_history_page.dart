@@ -3,19 +3,102 @@ import '../Widgets/graph.dart';
 import 'dart:ui';
 import '../Widgets/current_water_level.dart';
 import '../Widgets/menu.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:http/http.dart' as http;
+import 'package:influxdb_client/api.dart';
+import 'dart:async';
+import 'dart:convert';
 
 class LiveHistoryPage extends StatefulWidget {
+  final String sensorID;
+  LiveHistoryPage(this.sensorID);
   @override
   _LiveHistoryPageState createState() => _LiveHistoryPageState();
 }
 
 WaterLevelChart chartWidget = WaterLevelChart(
-    rangeStart: const Duration(hours: 1), sensorID: "'001'", key: UniqueKey());
+    rangeStart: const Duration(days: 1), sensorID: '001', key: UniqueKey());
 String dropdownValue = 'Daily';
 
 class _LiveHistoryPageState extends State<LiveHistoryPage> {
   bool _isLiveSelected = true;
   bool _isMenuOpen = false;
+  double _waterLevel = 0;
+  bool one = true;
+  Future<void> getWaterLevelData() async {
+    var token =
+        '8jtFDtDrQpDKrjceYg8ZKAyRL90Muwa1H0xm1dGsyNKPEbNUnG-Oz4t5XILOJAf2nZAu9lZIxZMfgvUuxOvY1g==';
+    var bucket = 'LevelData';
+    var org = 'Fluid';
+    var client = InfluxDBClient(
+        url: 'https://us-east-1-1.aws.cloud2.influxdata.com',
+        token: token,
+        org: org,
+        bucket: bucket);
+    var fluxQuery = '''from(bucket: "LevelData")
+    |> range(start: -1m)
+    |> filter(fn: (r) => r["_measurement"] == "water_level")
+    |> filter(fn: (r) => r["_field"] == "value")
+    |> filter(fn: (r) => r["sensor"] == "${widget.sensorID}")
+    |> aggregateWindow(every: 5s, fn: mean)
+    |> yield(name: "mean")''';
+    var queryService = client.getQueryService();
+
+    var recordStream = await queryService.query(fluxQuery);
+    var data = <double>[];
+    await recordStream.forEach((record) {
+      var value = record['_value'];
+      if (value != null) {
+        data.add(value);
+      }
+    });
+
+    if (mounted && data.isNotEmpty) {
+      setState(() {
+        _waterLevel = data.isNotEmpty ? data.last : _waterLevel;
+      });
+    }
+    print(_waterLevel);
+    if (_waterLevel >= 100 && one) {
+      one = false;
+      triggerNotification(_waterLevel);
+    } else {
+      if (_waterLevel < 100) {
+        one = true;
+      }
+    }
+  }
+
+  void triggerNotification(double waterLevel) {
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+      id: 10, // -1 is replaced by a random number
+      channelKey: 'alerts',
+      title: 'Your tank is getting empty !',
+      body: "Make sure to fill it as soon as possible",
+    ));
+  }
+
+  void _startTimer() {
+    Timer.periodic(Duration(seconds: 5), (timer) async {
+      getWaterLevelData();
+    });
+  }
+
+  @override
+  void initState() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+    super.initState();
+    chartWidget = WaterLevelChart(
+        rangeStart: const Duration(days: 1),
+        sensorID: "" + widget.sensorID + "",
+        key: UniqueKey());
+    _startTimer();
+  }
 
   void _selectLive() {
     setState(() {
@@ -58,8 +141,7 @@ class _LiveHistoryPageState extends State<LiveHistoryPage> {
             ),
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height *
-                  0.291, // 277/926 (iPhone 14 height)
+              height: MediaQuery.of(context).size.height * 0.291,
               decoration: BoxDecoration(
                 color: Color(0xFFBBD0EA),
                 boxShadow: [
@@ -132,12 +214,12 @@ class _LiveHistoryPageState extends State<LiveHistoryPage> {
                             ),
                           ]),
                         ),
-                        VerticalDivider(
+                        const VerticalDivider(
                           width: 1,
                           thickness: 1,
                           color: Color(0xFF989898),
                         ),
-                        SizedBox(width: 5),
+                        const SizedBox(width: 5),
                         GestureDetector(
                           onTap: _selectHistory,
                           child: Stack(children: [
@@ -161,7 +243,7 @@ class _LiveHistoryPageState extends State<LiveHistoryPage> {
                             ),
                           ]),
                         ),
-                        SizedBox(width: 15),
+                        const SizedBox(width: 15),
                       ],
                     ),
                   ),
@@ -242,9 +324,9 @@ class _LiveHistoryPageState extends State<LiveHistoryPage> {
                   );
                 }).toList(),
                 value: dropdownValue,
-                icon: Padding(
-                  padding: const EdgeInsets.only(left: 0),
-                  child: const Icon(Icons.arrow_drop_down),
+                icon: const Padding(
+                  padding: EdgeInsets.only(left: 0),
+                  child: Icon(Icons.arrow_drop_down),
                 ),
                 iconSize: 24,
                 style: const TextStyle(
@@ -268,20 +350,20 @@ class _LiveHistoryPageState extends State<LiveHistoryPage> {
                     switch (dropdownValue) {
                       case 'Weekly':
                         chartWidget = WaterLevelChart(
-                            rangeStart: Duration(days: 7),
-                            sensorID: "'001'",
+                            rangeStart: const Duration(days: 7),
+                            sensorID: "" + widget.sensorID + "",
                             key: UniqueKey());
                         break;
                       case 'Monthly':
                         chartWidget = WaterLevelChart(
-                            rangeStart: Duration(days: 30),
-                            sensorID: "'001'",
+                            rangeStart: const Duration(days: 30),
+                            sensorID: "" + widget.sensorID + "",
                             key: UniqueKey());
                         break;
                       case 'Daily':
                         chartWidget = WaterLevelChart(
-                            rangeStart: Duration(hours: 1),
-                            sensorID: "'001'",
+                            rangeStart: const Duration(days: 1),
+                            sensorID: "" + widget.sensorID + "",
                             key: UniqueKey());
                         break;
                     }
@@ -294,8 +376,12 @@ class _LiveHistoryPageState extends State<LiveHistoryPage> {
   }
 
   Widget _buildLive() {
+    String tank_number = widget.sensorID;
+
     return Container(
-      child: WaterLevelBucket(sensorId: '001'),
+      child: WaterLevelBucket(
+        sensorId: tank_number,
+      ),
     );
   }
 }

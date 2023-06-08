@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:influxdb_client/api.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
@@ -7,20 +8,20 @@ import 'package:intl/intl.dart';
 
 class WaterLevelBucket extends StatefulWidget {
   final String sensorId;
-
   const WaterLevelBucket({Key? key, required this.sensorId}) : super(key: key);
-
   @override
   _WaterLevelBucketState createState() => _WaterLevelBucketState();
 }
 
 class _WaterLevelBucketState extends State<WaterLevelBucket> {
-  late double _waterLevel = 4.0;
+  late double _waterLevel = 0.0;
 
   @override
   void initState() {
     super.initState();
-    _waterLevel = 4.0;
+    tankInformation();
+    getWaterLevelData();
+    _waterLevel = 0.0;
     lastUpdateTime = getLastUpdatedTime();
   }
 
@@ -30,21 +31,73 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
     getWaterLevelData();
   }
 
-  Future<void> getWaterLevelData() async {
+  late String tank_shape = "";
+  late double tank_width = 5;
+  late double tank_height = 13;
+  late double tank_length = 5;
+  late double tank_baseDiameter = 2;
+  Future<void> tankInformation() async {
     var token =
-        'mGpEPXdlrVSi7hDng6LusuUtI2J8VAqvwiqaQXzi56X6m_jtbhmqGil8SaeNXjkdue1E77amnBvpvObPh6RM3Q==';
-    var bucket = 'Level';
-    var org = 'Projet2CP';
+        '8jtFDtDrQpDKrjceYg8ZKAyRL90Muwa1H0xm1dGsyNKPEbNUnG-Oz4t5XILOJAf2nZAu9lZIxZMfgvUuxOvY1g==';
+    var bucket = 'UserData';
+    var org = 'Fluid';
     var client = InfluxDBClient(
-        url: 'http://192.168.220.224:8086',
+        url: 'https://us-east-1-1.aws.cloud2.influxdata.com',
         token: token,
         org: org,
         bucket: bucket);
-    var fluxQuery = '''from(bucket: "Level")
+    var fluxQuery = '''from(bucket: "UserData")
+    |> range(start: -600h)
+    |> filter(fn: (r) => r["_measurement"] == "tanks")
+    |> filter(fn: (r) => r["tank_number"] == "${widget.sensorId}")
+    |> last()
+    |> yield(name: "mean")''';
+    var queryService = client.getQueryService();
+    var result = await queryService.query(fluxQuery);
+    await for (var record in result) {
+      if (record.containsKey('_field') &&
+          record.containsKey('_value') &&
+          record['_field'] == 'tank_shape') {
+        tank_shape = record['_value'] as String;
+      }
+      if (record.containsKey('_field') &&
+          record.containsKey('_value') &&
+          record['_field'] == 'tank_width') {
+        tank_width = record['_value'] as double;
+      }
+      if (record.containsKey('_field') &&
+          record.containsKey('_value') &&
+          record['_field'] == 'tank_height') {
+        tank_height = record['_value'] as double;
+      }
+      if (record.containsKey('_field') &&
+          record.containsKey('_value') &&
+          record['_field'] == 'tank_length') {
+        tank_length = record['_value'] as double;
+      }
+      if (record.containsKey('_field') &&
+          record.containsKey('_value') &&
+          record['_field'] == 'tank_baseDiameter') {
+        tank_baseDiameter = record['_value'] as double;
+      }
+    }
+  }
+
+  Future<void> getWaterLevelData() async {
+    var token =
+        '8jtFDtDrQpDKrjceYg8ZKAyRL90Muwa1H0xm1dGsyNKPEbNUnG-Oz4t5XILOJAf2nZAu9lZIxZMfgvUuxOvY1g==';
+    var bucket = 'LevelData';
+    var org = 'Fluid';
+    var client = InfluxDBClient(
+        url: 'https://us-east-1-1.aws.cloud2.influxdata.com',
+        token: token,
+        org: org,
+        bucket: bucket);
+    var fluxQuery = '''from(bucket: "LevelData")
     |> range(start: -1m)
     |> filter(fn: (r) => r["_measurement"] == "water_level")
     |> filter(fn: (r) => r["_field"] == "value")
-    |> filter(fn: (r) => r["sensor"] == "'001'")
+    |> filter(fn: (r) => r["sensor"] == "${widget.sensorId}")
     |> aggregateWindow(every: 5s, fn: mean)
     |> yield(name: "mean")''';
     var queryService = client.getQueryService();
@@ -52,8 +105,6 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
     var recordStream = await queryService.query(fluxQuery);
     var data = <double>[];
     await recordStream.forEach((record) {
-      print(
-          'record: ${record['_time']}: water level: ${record['_value']} ${record['sensor']}');
       var value = record['_value'];
       if (value != null) {
         data.add(value);
@@ -65,6 +116,7 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
         _waterLevel = data.isNotEmpty ? data.last : _waterLevel;
       });
     }
+    updateVolume(_waterLevel);
     updateLastUpdateTime();
   }
 
@@ -76,6 +128,7 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
   }
 
   late String lastUpdateTime;
+  late double waterVolumeLeft = 0.0;
 
   void updateLastUpdateTime() {
     setState(() {
@@ -83,22 +136,36 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
     });
   }
 
+  void updateVolume(double waterLevel) {
+    setState(() {
+      if (tank_shape == "Cuboid") {
+        waterVolumeLeft =
+            ((tank_height - waterLevel * 0.1) * tank_length * tank_width) *
+                0.001;
+      } else {
+        waterVolumeLeft =
+            pi * tank_baseDiameter * tank_baseDiameter * (1 / 4) * tank_height;
+      }
+    });
+  }
+
   Widget _buildGetDataButton() {
     return ElevatedButton(
       onPressed: () {
+        tankInformation();
         getWaterLevelData();
       },
-      child: Text(
-        'Update',
-        style: TextStyle(fontFamily: 'Montserrat', fontSize: 20),
-      ),
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color.fromARGB(255, 2, 40, 78),
+        backgroundColor: const Color.fromARGB(255, 2, 40, 78),
         elevation: 4,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      ),
+      child: const Text(
+        'Update',
+        style: TextStyle(fontFamily: 'Montserrat', fontSize: 20),
       ),
     );
   }
@@ -109,21 +176,21 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 50),
-          Container(
+          const SizedBox(height: 50),
+          SizedBox(
             width: MediaQuery.of(context).size.width * 0.7,
             height: MediaQuery.of(context).size.width * 0.7,
             child: LiquidCircularProgressIndicator(
-              value: _waterLevel / 100,
-              valueColor:
-                  AlwaysStoppedAnimation(Color.fromARGB(123, 96, 167, 255)),
-              backgroundColor: Color.fromARGB(0, 255, 255, 255),
+              value: (tank_height - _waterLevel * 0.1) / tank_height,
+              valueColor: const AlwaysStoppedAnimation(
+                  Color.fromARGB(123, 96, 167, 255)),
+              backgroundColor: const Color.fromARGB(0, 255, 255, 255),
               borderColor: Colors.white,
               borderWidth: 1,
               direction: Axis.vertical,
               center: Text(
-                '${_waterLevel.toStringAsFixed(1)} %',
-                style: TextStyle(
+                '${((tank_height - _waterLevel * 0.1) * 100 / tank_height).toStringAsFixed(1)} %',
+                style: const TextStyle(
                   fontSize: 56,
                   fontFamily: "Aquire",
                   color: Color.fromARGB(255, 2, 40, 78),
@@ -132,12 +199,17 @@ class _WaterLevelBucketState extends State<WaterLevelBucket> {
               ),
             ),
           ),
-          SizedBox(height: 30),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
           Text(
             'Last update: $lastUpdateTime',
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           ),
-          SizedBox(height: 50),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+          Text(
+            'Water volume left:${waterVolumeLeft.toStringAsFixed(2)}L',
+            style: const TextStyle(fontSize: 16),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
           _buildGetDataButton(),
         ],
       ),
